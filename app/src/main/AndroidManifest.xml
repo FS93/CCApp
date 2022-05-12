@@ -10,6 +10,30 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CCApp">
         <activity
+            android:name=".SearchResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RideRecordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RideDialogActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ReviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ConfirmationActivity"
+            android:exported="false" />
+        <activity
             android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
