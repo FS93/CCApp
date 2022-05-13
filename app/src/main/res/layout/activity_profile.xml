@@ -11,13 +11,13 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="400dp"
         android:layout_margin="5dp"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:src="@drawable/tmp" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -132,7 +132,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tx_ratins_number"
+        android:id="@+id/tx_ratings_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -142,5 +142,18 @@
         android:text="Reviews"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
+
+    <LinearLayout
+        android:id="@+id/button_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="188dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/tx_ratings_number"
+        tools:layout_editor_absoluteX="5dp">
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
