@@ -4,7 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Giulio/StudioProjects/CCApp/app/src/main/res/layout/activity_main.xml" value="0.5546875" />
+        <entry key="app/src/main/res/drawable-v24/ic_logo.xml" value="0.144" />
+        <entry key="app/src/main/res/layout/activity_home.xml" value="0.2078125" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.3880208333333333" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3880208333333333" />
+        <entry key="app/src/main/res/layout/activity_search_result.xml" value="0.2078125" />
       </map>
     </option>
   </component>
