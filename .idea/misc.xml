@@ -3,7 +3,20 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Giulio/StudioProjects/CCApp/app/src/main/res/layout/activity_confirmation.xml" value="0.3140625" />
+        <entry key="..\:/Users/Giulio/StudioProjects/CCApp/app/src/main/res/layout/activity_login.xml" value="0.3140625" />
         <entry key="..\:/Users/Giulio/StudioProjects/CCApp/app/src/main/res/layout/activity_main.xml" value="0.5546875" />
+        <entry key="..\:/Users/Giulio/StudioProjects/CCApp/app/src/main/res/layout/activity_ride_dialog.xml" value="0.5546875" />
+        <entry key="..\:/Users/Giulio/StudioProjects/CCApp/app/src/main/res/layout/activity_search_result.xml" value="0.4578804347826087" />
+        <entry key="..\:/Users/Giulio/StudioProjects/CCApp/app/src/main/res/layout/fragment_ride_dialog1.xml" value="0.22" />
+        <entry key="..\:/Users/Giulio/StudioProjects/CCApp/app/src/main/res/layout/fragment_ride_dialog2.xml" value="0.44947916666666665" />
+        <entry key="..\:/Users/Giulio/StudioProjects/CCApp/app/src/main/res/layout/fragment_ride_dialog3.xml" value="0.44947916666666665" />
+        <entry key="..\:/Users/Giulio/StudioProjects/CCApp/app/src/main/res/layout/fragment_ride_dialog4.xml" value="0.44947916666666665" />
+        <entry key="..\:/Users/Giulio/StudioProjects/CCApp/app/src/main/res/layout/fragment_ride_dialog5.xml" value="0.44947916666666665" />
+        <entry key="..\:/Users/Giulio/StudioProjects/CCApp/app/src/main/res/layout/fragment_ride_dialog_fragment6_driver.xml" value="0.44947916666666665" />
+        <entry key="..\:/Users/Giulio/StudioProjects/CCApp/app/src/main/res/layout/fragment_ride_dialog_fragment6_passenger.xml" value="0.3572916666666667" />
+        <entry key="..\:/Users/Giulio/StudioProjects/CCApp/app/src/main/res/layout/fragment_ride_dialogue1.xml" value="0.5546875" />
+        <entry key="..\:/Users/Giulio/StudioProjects/CCApp/app/src/main/res/layout/ride_layout.xml" value="0.4578804347826087" />
         <entry key="app/src/main/res/drawable-v24/ic_logo.xml" value="0.144" />
         <entry key="app/src/main/res/drawable/ic_baseline_more_vert_24.xml" value="0.154" />
         <entry key="app/src/main/res/layout/activity_edit_profile.xml" value="0.1" />

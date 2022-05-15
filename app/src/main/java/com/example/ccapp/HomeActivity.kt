@@ -18,25 +18,23 @@ class HomeActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    //data = getIntent().getExtras().getString("keyName","defaultKey");
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId){
             R.id.search -> {
                 val intent = Intent(this@HomeActivity, RideDialogActivity::class.java)
                 intent.putExtra("dialog_type", "search")
-                finish()
+                //finish()
                 startActivity(intent)
             }
             R.id.offer -> {
                 val intent = Intent(this@HomeActivity, RideDialogActivity::class.java)
                 intent.putExtra("dialog_type", "offer")
-                finish()
+                //finish()
                 startActivity(intent)
             }
             R.id.profile -> {
                 val intent = Intent(this@HomeActivity, ProfileActivity::class.java)
-                finish()
+                //finish()
                 startActivity(intent)
             }
             R.id.logout -> {

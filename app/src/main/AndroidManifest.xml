@@ -9,6 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CCApp">
+
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyAmQRAm5XB29QV0_0vQQ-6XDTdnzNe1fro"/>
+
         <activity
             android:name=".SearchResultActivity"
             android:exported="false" />
