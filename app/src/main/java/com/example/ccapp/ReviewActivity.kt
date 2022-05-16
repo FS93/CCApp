@@ -17,14 +17,6 @@ class ReviewActivity : AppCompatActivity() {
             Review("Paolo Rossi", R.drawable.avatar),
             Review("Max Mustermann", R.drawable.avatar),
             Review("Mario Draghi", R.drawable.avatar),
-            Review("Olaf Scholz", R.drawable.avatar),
-            Review("Paolo Rossi", R.drawable.avatar),
-            Review("Max Mustermann", R.drawable.avatar),
-            Review("Mario Draghi", R.drawable.avatar),
-            Review("Olaf Scholz", R.drawable.avatar),
-            Review("Paolo Rossi", R.drawable.avatar),
-            Review("Max Mustermann", R.drawable.avatar),
-            Review("Mario Draghi", R.drawable.avatar),
             Review("Olaf Scholz", R.drawable.avatar)
         )
 
