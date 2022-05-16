@@ -29,10 +29,11 @@ class SearchResultActivity : AppCompatActivity(), OnMapReadyCallback {
         resultList = findViewById(R.id.result_list)
 
         rideList = ArrayList()
-        rideList.add(Ride("Ride 1"))
-        rideList.add(Ride("Ride 2"))
-        rideList.add(Ride("Ride 3"))
-        rideList.add(Ride("Ride 4"))
+        rideList.add(Ride(driverName = "Paolo", departure = "Via Branze 43, 25128 Brescia", destination = "Arthur-Hoffmann-Str. 87, 04275 Leipzig", rating = 2.0F, avatar = R.drawable.avatar, price = 10))
+        rideList.add(Ride(driverName = "SomeoneWithALongName", departure = "Via Branze 43, 25128 Brescia", destination = "Arhtur-Hoffmann-Str. 87, 04275 Leipzig", rating = 2.0F, avatar = R.drawable.avatar, price = 100))
+        rideList.add(Ride(driverName = "Paolo", departure = "Via Branze 43, 25128 Brescia", destination = "Arhtur-Hoffmann-Str. 87, 04275 Leipzig", rating = 2.0F, avatar = R.drawable.avatar, price = 8))
+        rideList.add(Ride(driverName = "Paolo", departure = "Via Branze 43, 25128 Brescia", destination = "Arhtur-Hoffmann-Str. 87, 04275 Leipzig", rating = 2.0F, avatar = R.drawable.avatar, price = 8))
+        rideList.add(Ride(driverName = "Paolo", departure = "Via Branze 43, 25128 Brescia", destination = "Arhtur-Hoffmann-Str. 87, 04275 Leipzig", rating = 2.0F, avatar = R.drawable.avatar, price = 9))
 
         rideAdapter = RideAdapter(this, rideList)
 
