@@ -9,6 +9,7 @@ class Ride {
     var avatar: Int? = null
     var rating: Float = 2.5F
     var price: Int?  = null
+    var dateTime: String? = null
 
     constructor() {}
 
@@ -18,7 +19,8 @@ class Ride {
         destination: String?,
         avatar: Int?,
         rating: Float,
-        price: Int?
+        price: Int?,
+        dateTime: String?
     ) {
         this.driverName = driverName
         this.departure = departure
@@ -26,5 +28,7 @@ class Ride {
         this.avatar = avatar
         this.rating = rating
         this.price = price
+        this.dateTime = dateTime
+
     }
 }

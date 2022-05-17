@@ -20,6 +20,7 @@ class RideAdapter(val context: Context, val rideList: ArrayList<Ride>): Recycler
         val ivAvatar = itemView.findViewById<ImageView>(R.id.ivAvatar)
         val rbDriverRating = itemView.findViewById<RatingBar>(R.id.rbDriverRating)
         val txtPrice = itemView.findViewById<TextView>(R.id.txtPrice)
+        val txtRideDateTextView = itemView.findViewById<TextView>(R.id.txtRideDateTime)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -29,7 +30,7 @@ class RideAdapter(val context: Context, val rideList: ArrayList<Ride>): Recycler
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val singleRide = rideList[position]
-        var viewHolder = holder as RideViewHolder
+        holder as RideViewHolder
         holder.apply {
             txtDriverName.text = singleRide.driverName
             txtDeparture.text = singleRide.departure
@@ -37,6 +38,7 @@ class RideAdapter(val context: Context, val rideList: ArrayList<Ride>): Recycler
             ivAvatar.setImageResource(singleRide.avatar!!)
             rbDriverRating.rating = singleRide.rating
             txtPrice.text = singleRide.price.toString() + " €"
+            txtRideDateTextView.text = singleRide.dateTime
         }
 
 
