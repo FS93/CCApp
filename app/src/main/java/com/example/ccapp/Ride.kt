@@ -1,7 +1,5 @@
 package com.example.ccapp
 
-import android.widget.ImageView
-
 class Ride {
     var driverName: String? = null
     var departure: String? = null
