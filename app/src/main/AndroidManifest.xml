@@ -16,7 +16,7 @@
             android:name=".SearchResultActivity"
             android:exported="false" />
         <activity
-            android:name=".RideRecordActivity"
+            android:name=".LoginActivity"
             android:exported="false" />
         <activity
             android:name=".RideDialogActivity"
@@ -37,7 +37,7 @@
             android:name=".ConfirmationActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".RideRecordActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
