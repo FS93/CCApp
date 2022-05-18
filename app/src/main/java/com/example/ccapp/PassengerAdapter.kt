@@ -21,7 +21,7 @@ class PassengerAdapter(var passengers: List<Passenger>) : RecyclerView.Adapter<P
 
 
         holder.itemView.apply {
-            passengerCheckbox.text = passengers[position].name
+            passengerName.text = passengers[position].name
             passengerCheckbox.isSelected = passengers[position].seatTaken
         }
     }

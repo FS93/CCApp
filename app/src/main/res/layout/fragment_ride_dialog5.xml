@@ -19,6 +19,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
             android:text="Ride preferences"
             android:textSize="24sp" />
 
@@ -29,11 +30,11 @@
 
             <TextView
                 android:id="@+id/textView2"
-                android:layout_width="150dp"
+                android:layout_width="317dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="Smoking" />
+                android:text="Is it ok, if someone in the car is smoking?" />
 
             <RadioGroup
                 android:layout_width="match_parent"
@@ -46,12 +47,14 @@
                     android:id="@+id/radioButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="Yes" />
 
                 <RadioButton
                     android:id="@+id/radioButton2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="No" />
             </RadioGroup>
         </LinearLayout>
@@ -62,11 +65,11 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="150dp"
+                android:layout_width="316dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="Music" />
+                android:text="Is it ok, if the driver plays some music?" />
 
             <RadioGroup
                 android:layout_width="match_parent"
@@ -78,11 +81,13 @@
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="Yes" />
 
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="No" />
             </RadioGroup>
         </LinearLayout>
@@ -93,11 +98,11 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="150dp"
+                android:layout_width="318dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="Talking" />
+                android:text="Do you like to talk to your fellow passengers?" />
 
             <RadioGroup
                 android:layout_width="match_parent"
@@ -109,12 +114,14 @@
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Yes" />
+                    android:layout_weight="1"
+                    android:text="I like to chat" />
 
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="No" />
+                    android:layout_weight="1"
+                    android:text="I enjoy the silence" />
             </RadioGroup>
         </LinearLayout>
 

@@ -1,11 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<CheckBox xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/passengerCheckbox"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:button="@drawable/ic_car"
-    android:text="Paolo"
-    android:clickable="false">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="10dp">
 
 
-</CheckBox>
+    <CheckBox
+        android:id="@+id/passengerCheckbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:button="@drawable/ic_car"
+        app:centerIfNoTextEnabled="true"
+       />
+
+    <TextView
+        android:id="@+id/passengerName"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="0dp"
+        app:layout_constraintTop_toBottomOf="@id/passengerCheckbox"
+        android:text="Paolo">
+    </TextView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
