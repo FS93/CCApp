@@ -12,11 +12,14 @@
         android:id="@+id/passengerCheckbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:button="@drawable/ic_car"
         android:scaleX="1.5"
         android:scaleY="1.5"
-        android:button="@drawable/ic_car"
         app:centerIfNoTextEnabled="true"
-        tools:ignore="MissingConstraints" />
+        app:flow_horizontalBias="0.5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/passengerName"

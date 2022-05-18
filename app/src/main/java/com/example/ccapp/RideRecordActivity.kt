@@ -16,8 +16,9 @@ class RideRecordActivity : AppCompatActivity() {
         rvPassengers.layoutManager = layoutManager
 
         var PassengerList = mutableListOf<Passenger>(
-            Passenger("Francesca"),
+            Passenger("Francesca Maria"),
             Passenger("Giulio"),
+            Passenger(false),
             Passenger(false)
         )
 

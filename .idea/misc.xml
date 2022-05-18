@@ -38,7 +38,7 @@
         <entry key="app/src/main/res/layout/fragment_ride_dialog3.xml" value="0.13852073535699017" />
         <entry key="app/src/main/res/layout/fragment_ride_dialog4.xml" value="0.2078125" />
         <entry key="app/src/main/res/layout/fragment_ride_dialog5.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/item_passenger_checkbox.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/item_passenger_checkbox.xml" value="0.9" />
         <entry key="app/src/main/res/layout/item_review.xml" value="0.49537037037037035" />
         <entry key="app/src/main/res/layout/recycler_view_item.xml" value="0.5307291666666667" />
         <entry key="app/src/main/res/layout/ride_layout.xml" value="0.625" />
