@@ -3,33 +3,49 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="16dp"
     android:orientation="vertical"
     tools:context=".RideRecordActivity">
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+
+        android:src="@drawable/avatar"/>
 
 
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:layout_marginTop="8dp"
+        android:layout_margin="16dp"
         android:orientation="horizontal">
 
 
-        <TextView
+<!--        <TextView
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:text="Driver Name" />
+            android:text="Driver Name" />-->
+
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_gravity="center_vertical"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_person"/>
 
         <TextView
             android:id="@+id/txtRideRecordDriverName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
+            android:layout_gravity="center_vertical"
             android:layout_weight="2"
+            android:textSize="18sp"
             android:ems="10"
+            android:gravity="end|center_vertical"
             android:text="Paolo" />
     </LinearLayout>
 
@@ -37,17 +53,23 @@
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:layout_marginTop="8dp"
+        android:layout_margin="16dp"
         android:orientation="horizontal">
 
 
-        <TextView
+<!--        <TextView
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:text="Departure" />
+            android:text="Departure" />-->
+
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_gravity="center_vertical"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_departure" />
 
         <TextView
             android:id="@+id/txtRideRecordDeparture"
@@ -55,6 +77,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:ems="10"
+            android:textSize="18sp"
+            android:gravity="end"
+            android:layout_gravity="end|center_vertical"
             android:text="Via Branze 43, 25128 Brescia" />
     </LinearLayout>
 
@@ -62,22 +87,31 @@
         android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:layout_marginTop="8dp"
+        android:layout_margin="16dp"
         android:orientation="horizontal">
 
 
-        <TextView
+<!--        <TextView
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:text="Destination" />
+            android:text="Destination" />-->
+
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_gravity="center_vertical"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_destination"/>
 
         <TextView
             android:id="@+id/txtRideRecordDestination"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:textSize="18sp"
+            android:gravity="end"
             android:layout_weight="2"
             android:ems="10"
             android:text="Arthur-Hoffmann-Straße 87, 04275 Leipzig" />
@@ -87,23 +121,32 @@
         android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:layout_marginTop="8dp"
+        android:layout_margin="16dp"
         android:orientation="horizontal">
 
 
-        <TextView
+<!--        <TextView
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:text="Date and Time" />
+            android:text="Date and Time" />-->
+
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_gravity="center_vertical"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_calendar"/>
 
         <TextView
             android:id="@+id/txtRideRecordDateTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:gravity="end"
             android:layout_weight="2"
+            android:textSize="18sp"
             android:ems="10"
             android:text="17.05.2022 15:00" />
     </LinearLayout>
@@ -112,27 +155,45 @@
         android:id="@+id/linearLayout5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:layout_marginTop="8dp"
+        android:layout_margin="16dp"
         android:orientation="horizontal">
 
 
-        <TextView
+<!--        <TextView
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:text="Destination" />
+            android:text="Price" />-->
+
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:scaleType="fitXY"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_money"/>
 
         <TextView
             android:id="@+id/txtRideRecordPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:gravity="end"
             android:layout_weight="2"
+            android:textSize="18sp"
+            android:textStyle="bold"
             android:ems="10"
             android:text="10 €" />
     </LinearLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Seats"
+        android:gravity="center"
+        android:textSize="24sp"
+        android:textStyle="bold"/>
+    
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvPassengers"
         android:layout_width="match_parent"
