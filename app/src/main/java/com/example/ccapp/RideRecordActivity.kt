@@ -2,14 +2,20 @@ package com.example.ccapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
+import androidx.core.view.iterator
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_ride_record.*
+import kotlinx.android.synthetic.main.item_passenger_checkbox.*
+import kotlinx.android.synthetic.main.item_passenger_checkbox.view.*
 import java.util.regex.Pattern
 
 class RideRecordActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ride_record)
 
@@ -17,8 +23,8 @@ class RideRecordActivity : AppCompatActivity() {
         val destination = findViewById<TextView>(R.id.txtRideRecordDestination)
 
         // Insert line breaks for long texts
-            departure.text.replace(Regex(","), "\n")
-            destination.text.replace(Regex(","), "\n")
+            departure.text = departure.text.toString().replace(',','\n')
+            destination.text = destination.text.toString().replace(',','\n')
 
         // Setup RecyclerView for passengers
 
@@ -42,7 +48,6 @@ class RideRecordActivity : AppCompatActivity() {
 
             val adapter = PassengerAdapter(PassengerList)
             rvPassengers.adapter = adapter
-
 
 
 
