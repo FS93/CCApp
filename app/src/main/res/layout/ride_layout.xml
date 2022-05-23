@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="90dp"
+    android:layout_height="120dp"
     android:layout_margin="10dp"
     android:padding="5dp"
     android:background="#C84B4B">
@@ -19,14 +19,14 @@
 
     <TextView
         android:id="@+id/txtDriverName"
-        android:layout_width="120dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:text="Floriannnnnnnn"
         android:textColor="@color/white"
         android:textSize="10sp"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/rbDriverRating"
         app:layout_constraintStart_toStartOf="@+id/ivAvatar"
         app:layout_constraintTop_toBottomOf="@+id/ivAvatar" />
 
@@ -35,12 +35,14 @@
         style="?android:attr/ratingBarStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_marginBottom="5dp"
         android:isIndicator="true"
         android:numStars="5"
-        app:layout_constraintBottom_toBottomOf="@id/txtDriverName"
-        app:layout_constraintStart_toEndOf="@id/txtDriverName"
-        app:layout_constraintTop_toTopOf="@+id/txtDriverName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/txtDriverName"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/txtDriverName"
+        app:layout_constraintTop_toBottomOf="@+id/txtDriverName"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <ImageView
@@ -48,9 +50,9 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginStart="5dp"
+        android:layout_marginEnd="16dp"
         android:src="@drawable/ic_departure"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="10dp"
         app:layout_constraintStart_toEndOf="@id/txtDeparture"
         app:layout_constraintTop_toTopOf="@+id/ivAvatar"
         app:tint="@color/white" />
@@ -75,11 +77,11 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginStart="5dp"
+        android:layout_marginEnd="16dp"
         android:src="@drawable/ic_destination"
         app:layout_constraintBottom_toBottomOf="@+id/ivAvatar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/txtDestination"
-        android:layout_marginEnd="10dp"
         app:tint="@color/white" />
 
     <TextView
@@ -104,24 +106,23 @@
         android:text="10 €"
         android:textColor="@color/white"
         android:textStyle="bold"
-        app:flow_horizontalBias="0.5"
-        app:layout_constraintBottom_toBottomOf="@id/txtDriverName"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="5dp"
+        app:layout_constraintBottom_toBottomOf="@id/rbDriverRating"
+        app:layout_constraintEnd_toEndOf="@+id/ivDestination"
         app:layout_constraintTop_toTopOf="@+id/txtDriverName"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.5" />
 
     <TextView
         android:id="@+id/txtRideDateTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="10sp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
         android:text="17.05.2022 15:00"
         android:textColor="@color/white"
-        app:layout_constraintStart_toEndOf="@id/rbDriverRating"
-        app:layout_constraintTop_toTopOf="@id/txtDriverName"
-        app:layout_constraintBottom_toBottomOf="@id/txtDriverName"/>
+        android:textSize="10sp"
+        app:flow_verticalBias="0.5"
+        app:layout_constraintBottom_toBottomOf="@id/rbDriverRating"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/txtDriverName"
+        app:layout_constraintTop_toTopOf="@id/txtDriverName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

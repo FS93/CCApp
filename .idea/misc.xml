@@ -41,7 +41,7 @@
         <entry key="app/src/main/res/layout/item_passenger_checkbox.xml" value="0.5" />
         <entry key="app/src/main/res/layout/item_review.xml" value="0.49537037037037035" />
         <entry key="app/src/main/res/layout/recycler_view_item.xml" value="0.5307291666666667" />
-        <entry key="app/src/main/res/layout/ride_layout.xml" value="0.625" />
+        <entry key="app/src/main/res/layout/ride_layout.xml" value="0.5" />
         <entry key="app/src/main/res/layout/test.xml" value="0.1" />
         <entry key="app/src/main/res/menu/home_menu.xml" value="0.5307291666666667" />
       </map>
