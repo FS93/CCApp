@@ -7,6 +7,8 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
@@ -64,8 +66,9 @@ class HomeActivity : AppCompatActivity() {
                 startActivity(intent)
             }
             R.id.logout -> {
-                val intent = Intent(this@HomeActivity, RideDialogActivity::class.java)
-                finish()
+                Firebase.auth.signOut()
+                val intent = Intent(this@HomeActivity, LoginActivity::class.java)
+                //finish()
                 startActivity(intent)
             }
         }
