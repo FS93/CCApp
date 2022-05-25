@@ -34,11 +34,9 @@ class LoginActivity : AppCompatActivity() {
         mAuth = Firebase.auth
 
         btnSignUp.setOnClickListener{
-            Toast.makeText(applicationContext,"Signup activity not yet implemented...",Toast.LENGTH_SHORT).show()
-
-            //val intent = Intent(this, SignUp::class.java)
-            //finish()
-            //startActivity(intent)
+            val intent = Intent(this, SignupActivity::class.java)
+            finish()
+            startActivity(intent)
         }
 
         btnLogin.setOnClickListener {
