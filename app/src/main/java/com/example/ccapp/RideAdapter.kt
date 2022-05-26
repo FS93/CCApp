@@ -11,9 +11,18 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.ride_layout.view.*
 
 
-class RideAdapter(val context: Context, val rideList: ArrayList<Ride>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class RideAdapter constructor(val context: Context, val rideList: ArrayList<Ride>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    class RideViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+    var onItemClick: ((Ride) -> Unit)? = null
+
+    inner class RideViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+
+        init {
+            itemView.setOnClickListener {
+                onItemClick?.invoke(rideList[absoluteAdapterPosition])
+            }
+        }
+
         val txtDriverName = itemView.findViewById<TextView>(R.id.txtDriverName)
         val txtDeparture = itemView.findViewById<TextView>(R.id.txtDeparture)
         val txtDestination = itemView.findViewById<TextView>(R.id.txtDestination)
@@ -30,6 +39,7 @@ class RideAdapter(val context: Context, val rideList: ArrayList<Ride>): Recycler
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val singleRide = rideList[position]
+
         holder as RideViewHolder
         holder.apply {
             txtDriverName.text = singleRide.driverName

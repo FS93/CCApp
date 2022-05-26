@@ -1,12 +1,12 @@
 package com.example.ccapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_open_reviews.*
 
-class OpenReviews : AppCompatActivity() {
+class OpenReviewsActivity : AppCompatActivity() {
 
     private lateinit var rideAdapter: RideAdapter
     private lateinit var pastRidesList: ArrayList<Ride>
@@ -23,6 +23,12 @@ class OpenReviews : AppCompatActivity() {
         rideAdapter = RideAdapter(this, pastRidesList)
         rvPastRides.layoutManager = LinearLayoutManager(this)
         rvPastRides.adapter = rideAdapter
+
+        rideAdapter.onItemClick = { ride ->
+
+            val intent = Intent(this@OpenReviewsActivity, ReviewActivity::class.java)
+            startActivity(intent)
+        }
 
     }
 }
