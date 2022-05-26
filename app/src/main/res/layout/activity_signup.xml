@@ -39,11 +39,10 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@id/edt_name"
-        android:hint="Email"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        />
+        android:hint="Email" />
 
     <EditText
         android:id="@+id/edt_password"

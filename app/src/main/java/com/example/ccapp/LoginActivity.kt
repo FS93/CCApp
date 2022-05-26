@@ -7,7 +7,10 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -53,10 +56,19 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        // Check if user is signed in (non-null) - if so, got to HomeActivity.
+        val currentUser = mAuth.currentUser
+        if(currentUser != null){
+            val intent = Intent(this, HomeActivity::class.java)
+            finish()
+            startActivity(intent)
+        }
+    }
+
     private fun login(email: String, password: String) {
-/*        val intent = Intent(this@LoginActivity, HomeActivity::class.java)
-        finish()
-        startActivity(intent)*/
+
         mAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
@@ -66,8 +78,8 @@ class LoginActivity : AppCompatActivity() {
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w("LOGIN FAILURE", "signInWithEmail:failure", task.exception)
-                    Toast.makeText(baseContext, "Authentication failed.",
-                        Toast.LENGTH_SHORT).show()
+                    Toast.makeText(baseContext, "Authentication failed: ${task.exception?.message}",
+                        Toast.LENGTH_LONG).show()
                 }
             }
     }
