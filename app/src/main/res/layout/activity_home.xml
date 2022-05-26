@@ -15,7 +15,7 @@
         android:layout_marginTop="16dp"
         android:gravity="center"
         android:text="Upcoming Rides"
-        android:textColor="@color/black"
+        android:textColor="@color/cc_color"
         android:textSize="20sp" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -36,6 +36,7 @@
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/cc_color"
             app:srcCompat="@drawable/ic_search" />
 
         <ImageButton
@@ -43,6 +44,7 @@
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/cc_color"
             app:srcCompat="@drawable/ic_add" />
 
         <ImageButton
@@ -50,6 +52,7 @@
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/cc_color"
             app:srcCompat="@drawable/ic_star" />
 
     </LinearLayout>
