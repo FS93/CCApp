@@ -47,8 +47,12 @@ class SignupActivity : AppCompatActivity() {
 
             val email = edt_email.text.toString()
             val password = edt_password.text.toString()
-
-           createAccount(email, password)
+            // validity check
+            if (email != "" && password != "") {
+                createAccount(email, password)
+            } else {
+                Toast.makeText(this, "Please enter your credentials", Toast.LENGTH_SHORT).show()
+            }
 
         }
 
