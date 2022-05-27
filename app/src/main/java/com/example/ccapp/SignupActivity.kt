@@ -1,19 +1,20 @@
 package com.example.ccapp
 
+import android.R.attr
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_profile.*
+
 
 class SignupActivity : AppCompatActivity() {
 
@@ -24,6 +25,8 @@ class SignupActivity : AppCompatActivity() {
     val pickImage = 0
     private var imageUri: Uri? = null
     private lateinit var auth: FirebaseAuth
+
+    private val SELECT_PICTURE = 200
 
 
 
@@ -36,8 +39,13 @@ class SignupActivity : AppCompatActivity() {
         // Gallery Picker for profile picture
         profilePicture = findViewById(R.id.ivProfilePicture)
         profilePicture.setOnClickListener {
-            val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
-            startActivityForResult(gallery, pickImage)
+//            val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+//            startActivityForResult(gallery, pickImage)
+
+//            val i = Intent()
+//            i.type = "image/*"
+//            i.action = Intent.ACTION_GET_CONTENT
+//            startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE)
         }
         edt_email = findViewById(R.id.edt_email)
         edt_password = findViewById(R.id.edt_password)
@@ -61,8 +69,23 @@ class SignupActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK && requestCode == pickImage) {
-            imageUri = data?.data
-            profilePicture.setImageURI(imageUri)
+//            imageUri = data?.data
+//            profilePicture.setImageURI(imageUri)
+
+//            Log.d("image", resultCode.toString())
+//            if (resultCode === RESULT_OK) {
+//
+//                // compare the resultCode with the
+//                // SELECT_PICTURE constant
+//                if (requestCode === SELECT_PICTURE) {
+//                    // Get the url of the image from data
+//                    val selectedImageUri: Uri? = data?.data
+//                    if (null != selectedImageUri) {
+//                        // update the preview image in the layout
+//                        profilePicture.setImageURI(selectedImageUri)
+//                    }
+//                }
+//            }
         }
     }
 
