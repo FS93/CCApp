@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CCApp">
         <activity
-            android:name=".OpenReviews"
+            android:name=".OpenReviewsActivity"
             android:exported="false" />
         <activity
             android:name=".SignupActivity"
@@ -37,7 +37,7 @@
             android:name=".ReviewActivity"
             android:exported="false" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".LoginActivity"
             android:exported="false" />
         <activity
             android:name=".ProfileActivity"
@@ -49,7 +49,7 @@
             android:name=".ConfirmationActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

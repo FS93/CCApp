@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageButton
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -14,7 +13,7 @@ import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
 
-    private lateinit var upcomingAdapter: RideAdapter
+    private lateinit var adapter: RideAdapter
     private lateinit var upcomingRideList: ArrayList<Ride>
     private lateinit var btnSearch: ImageButton
     private lateinit var btnOffer: ImageButton
@@ -43,8 +42,7 @@ class HomeActivity : AppCompatActivity() {
         }
 
         btnReview.setOnClickListener{
-            val intent = Intent(this@HomeActivity, OpenReviews::class.java)
-            intent.putExtra("dialog_type", "offer")
+            val intent = Intent(this@HomeActivity, OpenReviewsActivity::class.java)
             //finish()
             startActivity(intent)
         }
@@ -56,11 +54,18 @@ class HomeActivity : AppCompatActivity() {
         upcomingRideList.add(Ride(driverName = "Paolo", departure = "Via Branze 43, 25128 Brescia", destination = "Arthur-Hoffmann-Str. 87, 04275 Leipzig", rating = 2.0F, avatar = R.drawable.avatar, price = 10, dateTime = "17.05.2022 15:00"))
         upcomingRideList.add(Ride(driverName = "SomeoneWithALongName", departure = "Via Branze 43, 25128 Brescia", destination = "Arhtur-Hoffmann-Str. 87, 04275 Leipzig", rating = 2.0F, avatar = R.drawable.avatar, price = 100, dateTime = "17.05.2022 15:00"))
 
-
-        upcomingAdapter = RideAdapter(this, upcomingRideList)
+        // Setup of the Recycler View Adapter
+        adapter = RideAdapter(this, upcomingRideList)
         rvUpcomingRides.layoutManager = LinearLayoutManager(this)
-        rvUpcomingRides.adapter = upcomingAdapter
+        rvUpcomingRides.adapter = adapter
+
+        adapter.onItemClick = { ride ->
+
+            val intent = Intent(this@HomeActivity, RideRecordActivity::class.java)
+            startActivity(intent)
+        }
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.home_menu,menu)
