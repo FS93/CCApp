@@ -35,25 +35,35 @@
         android:hint="Name" />
 
     <EditText
-        android:id="@+id/edt_email"
+        android:id="@+id/edt_surname"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@id/edt_name"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
+        android:hint="Surname" />
+
+    <EditText
+        android:id="@+id/edt_email"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/edt_surname"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
         android:hint="Email" />
+
 
     <EditText
         android:id="@+id/edt_password"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@id/edt_email"
-        android:hint="Password"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        />
+        android:hint="Password" />
 
     <Button
         android:id="@+id/btnSignUp"
@@ -61,8 +71,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/edt_password"
         android:layout_centerHorizontal="true"
-        android:text="Sign up"
         android:layout_marginTop="30dp"
-        />
+        android:text="Sign up" />
 
 </RelativeLayout>

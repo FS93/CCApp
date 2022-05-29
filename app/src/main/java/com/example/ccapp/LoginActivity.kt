@@ -27,8 +27,6 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        //TODO("Missing firebase integration")
-
         edt_email = findViewById(R.id.edt_email)
         edt_password = findViewById(R.id.edt_password)
         btnLogin = findViewById(R.id.btnLogin)

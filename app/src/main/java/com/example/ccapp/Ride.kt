@@ -1,29 +1,26 @@
 package com.example.ccapp
 
 class Ride {
-    var driverName: String? = null
+    var driverId: String? = null
     var departure: String? = null
     var destination: String? = null
-    var avatar: Int? = null
     var rating: Float = 2.5F
-    var price: Int?  = null
+    var price: Float?  = null
     var dateTime: String? = null
 
     constructor() {}
 
     constructor(
-        driverName: String?,
+        driverId: String?,
         departure: String?,
         destination: String?,
-        avatar: Int?,
         rating: Float,
-        price: Int?,
+        price: Float?,
         dateTime: String?
     ) {
-        this.driverName = driverName
+        this.driverId = driverId
         this.departure = departure
         this.destination = destination
-        this.avatar = avatar
         this.rating = rating
         this.price = price
         this.dateTime = dateTime

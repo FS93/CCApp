@@ -42,13 +42,13 @@ class RideAdapter constructor(val context: Context, val rideList: ArrayList<Ride
 
         holder as RideViewHolder
         holder.apply {
-            txtDriverName.text = singleRide.driverName
-            txtDeparture.text = singleRide.departure
-            txtDestination.text = singleRide.destination
-            ivAvatar.setImageResource(singleRide.avatar!!)
-            rbDriverRating.rating = singleRide.rating
-            txtPrice.text = singleRide.price.toString() + " €"
-            txtRideDateTextView.text = singleRide.dateTime
+//            txtDriverName.text = singleRide.driverName
+//            txtDeparture.text = singleRide.departure
+//            txtDestination.text = singleRide.destination
+//            ivAvatar.setImageResource(singleRide.avatar!!)
+//            rbDriverRating.rating = singleRide.rating
+//            txtPrice.text = singleRide.price.toString() + " €"
+//            txtRideDateTextView.text = singleRide.dateTime
         }
 
 
