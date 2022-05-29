@@ -23,7 +23,7 @@
             android:textSize="24sp" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/edt_location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"

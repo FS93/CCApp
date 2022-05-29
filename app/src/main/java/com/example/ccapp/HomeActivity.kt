@@ -28,9 +28,11 @@ class HomeActivity : AppCompatActivity() {
         btnReview = findViewById(R.id.btnReview)
 
         btnSearch.setOnClickListener{
-            val intent = Intent(this@HomeActivity, RideDialogActivity::class.java)
-            intent.putExtra("dialog_type", "search")
+//            val intent = Intent(this@HomeActivity, RideDialogActivity::class.java)
+//            intent.putExtra("dialog_type", "search")
             //finish()
+
+            val intent = Intent(this@HomeActivity, SearchResultActivity::class.java)
             startActivity(intent)
         }
 

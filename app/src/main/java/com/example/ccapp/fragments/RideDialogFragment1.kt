@@ -1,32 +1,35 @@
 package com.example.ccapp.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.Toast
 import com.example.ccapp.R
 import com.example.ccapp.RideDialogActivity
+import com.github.appintro.SlidePolicy
 
-class RideDialogFragment1 : Fragment() {
+class RideDialogFragment1() : Fragment(), SlidePolicy {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private lateinit var edtLocation: EditText
 
-    override fun onDestroyView() {
-        Log.d("frag","on destroy called")
-        super.onDestroyView()
-    }
+    override val isPolicyRespected: Boolean
+        get() = check()
 
-    override fun onPause() {
-        Log.d("frag","on pause called")
-        // send data with this method, since it is called as soon as the frag goes invisible
+    private fun check(): Boolean{
+        if (edtLocation.text.toString() == ""){
+            return false
+        }
         var rda: RideDialogActivity = activity as RideDialogActivity
-        Log.d("frag",rda.toString())
-        rda.test()
-        super.onPause()
+        rda.setDeparture(edtLocation.text.toString())
+        return true
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        edtLocation = view.findViewById(R.id.edt_location)
     }
 
     override fun onCreateView(
@@ -35,5 +38,10 @@ class RideDialogFragment1 : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_ride_dialog1, container, false)
+    }
+
+    override fun onUserIllegallyRequestedNextPage() {
+        Toast.makeText(activity,"You need to fill in the information needed to go forward!",
+            Toast.LENGTH_LONG).show()
     }
 }

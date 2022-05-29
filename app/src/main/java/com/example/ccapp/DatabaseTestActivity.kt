@@ -32,29 +32,29 @@ class DatabaseTestActivity : AppCompatActivity() {
 
 //        database.reference.child("rides").child("driver_id").setValue("123")
 
-        val ride = Ride(
-            "123uid", "Castiglione delle Stiviere, Via Roma, 1", "Brescia, Via Branze, 39",
-            4.0F, 15F, "12:30"
-        )
-
-        myRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                // inside the method of on Data change we are setting
-                // our object class to our database reference.
-                // data base reference will sends data to firebase.
-                myRef.child("ride").setValue(ride)
-
-                // after adding this data we are showing toast message.
-                Toast.makeText(this@DatabaseTestActivity, "Data added", Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                // if the data is not added or it is cancelled then
-                // we are displaying a failure toast message.
-                Toast.makeText(this@DatabaseTestActivity, "Fail to add data $error", Toast.LENGTH_SHORT)
-                    .show()
-            }
-        })
+//        val ride = Ride(
+//            "123uid", "Castiglione delle Stiviere, Via Roma, 1", "Brescia, Via Branze, 39",
+//            4.0F, "12:00", 7
+//        )
+//
+//        myRef.addValueEventListener(object : ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                // inside the method of on Data change we are setting
+//                // our object class to our database reference.
+//                // data base reference will sends data to firebase.
+//                myRef.child("ride").setValue(ride)
+//
+//                // after adding this data we are showing toast message.
+//                Toast.makeText(this@DatabaseTestActivity, "Data added", Toast.LENGTH_SHORT).show()
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//                // if the data is not added or it is cancelled then
+//                // we are displaying a failure toast message.
+//                Toast.makeText(this@DatabaseTestActivity, "Fail to add data $error", Toast.LENGTH_SHORT)
+//                    .show()
+//            }
+//        })
     }
 
     private fun login(email: String, password: String) {
