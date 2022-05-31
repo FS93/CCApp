@@ -84,6 +84,7 @@ class HomeActivity : AppCompatActivity() {
 
         adapter.onItemClick = { ride ->
             val intent = Intent(this@HomeActivity, RideRecordActivity::class.java)
+            intent.putExtra("ride_id", ride.id)
             startActivity(intent)
         }
     }
