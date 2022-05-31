@@ -5,15 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
-import androidx.core.view.iterator
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.example.ccapp.dbClasses.Passenger
+import com.example.ccapp.dbClasses.Ride
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_ride_record.*
-import kotlinx.android.synthetic.main.item_passenger_checkbox.*
-import kotlinx.android.synthetic.main.item_passenger_checkbox.view.*
-import org.w3c.dom.Text
-import java.util.regex.Pattern
 
 class RideRecordActivity : AppCompatActivity() {
 

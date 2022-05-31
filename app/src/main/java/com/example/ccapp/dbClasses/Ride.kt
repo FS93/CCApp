@@ -1,4 +1,4 @@
-package com.example.ccapp
+package com.example.ccapp.dbClasses
 
 import android.util.Log
 import com.google.firebase.database.*
@@ -12,6 +12,7 @@ class Ride {
     var time: String? = null
     var seats: Int = 0
     var id: String? = null
+    var passengers: ArrayList<User> = ArrayList()
 
     private lateinit var mDbRef: DatabaseReference
 

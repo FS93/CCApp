@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.core.view.isInvisible
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.ccapp.dbClasses.Review
 import kotlinx.android.synthetic.main.activity_review.*
 
 class ReviewActivity : AppCompatActivity() {

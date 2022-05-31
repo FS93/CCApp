@@ -5,12 +5,12 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.ccapp.dbClasses.Ride
+import com.example.ccapp.dbClasses.User
 import com.example.ccapp.fragments.*
 import com.github.appintro.AppIntro2
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
-import com.google.firebase.ktx.Firebase
 import java.util.*
 
 class RideDialogActivity : AppIntro2() {

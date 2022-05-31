@@ -8,6 +8,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageButton
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.ccapp.dbClasses.Ride
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
@@ -39,12 +40,12 @@ class HomeActivity : AppCompatActivity() {
         mDbRef = FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/").getReference("ride")
         mDbRef.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                upcomingRideList.clear()
                 for (postSnapshot in snapshot.children){
                     Log.d("ride", postSnapshot.getValue(Ride::class.java)!!.toString())
                     upcomingRideList.add(postSnapshot.getValue(Ride::class.java)!!)
                 }
                 adapter.notifyDataSetChanged()
-
             }
 
             override fun onCancelled(error: DatabaseError) {

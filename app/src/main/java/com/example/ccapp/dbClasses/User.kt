@@ -1,4 +1,4 @@
-package com.example.ccapp
+package com.example.ccapp.dbClasses
 
 class User {
     var userID: String? = null

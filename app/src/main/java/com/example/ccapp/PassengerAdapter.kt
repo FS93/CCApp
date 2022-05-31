@@ -1,17 +1,12 @@
 package com.example.ccapp
 
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.CheckBox
 import android.widget.CompoundButton
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_passenger_checkbox.view.*
-import com.example.ccapp.RideRecordActivity
-import kotlinx.android.synthetic.main.item_review.view.*
+import com.example.ccapp.dbClasses.Passenger
 
 class PassengerAdapter(var passengers: List<Passenger>) : RecyclerView.Adapter<PassengerAdapter.PassengerViewHolder>(){
 

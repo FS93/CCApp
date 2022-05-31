@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.ccapp.dbClasses.Ride
 import kotlinx.android.synthetic.main.activity_open_reviews.*
 
 class OpenReviewsActivity : AppCompatActivity() {
