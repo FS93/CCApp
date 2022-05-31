@@ -1,5 +1,8 @@
 package com.example.ccapp
 
+import android.util.Log
+import com.google.firebase.database.*
+
 class Ride {
     var driverId: String? = null
     var departure: String? = null
@@ -8,30 +11,20 @@ class Ride {
     var date: String? = null
     var time: String? = null
     var seats: Int = 0
+    var id: String? = null
 
-    constructor() {}
+    private lateinit var mDbRef: DatabaseReference
 
-    constructor(
-        driverId: String?,
-        departure: String?,
-        destination: String?,
-        price: Float?,
-        date: String?,
-        time: String?,
-        seats: Int
-    ) {
-        this.driverId = driverId
-        this.departure = departure
-        this.destination = destination
-        this.price = price
-        this.date = date
-        this.time = time
-        this.seats = seats
+    var driverName: String? = null
+    var driverSurname: String? = null
+    var driverReview: Float? = null
+
+    constructor() {
     }
 
     override fun toString(): String {
-        return "{driverId: $driverId, departure: $departure, " +
-                "destination: $destination, price: $price, " +
-                "date: $date, time: $time, seats: $seats}"
+        return "Ride(driverId=$driverId, departure=$departure, destination=$destination, price=$price, date=$date, time=$time, seats=$seats, driverName=$driverName, driverSurname=$driverSurname, driverReview=$driverReview)"
     }
+
+
 }
