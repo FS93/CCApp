@@ -42,13 +42,6 @@ class RideRecordActivity : AppCompatActivity() {
         layoutManager.orientation = LinearLayoutManager.HORIZONTAL
         rvPassengers.layoutManager = layoutManager
 
-        var PassengerList = mutableListOf<Passenger>(
-                Passenger("Francesca Maria"),
-                Passenger("Giulio"),
-                Passenger(false),
-                Passenger(false)
-            )
-
         mDbRef = FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/").getReference("ride/" + id!!)
         mDbRef.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -64,14 +57,16 @@ class RideRecordActivity : AppCompatActivity() {
             }
         })
 
+        var PassengerList = mutableListOf<Passenger>(
+            Passenger("Francesca Maria"),
+            Passenger("Giulio"),
+            Passenger(false),
+            Passenger(false)
+        )
 
-            val adapter = PassengerAdapter(PassengerList)
-            rvPassengers.adapter = adapter
-
-
+        val adapter = PassengerAdapter(PassengerList)
+        rvPassengers.adapter = adapter
 
     }
-
-
 
 }

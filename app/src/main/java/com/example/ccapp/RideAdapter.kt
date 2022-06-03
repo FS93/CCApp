@@ -39,25 +39,17 @@ class RideAdapter constructor(val context: Context, val rideList: ArrayList<Ride
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val singleRide = rideList[position]
-
         holder as RideViewHolder
         holder.apply {
-//            txtDriverName.text = singleRide.driverId
             txtDriverName.text = singleRide.driverName + " " + singleRide.driverSurname
             txtDeparture.text = singleRide.departure
             txtDestination.text = singleRide.destination
-//            ivAvatar.setImageResource(singleRide.avatar!!)
-//            rbDriverRating.rating = singleRide.rating
             txtPrice.text = singleRide.price.toString() + " €"
             txtRideDateTextView.text = singleRide.date + " " + singleRide.time
         }
-
-
     }
 
     override fun getItemCount(): Int {
         return rideList.size
     }
-
-
 }

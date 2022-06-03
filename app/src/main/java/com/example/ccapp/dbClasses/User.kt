@@ -8,6 +8,7 @@ class User {
 //    var pictureUrl: String? = null
     var averageReview: Float = 0F
     var numerOfReviews: Int = 0
+    var rides: ArrayList<String> = ArrayList()
 
     constructor(){ }
 

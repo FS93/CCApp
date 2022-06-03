@@ -32,12 +32,14 @@ class RideDialogActivity : AppIntro2() {
 
         database =
             FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
-        myRef = database.getReference("ride").child("ride"+FirebaseAuth.getInstance().currentUser?.uid!!+ Calendar.getInstance().time.toString())
+        myRef = database.getReference("ride").child("ride"+FirebaseAuth.getInstance()
+            .currentUser?.uid!!+ Calendar.getInstance().time.toString())
 
-        mDbRef = FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/").getReference("user/" + FirebaseAuth.getInstance().currentUser?.uid!!)
+        mDbRef = FirebaseDatabase
+            .getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
+            .getReference("user/" + FirebaseAuth.getInstance().currentUser?.uid!!)
         mDbRef.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                Log.d("ride", snapshot.getValue(User::class.java)!!.name.toString())
                 ride.driverName = snapshot.getValue(User::class.java)!!.name.toString()
                 ride.driverSurname = snapshot.getValue(User::class.java)!!.surname.toString()
                 ride.driverReview = snapshot.getValue(User::class.java)!!.averageReview
@@ -107,30 +109,23 @@ class RideDialogActivity : AppIntro2() {
 
     fun setDeparture(departure: String){
         ride.departure = departure
-        Log.d("RIDEDIALOG", "YO WATTUP" + ride.toString())
     }
 
     fun setDestination(destination: String){
         ride.destination = destination
-        Log.d("RIDEDIALOG", "YO WATTUP" + ride.toString())
     }
 
     fun setPrice(price: Float){
         ride.price = price
-        Log.d("RIDEDIALOG", "YO WATTUP" + ride.toString())
     }
 
     fun setDateTime(date: String, time: String){
         ride.date = date
         ride.time = time
-        Log.d("RIDEDIALOG", "YO WATTUP" + ride.toString())
     }
 
     fun setSeats(seats: Int){
         ride.seats = seats
-        Log.d("RIDEDIALOG", "YO WATTUP" + ride.toString())
     }
-
-
 
 }

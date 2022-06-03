@@ -17,7 +17,6 @@ class ReviewAdapter(var reviews: List<Review>) : RecyclerView.Adapter<ReviewAdap
     }
 
     override fun onBindViewHolder(holder: ReviewViewHolder, position: Int) {
-
         holder.itemView.apply {
             txPersonName.text = reviews[position].personName
             ivAvatar.setImageResource(reviews[position].avatar)

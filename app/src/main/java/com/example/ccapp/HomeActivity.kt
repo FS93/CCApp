@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ccapp.dbClasses.Ride
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_home.*
 
@@ -55,8 +56,7 @@ class HomeActivity : AppCompatActivity() {
         btnSearch.setOnClickListener{
 //            val intent = Intent(this@HomeActivity, RideDialogActivity::class.java)
 //            intent.putExtra("dialog_type", "search")
-            //finish()
-
+//            finish()
             val intent = Intent(this@HomeActivity, SearchResultActivity::class.java)
             startActivity(intent)
         }
@@ -73,15 +73,6 @@ class HomeActivity : AppCompatActivity() {
             //finish()
             startActivity(intent)
         }
-
-
-//        upcomingRideList = ArrayList()
-//        upcomingRideList.add(Ride(driverName = "Paolo", departure = "Via Branze 43, 25128 Brescia", destination = "Arthur-Hoffmann-Str. 87, 04275 Leipzig", rating = 2.0F, avatar = R.drawable.avatar, price = 10, dateTime = "17.05.2022 15:00"))
-//        upcomingRideList.add(Ride(driverName = "SomeoneWithALongName", departure = "Via Branze 43, 25128 Brescia", destination = "Arhtur-Hoffmann-Str. 87, 04275 Leipzig", rating = 2.0F, avatar = R.drawable.avatar, price = 100, dateTime = "17.05.2022 15:00"))
-//        upcomingRideList.add(Ride(driverName = "Paolo", departure = "Via Branze 43, 25128 Brescia", destination = "Arthur-Hoffmann-Str. 87, 04275 Leipzig", rating = 2.0F, avatar = R.drawable.avatar, price = 10, dateTime = "17.05.2022 15:00"))
-//        upcomingRideList.add(Ride(driverName = "SomeoneWithALongName", departure = "Via Branze 43, 25128 Brescia", destination = "Arhtur-Hoffmann-Str. 87, 04275 Leipzig", rating = 2.0F, avatar = R.drawable.avatar, price = 100, dateTime = "17.05.2022 15:00"))
-
-        // Setup of the Recycler View Adapter
 
         adapter.onItemClick = { ride ->
             val intent = Intent(this@HomeActivity, RideRecordActivity::class.java)
