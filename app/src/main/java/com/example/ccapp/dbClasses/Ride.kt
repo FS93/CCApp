@@ -12,9 +12,7 @@ class Ride {
     var time: String? = null
     var seats: Int = 0
     var id: String? = null
-    var passengers: ArrayList<User> = ArrayList()
-
-    private lateinit var mDbRef: DatabaseReference
+    var passengers: ArrayList<String> = ArrayList()
 
     var driverName: String? = null
     var driverSurname: String? = null

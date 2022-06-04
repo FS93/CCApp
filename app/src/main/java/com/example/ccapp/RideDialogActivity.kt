@@ -17,8 +17,10 @@ class RideDialogActivity : AppIntro2() {
 
     private var ride: Ride = Ride()
     private lateinit var database: FirebaseDatabase
-    private lateinit var myRef : DatabaseReference
+    private lateinit var ridesRefDatabase : DatabaseReference
+    private lateinit var userRefDatabase : DatabaseReference
     private lateinit var mDbRef: DatabaseReference
+    private lateinit var user : User
 
     private var submittable = false
 
@@ -32,19 +34,29 @@ class RideDialogActivity : AppIntro2() {
 
         database =
             FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
-        myRef = database.getReference("ride").child("ride"+FirebaseAuth.getInstance()
-            .currentUser?.uid!!+ Calendar.getInstance().time.toString())
+        ridesRefDatabase = database.getReference("ride")
+        userRefDatabase = database.getReference("user").child(FirebaseAuth.getInstance().currentUser?.uid!!)
 
-        mDbRef = FirebaseDatabase
-            .getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
-            .getReference("user/" + FirebaseAuth.getInstance().currentUser?.uid!!)
-        mDbRef.addValueEventListener(object: ValueEventListener {
+        userRefDatabase.addValueEventListener(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot){
+                user = snapshot.getValue(User::class.java)!!
+            }
+
+            override fun onCancelled(error: DatabaseError){
+
+            }
+        })
+
+//        mDbRef = FirebaseDatabase
+//            .getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
+//            .getReference("user/" + FirebaseAuth.getInstance().currentUser?.uid!!)
+        userRefDatabase.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 ride.driverName = snapshot.getValue(User::class.java)!!.name.toString()
                 ride.driverSurname = snapshot.getValue(User::class.java)!!.surname.toString()
                 ride.driverReview = snapshot.getValue(User::class.java)!!.averageReview
-                ride.id = "ride" +FirebaseAuth.getInstance().currentUser?.uid!!+ Calendar.getInstance().time.toString()
                 submittable = true
+                Log.d("firebase", snapshot.getValue(User::class.java)!!.toString())
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -88,12 +100,38 @@ class RideDialogActivity : AppIntro2() {
     }
 
     fun saveRideToDatabase(){
-        if (submittable){
-            myRef.setValue(ride).addOnSuccessListener{
+//        if (submittable){
+//            ridesRefDatabase.setValue(ride).addOnSuccessListener{
+//                Toast.makeText(
+//                    baseContext, "SAVED TO DB",
+//                    Toast.LENGTH_LONG
+//                ).show()
+//            }
+//        } else {
+//            Toast.makeText(
+//                baseContext, "An error has occured",
+//                Toast.LENGTH_LONG
+//            ).show()
+//            val intent = Intent(this@RideDialogActivity, HomeActivity::class.java)
+//            finish()
+//            startActivity(intent)
+//        }
+
+        if (submittable) {
+            var rideRef = ridesRefDatabase.push()
+            var rideKey = rideRef.key
+            ride.id = rideKey
+            if (rideRef == null) {
+                Log.w("firebase", "Couldn't get push key for posts")
+                return
+            }
+            rideRef.setValue(ride).addOnSuccessListener {
                 Toast.makeText(
                     baseContext, "SAVED TO DB",
                     Toast.LENGTH_LONG
                 ).show()
+                user.ridesAsDriver.add(rideKey!!)
+                userRefDatabase.setValue(user)
             }
         } else {
             Toast.makeText(
