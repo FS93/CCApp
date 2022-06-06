@@ -39,13 +39,19 @@ class HomeActivity : AppCompatActivity() {
         rvUpcomingRides.layoutManager = LinearLayoutManager(this)
         rvUpcomingRides.adapter = adapter
 
-        mDbRef = FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/").getReference("ride")
-        mDbRef.addValueEventListener(object: ValueEventListener {
+        mDbRef =
+            FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
+                .getReference("ride")
+        mDbRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 upcomingRideList.clear()
-                for (postSnapshot in snapshot.children){
+                for (postSnapshot in snapshot.children) {
                     Log.d("ride", postSnapshot.getValue(Ride::class.java)!!.toString())
-                    upcomingRideList.add(postSnapshot.getValue(Ride::class.java)!!)
+                    if (postSnapshot.getValue(Ride::class.java)!!.passengers.contains(FirebaseAuth.getInstance().currentUser?.uid!!)
+                        || postSnapshot.getValue(Ride::class.java)!!.driverId == FirebaseAuth.getInstance().currentUser?.uid!!
+                    ) {
+                        upcomingRideList.add(postSnapshot.getValue(Ride::class.java)!!)
+                    }
                 }
                 adapter.notifyDataSetChanged()
             }
@@ -54,7 +60,7 @@ class HomeActivity : AppCompatActivity() {
             }
         })
 
-        btnSearch.setOnClickListener{
+        btnSearch.setOnClickListener {
 //            val intent = Intent(this@HomeActivity, RideDialogActivity::class.java)
 //            intent.putExtra("dialog_type", "search")
 //            finish()
@@ -62,14 +68,14 @@ class HomeActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        btnOffer.setOnClickListener{
+        btnOffer.setOnClickListener {
             val intent = Intent(this@HomeActivity, RideDialogActivity::class.java)
             intent.putExtra("dialog_type", "offer")
             //finish()
             startActivity(intent)
         }
 
-        btnReview.setOnClickListener{
+        btnReview.setOnClickListener {
             val intent = Intent(this@HomeActivity, OpenReviewsActivity::class.java)
             //finish()
             startActivity(intent)
@@ -89,12 +95,12 @@ class HomeActivity : AppCompatActivity() {
 
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.home_menu,menu)
+        menuInflater.inflate(R.menu.home_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId){
+        when (item.itemId) {
             R.id.profile -> {
                 val intent = Intent(this@HomeActivity, ProfileActivity::class.java)
                 //finish()

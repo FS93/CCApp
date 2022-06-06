@@ -63,7 +63,7 @@ class RideRecordActivity : AppCompatActivity() {
         mDbRef.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 passengerList.clear()
-                Log.d("ride", snapshot.toString())
+                adapter.notifyDataSetChanged()
                 ride = snapshot.getValue(Ride::class.java)!!
                 departure.text = ride.departure
                 destination.text = ride.destination

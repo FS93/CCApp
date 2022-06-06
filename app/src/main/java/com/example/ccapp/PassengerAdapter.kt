@@ -52,24 +52,24 @@ class PassengerAdapter(var passengers: List<Passenger>) :
 
         val cb = holder.itemView.passengerCheckbox
 
-        cb.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
-            run {
-                // TODO: passengers shall only be able to choose ONE seat, work with toggleSeatChoosen
-                if (cb.isChecked) {
-                    if (type == userType.PASSENGER && !toggleSeatChoosen) {
-                        cb.text = "Take Seat"
-                    } else {
-                        cb.text = "Undo removal"
-                    }
-                } else {
-                    if (type == userType.DRIVER) {
-                        cb.text = "Remove Passenger"
-                    } else {
-                        cb.text = "Undo choice"
-                    }
-                }
-            }
-        })
+//        cb.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
+//            run {
+//                // TODO: passengers shall only be able to choose ONE seat, work with toggleSeatChoosen
+//                if (cb.isChecked) {
+//                    if (type == userType.PASSENGER && !toggleSeatChoosen) {
+//                        cb.text = "Take Seat"
+//                    } else {
+//                        cb.text = "Undo removal"
+//                    }
+//                } else {
+//                    if (type == userType.DRIVER) {
+//                        cb.text = "Remove Passenger"
+//                    } else {
+//                        cb.text = "Undo choice"
+//                    }
+//                }
+//            }
+//        })
 
     }
 

@@ -10,6 +10,7 @@ import com.example.ccapp.dbClasses.Ride
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_home.*
 
@@ -40,7 +41,11 @@ class SearchResultActivity : AppCompatActivity(), OnMapReadyCallback {
                 rideList.clear()
                 for (postSnapshot in snapshot.children){
                     Log.d("ride", postSnapshot.getValue(Ride::class.java)!!.toString())
-                    rideList.add(postSnapshot.getValue(Ride::class.java)!!)
+                    if (!(postSnapshot.getValue(Ride::class.java)!!.passengers.contains(FirebaseAuth.getInstance().currentUser?.uid!!))
+                        && !(postSnapshot.getValue(Ride::class.java)!!.driverId == FirebaseAuth.getInstance().currentUser?.uid!!)
+                    ) {
+                        rideList.add(postSnapshot.getValue(Ride::class.java)!!)
+                    }
                 }
                 adapter.notifyDataSetChanged()
             }
@@ -52,6 +57,11 @@ class SearchResultActivity : AppCompatActivity(), OnMapReadyCallback {
         adapter.onItemClick = { ride ->
             val intent = Intent(this@SearchResultActivity, RideRecordActivity::class.java)
             intent.putExtra("ride_id", ride.id)
+            if (ride.driverId == FirebaseAuth.getInstance().currentUser?.uid!!) {
+                intent.putExtra("user_type", "driver")
+            } else {
+                intent.putExtra("user_type", "passenger")
+            }
             startActivity(intent)
         }
     }
