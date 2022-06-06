@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.widget.ImageButton
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ccapp.dbClasses.Ride
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.database.DatabaseReference
@@ -77,6 +78,11 @@ class HomeActivity : AppCompatActivity() {
         adapter.onItemClick = { ride ->
             val intent = Intent(this@HomeActivity, RideRecordActivity::class.java)
             intent.putExtra("ride_id", ride.id)
+            if (ride.driverId == FirebaseAuth.getInstance().currentUser?.uid!!) {
+                intent.putExtra("user_type", "driver")
+            } else {
+                intent.putExtra("user_type", "passenger")
+            }
             startActivity(intent)
         }
     }
