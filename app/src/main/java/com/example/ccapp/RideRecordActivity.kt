@@ -21,23 +21,32 @@ class RideRecordActivity : AppCompatActivity() {
     private lateinit var adapter : PassengerAdapter
     private lateinit var passengerList : MutableList<Passenger>
     private lateinit var btnAction : Button
-    private var userType : String? = null
+
+
+    private lateinit var userType : String
+    private lateinit var id: String
+
+    private lateinit var departure: TextView
+    private lateinit var destination: TextView
+    private lateinit var driver: TextView
+    private lateinit var dateTime: TextView
+    private lateinit var price: TextView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ride_record)
 
-        val intent: Intent = getIntent()
-        val id = intent.getStringExtra("ride_id")
-        userType = intent.getStringExtra("user_type")
+        id = intent.getStringExtra("ride_id").toString()
+        userType = intent.getStringExtra("user_type").toString()
         var user: User
 
 
-        val departure = findViewById<TextView>(R.id.txtRideRecordDeparture)
-        val destination = findViewById<TextView>(R.id.txtRideRecordDestination)
-        val driver = findViewById<TextView>(R.id.txtRideRecordDriverName)
-        val dateTime = findViewById<TextView>(R.id.txtRideRecordDateTime)
-        val price = findViewById<TextView>(R.id.txtRideRecordPrice)
+        departure = findViewById<TextView>(R.id.txtRideRecordDeparture)
+        destination = findViewById<TextView>(R.id.txtRideRecordDestination)
+        driver = findViewById<TextView>(R.id.txtRideRecordDriverName)
+        dateTime = findViewById<TextView>(R.id.txtRideRecordDateTime)
+        price = findViewById<TextView>(R.id.txtRideRecordPrice)
 
         btnAction = findViewById(R.id.btn_action)
 
@@ -64,6 +73,7 @@ class RideRecordActivity : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 passengerList.clear()
                 adapter.notifyDataSetChanged()
+
                 ride = snapshot.getValue(Ride::class.java)!!
                 departure.text = ride.departure
                 destination.text = ride.destination
@@ -75,69 +85,85 @@ class RideRecordActivity : AppCompatActivity() {
                     var userRef = FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
                         .getReference("user").child(FirebaseAuth.getInstance().currentUser?.uid!!)
 
-                    when(userType){
-                        null -> {
-                            Toast.makeText(
-                                baseContext, "An error has occured",
-                                Toast.LENGTH_LONG
-                            ).show()
-                            val intent = Intent(this@RideRecordActivity, HomeActivity::class.java)
+                    if (intent.getBooleanExtra("review", false)){
+                        if(userType == null){
+                            errorGoHome()
+                        } else {
+                            val intent = Intent(this@RideRecordActivity, ReviewActivity::class.java)
+                            intent.putExtra("driver_type", userType)
+                            intent.putExtra("ride_id", ride.id)
                             finish()
                             startActivity(intent)
                         }
-                        "driver" -> {
-                            Toast.makeText(baseContext, "new activity opens", Toast.LENGTH_LONG).show()
-                        }
-                        "passenger" -> { //unjoin
-                            if(ride.passengers.contains(FirebaseAuth.getInstance().currentUser?.uid!!)){
-                                userRef.addListenerForSingleValueEvent(object: ValueEventListener{
-                                    override fun onDataChange(snapshot: DataSnapshot){
-                                        user = snapshot.getValue(User::class.java)!!
-                                        user.ridesAsPassenger.remove(id)
-                                        userRef.setValue(user)
-                                        ride.passengers.remove(FirebaseAuth.getInstance().currentUser?.uid!!)
-                                        mDbRef.setValue(ride)
-                                    }
-
-                                    override fun onCancelled(error: DatabaseError){
-
-                                    }
-                                })
-                            } else { //join
-                                userRef.addListenerForSingleValueEvent(object: ValueEventListener{
-                                    override fun onDataChange(snapshot: DataSnapshot){
-                                        user = snapshot.getValue(User::class.java)!!
-                                        if (!user.ridesAsPassenger.contains(id)){
-                                            user.ridesAsPassenger.add(id)
+                    } else {
+                        when(userType){
+                            null -> {
+                                errorGoHome()
+                            }
+                            "driver" -> {
+                                Toast.makeText(baseContext, "new activity opens", Toast.LENGTH_LONG).show()
+                            }
+                            "passenger" -> { //unjoin
+                                if(ride.passengers.contains(FirebaseAuth.getInstance().currentUser?.uid!!)){
+                                    userRef.addListenerForSingleValueEvent(object: ValueEventListener{
+                                        override fun onDataChange(snapshot: DataSnapshot){
+                                            user = snapshot.getValue(User::class.java)!!
+                                            user.ridesAsPassenger.remove(id)
                                             userRef.setValue(user)
-                                        }
-                                        if(!ride.passengers.contains((FirebaseAuth.getInstance().currentUser?.uid!!))){
-                                            ride.passengers.add(FirebaseAuth.getInstance().currentUser?.uid!!)
+                                            ride.passengers.remove(FirebaseAuth.getInstance().currentUser?.uid!!)
                                             mDbRef.setValue(ride)
                                         }
-                                    }
 
-                                    override fun onCancelled(error: DatabaseError){
+                                        override fun onCancelled(error: DatabaseError){}
+                                    })
+                                } else { //join
+                                    userRef.addListenerForSingleValueEvent(object: ValueEventListener{
+                                        override fun onDataChange(snapshot: DataSnapshot){
+                                            user = snapshot.getValue(User::class.java)!!
+                                            if (!user.ridesAsPassenger.contains(id)){
+                                                user.ridesAsPassenger.add(id)
+                                                userRef.setValue(user)
+                                            }
+                                            if(!ride.passengers.contains((FirebaseAuth.getInstance().currentUser?.uid!!))){
+                                                ride.passengers.add(FirebaseAuth.getInstance().currentUser?.uid!!)
+                                                mDbRef.setValue(ride)
+                                            }
+                                        }
 
-                                    }
-                                })
+                                        override fun onCancelled(error: DatabaseError){}
+                                    })
+                                }
                             }
                         }
                     }
 
+                }
 
+                if (intent.getBooleanExtra("review", false)){
+                    btnAction.text = "Review"
+                } else {
+                    when (userType) {
+                        null -> {
+                            errorGoHome()
+                        }
+                        "driver" -> {
+                            btnAction.text = "Manage"
+                        }
+                        "passenger" -> {
+                            if (ride.passengers.contains(FirebaseAuth.getInstance().currentUser?.uid!!)) {
+                                btnAction.text = "Unjoin"
+                            } else {
+                                btnAction.text = "Join"
+                            }
+                        }
+                    }
                 }
 
 
 
+
                 if (ride.seats < ride.passengers.size) {
-                    Toast.makeText(
-                        baseContext, "An error has occured",
-                        Toast.LENGTH_LONG
-                    ).show()
-                    val intent = Intent(this@RideRecordActivity, HomeActivity::class.java)
-                    finish()
-                    startActivity(intent)
+                    errorGoHome()
                 }
 
                 var userRef = FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/").getReference("user")
@@ -155,28 +181,6 @@ class RideRecordActivity : AppCompatActivity() {
                         }
                     })
                 }
-
-                when(userType){
-                    null -> {
-                        Toast.makeText(
-                            baseContext, "An error has occured",
-                            Toast.LENGTH_LONG
-                        ).show()
-                        val intent = Intent(this@RideRecordActivity, HomeActivity::class.java)
-                        finish()
-                        startActivity(intent)
-                    }
-                    "driver" -> {
-                        btnAction.text = "Manage"
-                    }
-                    "passenger" -> {
-                        if(ride.passengers.contains(FirebaseAuth.getInstance().currentUser?.uid!!)){
-                            btnAction.text = "Unjoin"
-                        } else {
-                            btnAction.text = "Join"
-                        }
-                    }
-                }
             }
 
 
@@ -189,6 +193,16 @@ class RideRecordActivity : AppCompatActivity() {
 
 
 
+    }
+
+    fun errorGoHome(){
+        Toast.makeText(
+            baseContext, "An error has occurred",
+            Toast.LENGTH_LONG
+        ).show()
+        val intent = Intent(this@RideRecordActivity, HomeActivity::class.java)
+        finish()
+        startActivity(intent)
     }
 
 }
