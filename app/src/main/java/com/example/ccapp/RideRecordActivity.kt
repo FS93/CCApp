@@ -41,7 +41,6 @@ class RideRecordActivity : AppCompatActivity() {
         userType = intent.getStringExtra("user_type").toString()
         var user: User
 
-
         departure = findViewById<TextView>(R.id.txtRideRecordDeparture)
         destination = findViewById<TextView>(R.id.txtRideRecordDestination)
         driver = findViewById<TextView>(R.id.txtRideRecordDriverName)
@@ -90,7 +89,7 @@ class RideRecordActivity : AppCompatActivity() {
                             errorGoHome()
                         } else {
                             val intent = Intent(this@RideRecordActivity, ReviewActivity::class.java)
-                            intent.putExtra("driver_type", userType)
+                            intent.putExtra("user_type", userType)
                             intent.putExtra("ride_id", ride.id)
                             finish()
                             startActivity(intent)

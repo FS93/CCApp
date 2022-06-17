@@ -10,6 +10,7 @@ class User {
     var numerOfReviews: Int = 0
     var ridesAsDriver: ArrayList<String> = ArrayList()
     var ridesAsPassenger: ArrayList<String> = ArrayList()
+    var reviewedRides: ArrayList<String> = ArrayList()
 
     constructor(){ }
 
