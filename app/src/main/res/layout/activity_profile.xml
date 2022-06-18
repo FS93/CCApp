@@ -45,7 +45,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:editable="false"
             android:inputType="none"
             android:text="Rossi" />
     </LinearLayout>
@@ -75,7 +74,6 @@
             android:layout_weight="1"
             android:ems="10"
             android:inputType="phone"
-            android:editable="false"
             android:text="1234567890" />
     </LinearLayout>
 

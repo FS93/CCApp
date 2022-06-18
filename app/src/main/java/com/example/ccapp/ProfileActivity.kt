@@ -4,8 +4,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
+import android.widget.*
+import com.example.ccapp.dbClasses.User
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class ProfileActivity : AppCompatActivity() {
 
@@ -13,6 +18,8 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var edt_first_name: EditText
     private lateinit var edt_last_name: EditText
     private lateinit var edt_phone: EditText
+    private lateinit var rtBar: RatingBar
+    private lateinit var tx_review_number: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,17 +28,62 @@ class ProfileActivity : AppCompatActivity() {
         edt_first_name = findViewById(R.id.edt_first_name)
         edt_last_name = findViewById(R.id.edt_last_name)
         edt_phone = findViewById(R.id.phone)
+        rtBar = findViewById(R.id.ratingBar)
+        tx_review_number = findViewById(R.id.tx_ratings_number)
+
+
+        var userRef =
+            FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
+                .getReference("user")
+        userRef.child(FirebaseAuth.getInstance().currentUser?.uid!!)
+            .addListenerForSingleValueEvent(object: ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    var user = snapshot.getValue(User::class.java)!!
+                    edt_first_name.setText(user.name)
+                    edt_last_name.setText(user.surname)
+                    edt_phone.setText(user.email)
+                    rtBar.rating = user.averageReview
+                    tx_review_number.text = "Reviews: " + user.numerOfReviews.toString()
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+            })
 
         layout = findViewById(R.id.button_layout)
         val editButton = Button(this)
-        editButton.text = "Edit"
+        editButton.text = "Save"
         layout.addView(editButton)
 
         editButton.setOnClickListener {
             // make content editable
             //TODO("make content of text views editable")
+            userRef.child(FirebaseAuth.getInstance().currentUser?.uid!!)
+                .addListenerForSingleValueEvent(object: ValueEventListener{
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        var user = snapshot.getValue(User::class.java)!!
+                        user.name = edt_first_name.text.toString()
+                        user.surname = edt_last_name.text.toString()
+                        user.email = edt_phone.text.toString()
+                        userRef.child(FirebaseAuth.getInstance().currentUser?.uid!!).setValue(user)
+                    }
 
-            layout.removeView(editButton)
+                    override fun onCancelled(error: DatabaseError) {
+                        TODO("Not yet implemented")
+                    }
+                })
+
+
+            val text = "Profile updated!"
+            val duration = Toast.LENGTH_SHORT
+
+            val toast = Toast.makeText(applicationContext, text, duration)
+            toast.show()
+
+            finish()
+
+//            layout.removeView(editButton)
         }
     }
 }
