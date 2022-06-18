@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ccapp.dbClasses.Ride
+import com.example.ccapp.dbClasses.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_open_reviews.*
@@ -29,21 +30,42 @@ class OpenReviewsActivity : AppCompatActivity() {
         mDbRef =
             FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
                 .getReference("ride")
-        mDbRef.addValueEventListener(object : ValueEventListener {
+
+
+        var userRef =
+            FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
+                .getReference("user").child(FirebaseAuth.getInstance().currentUser?.uid!!)
+
+        userRef.addValueEventListener(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                pastRidesList.clear()
-                for (postSnapshot in snapshot.children) {
-                    Log.d("ride", postSnapshot.getValue(Ride::class.java)!!.toString())
-                    if (postSnapshot.getValue(Ride::class.java)!!.passengers.contains(FirebaseAuth.getInstance().currentUser?.uid!!)
-                        || postSnapshot.getValue(Ride::class.java)!!.driverId == FirebaseAuth.getInstance().currentUser?.uid!!
-                    ) {
-                        pastRidesList.add(postSnapshot.getValue(Ride::class.java)!!)
+                var userReviewedRides = snapshot.getValue(User::class.java)!!.reviewedRides
+                Log.d("reviews", userReviewedRides.toString())
+
+                mDbRef.addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        pastRidesList.clear()
+                        for (postSnapshot in snapshot.children) {
+                            Log.d("reviews", postSnapshot.getValue(Ride::class.java)!!.toString())
+                            var ride = postSnapshot.getValue(Ride::class.java)!!
+                            Log.d("reviews", ride.id!!)
+                            if (ride.passengers.contains(FirebaseAuth.getInstance().currentUser?.uid!!) || ride.driverId == FirebaseAuth.getInstance().currentUser?.uid!!
+                            ) {
+                                if (!userReviewedRides.contains(ride.id)) pastRidesList.add(postSnapshot.getValue(Ride::class.java)!!)
+                            }
+                        }
+                        rideAdapter.notifyDataSetChanged()
                     }
-                }
-                rideAdapter.notifyDataSetChanged()
+
+                    override fun onCancelled(error: DatabaseError) {
+                    }
+                })
+
+
+
             }
 
             override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
             }
         })
 

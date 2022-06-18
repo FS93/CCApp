@@ -14,6 +14,7 @@ import com.example.ccapp.dbClasses.Passenger
 import com.example.ccapp.dbClasses.Review
 import com.example.ccapp.dbClasses.Ride
 import com.example.ccapp.dbClasses.User
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_review.*
 
@@ -90,7 +91,6 @@ class ReviewActivity : AppCompatActivity() {
                         }
                     }
                     "passenger" -> {
-                        Log.d("driver", "We are in boys")
                         userRef.child(ride.driverId!!)
                             .addListenerForSingleValueEvent(object : ValueEventListener {
                                 override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -123,15 +123,6 @@ class ReviewActivity : AppCompatActivity() {
             rvReviews.isInvisible = true
             btnSaveReviews.isInvisible = true
 
-
-
-//            for (user in userList){
-//                var i = userList.indexOf(user)
-//                var view = rvReviews.layoutManager!!.findViewByPosition(i)
-//                var stars = view!!.findViewById<RatingBar>(R.id.rbReview).rating
-//                Log.d("Star", stars.toString())
-//            }
-
             for (user in userList){
                 userRef.child(user.userId)
                     .addListenerForSingleValueEvent(object: ValueEventListener{
@@ -150,6 +141,19 @@ class ReviewActivity : AppCompatActivity() {
                         }
                     })
             }
+
+            userRef.child(FirebaseAuth.getInstance().currentUser?.uid!!).addListenerForSingleValueEvent(object: ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    var currentUser = snapshot.getValue(User::class.java)!!
+                    currentUser.reviewedRides.add(rideId)
+                    userRef.child(FirebaseAuth.getInstance().currentUser?.uid!!).setValue(currentUser)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+
+            })
 
             Toast.makeText(this, "Thank you for your reviews :)", Toast.LENGTH_LONG).show()
             Thread.sleep(1000)
