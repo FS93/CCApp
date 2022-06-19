@@ -69,6 +69,15 @@ class ReviewActivity : AppCompatActivity() {
                         startActivity(intent)
                     }
                     "driver" -> {
+                        if (ride.passengers.isEmpty()){
+                            Toast.makeText(
+                                baseContext, "Impossible to leaeve a reviews with no passengers",
+                                Toast.LENGTH_LONG
+                            ).show()
+                            val intent = Intent(this@ReviewActivity, HomeActivity::class.java)
+                            finish()
+                            startActivity(intent)
+                        }
                         for (pas in ride.passengers) {
                             userRef.child(pas)
                                 .addListenerForSingleValueEvent(object : ValueEventListener {
