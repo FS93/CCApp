@@ -71,7 +71,7 @@ class ReviewActivity : AppCompatActivity() {
                     "driver" -> {
                         if (ride.passengers.isEmpty()){
                             Toast.makeText(
-                                baseContext, "Impossible to leaeve a reviews with no passengers",
+                                baseContext, "Impossible to leave a review with no passengers",
                                 Toast.LENGTH_LONG
                             ).show()
                             val intent = Intent(this@ReviewActivity, HomeActivity::class.java)
