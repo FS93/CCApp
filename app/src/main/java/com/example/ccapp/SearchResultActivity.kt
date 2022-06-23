@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.EditText
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ccapp.dbClasses.Ride
@@ -14,20 +16,30 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_home.*
 
-class SearchResultActivity : AppCompatActivity(), OnMapReadyCallback {
+class SearchResultActivity : AppCompatActivity() {
     private lateinit var resultList: RecyclerView
     private lateinit var adapter: RideAdapter
     private lateinit var rideList: ArrayList<Ride>
-    private lateinit var mapView: MapView
     private lateinit var mDbRef: DatabaseReference
+    private lateinit var edtDeparture: EditText
+    private lateinit var edtDestination: EditText
+
+    private lateinit var usrId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_result)
 
-//        mapView = findViewById(R.id.mapView)
-//        mapView.onCreate(savedInstanceState)
-//        mapView.getMapAsync(this)
+        edtDeparture = findViewById(R.id.edt_departure_search)
+        edtDestination = findViewById(R.id.edt_destination_search)
+
+        edtDeparture.addTextChangedListener{
+            updateSearch()
+        }
+
+        edtDestination.addTextChangedListener(){
+            updateSearch()
+        }
 
         resultList = findViewById(R.id.result_list)
         rideList = ArrayList()
@@ -36,23 +48,8 @@ class SearchResultActivity : AppCompatActivity(), OnMapReadyCallback {
         resultList.adapter = adapter
 
         mDbRef = FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/").getReference("ride")
-        mDbRef.addValueEventListener(object: ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                rideList.clear()
-                for (postSnapshot in snapshot.children){
-                    Log.d("ride", postSnapshot.getValue(Ride::class.java)!!.toString())
-                    if (!(postSnapshot.getValue(Ride::class.java)!!.passengers.contains(FirebaseAuth.getInstance().currentUser?.uid!!))
-                        && !(postSnapshot.getValue(Ride::class.java)!!.driverId == FirebaseAuth.getInstance().currentUser?.uid!!)
-                    ) {
-                        rideList.add(postSnapshot.getValue(Ride::class.java)!!)
-                    }
-                }
-                adapter.notifyDataSetChanged()
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-            }
-        })
+        usrId = FirebaseAuth.getInstance().currentUser?.uid!!
+        updateSearch()
 
         adapter.onItemClick = { ride ->
             val intent = Intent(this@SearchResultActivity, RideRecordActivity::class.java)
@@ -66,6 +63,36 @@ class SearchResultActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    override fun onMapReady(p0: GoogleMap) {
+    fun updateSearch(){
+        var departure = edtDeparture.text.split(" ").toTypedArray()
+        var destination = edtDestination.text.split(" ").toTypedArray()
+        for (s in departure){
+            Log.d("search", "Departure: " + s)
+        }
+        for (s in destination) Log.d("search", "Destination: " + s)
+
+
+        mDbRef.addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                rideList.clear()
+                for (postSnapshot in snapshot.children){
+                    var ride = postSnapshot.getValue(Ride::class.java)!!
+                    if (!(ride.passengers.contains(usrId)) && ride.driverId != usrId)
+                        if(checkString(ride.departure, departure) && checkString(ride.destination, destination)) rideList.add(ride)
+                }
+                adapter.notifyDataSetChanged()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+    }
+
+    fun checkString(text: String?, words: Array<String>?): Boolean{
+        if(text.isNullOrBlank()) return true
+        if(words.isNullOrEmpty()) return true
+        if(text == "") return true
+        for (s in words) if (text.lowercase().contains(s.lowercase())) return true
+        return false
     }
 }

@@ -141,7 +141,7 @@ class ReviewActivity : AppCompatActivity() {
                             var stars = view!!.findViewById<RatingBar>(R.id.rbReview).rating
 
                             var u = snapshot.getValue(User::class.java)!!
-                            u.averageReview = u.averageReview * u.numerOfReviews + stars
+                            u.averageReview = (u.averageReview * u.numerOfReviews + stars) /( u.numerOfReviews -1)
                             u.numerOfReviews += 1
                             userRef.child(user.userId).setValue(u)
                         }
