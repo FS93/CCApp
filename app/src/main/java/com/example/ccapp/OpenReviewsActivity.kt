@@ -1,6 +1,7 @@
 package com.example.ccapp
 
 import android.content.Intent
+import android.icu.text.SimpleDateFormat
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -45,11 +46,16 @@ class OpenReviewsActivity : AppCompatActivity() {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         pastRidesList.clear()
                         for (postSnapshot in snapshot.children) {
-                            Log.d("reviews", postSnapshot.getValue(Ride::class.java)!!.toString())
                             var ride = postSnapshot.getValue(Ride::class.java)!!
-                            Log.d("reviews", ride.id!!)
-                            if (ride.passengers.contains(FirebaseAuth.getInstance().currentUser?.uid!!) || ride.driverId == FirebaseAuth.getInstance().currentUser?.uid!!
-                            ) {
+                            var userId = FirebaseAuth.getInstance().currentUser?.uid!!
+                            var dFormat = SimpleDateFormat("dd/MM/yyyy")
+                            var date = ride.date
+                            var formattedDate = dFormat.parse(date)
+                            var dateOk = false
+                            if (System.currentTimeMillis() > formattedDate.time + 86400000){
+                                dateOk = true
+                            }
+                            if (( ride.passengers.contains(userId) || ride.driverId == userId ) && dateOk) {
                                 if (!userReviewedRides.contains(ride.id)) pastRidesList.add(postSnapshot.getValue(Ride::class.java)!!)
                             }
                         }

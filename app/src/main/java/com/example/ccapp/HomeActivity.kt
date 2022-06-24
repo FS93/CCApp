@@ -1,6 +1,7 @@
 package com.example.ccapp
 
 import android.content.Intent
+import android.icu.text.SimpleDateFormat
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -47,9 +48,16 @@ class HomeActivity : AppCompatActivity() {
                 upcomingRideList.clear()
                 for (postSnapshot in snapshot.children) {
                     Log.d("ride", postSnapshot.getValue(Ride::class.java)!!.toString())
-                    if (postSnapshot.getValue(Ride::class.java)!!.passengers.contains(FirebaseAuth.getInstance().currentUser?.uid!!)
-                        || postSnapshot.getValue(Ride::class.java)!!.driverId == FirebaseAuth.getInstance().currentUser?.uid!!
-                    ) {
+                    var ride = postSnapshot.getValue(Ride::class.java)!!
+                    var dFormat = SimpleDateFormat("dd/MM/yyyy")
+                    var date = ride.date
+                    var formattedDate = dFormat.parse(date)
+                    var dateOk = false
+                    if (System.currentTimeMillis() < formattedDate.time + 86400000){
+                        dateOk = true
+                    }
+                    var userId = FirebaseAuth.getInstance().currentUser?.uid!!
+                    if ((ride.passengers.contains(userId) || ride.driverId == userId ) && dateOk) {
                         upcomingRideList.add(postSnapshot.getValue(Ride::class.java)!!)
                     }
                 }
