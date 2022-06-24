@@ -1,6 +1,9 @@
 package com.example.ccapp
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.ColorFilter
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
@@ -116,21 +119,25 @@ class RideRecordActivity : AppCompatActivity() {
                                         override fun onCancelled(error: DatabaseError){}
                                     })
                                 } else { //join
-                                    userRef.addListenerForSingleValueEvent(object: ValueEventListener{
-                                        override fun onDataChange(snapshot: DataSnapshot){
-                                            user = snapshot.getValue(User::class.java)!!
-                                            if (!user.ridesAsPassenger.contains(id)){
-                                                user.ridesAsPassenger.add(id)
-                                                userRef.setValue(user)
+                                    if (ride.passengers.size >= ride.seats){
+                                        Toast.makeText(baseContext, "No seats available!", Toast.LENGTH_LONG).show()
+                                    } else {
+                                        userRef.addListenerForSingleValueEvent(object: ValueEventListener{
+                                            override fun onDataChange(snapshot: DataSnapshot){
+                                                user = snapshot.getValue(User::class.java)!!
+                                                if (!user.ridesAsPassenger.contains(id)){
+                                                    user.ridesAsPassenger.add(id)
+                                                    userRef.setValue(user)
+                                                }
+                                                if(!ride.passengers.contains((FirebaseAuth.getInstance().currentUser?.uid!!))){
+                                                    ride.passengers.add(FirebaseAuth.getInstance().currentUser?.uid!!)
+                                                    mDbRef.setValue(ride)
+                                                }
                                             }
-                                            if(!ride.passengers.contains((FirebaseAuth.getInstance().currentUser?.uid!!))){
-                                                ride.passengers.add(FirebaseAuth.getInstance().currentUser?.uid!!)
-                                                mDbRef.setValue(ride)
-                                            }
-                                        }
 
-                                        override fun onCancelled(error: DatabaseError){}
-                                    })
+                                            override fun onCancelled(error: DatabaseError){}
+                                        })
+                                    }
                                 }
                             }
                         }
@@ -152,6 +159,12 @@ class RideRecordActivity : AppCompatActivity() {
                             if (ride.passengers.contains(FirebaseAuth.getInstance().currentUser?.uid!!)) {
                                 btnAction.text = "Unjoin"
                             } else {
+                                if (ride.passengers.size >= ride.seats){
+                                    btnAction.isEnabled = false
+                                    Toast.makeText(baseContext, "Hidden", Toast.LENGTH_LONG).show()
+                                } else {
+                                    btnAction.isEnabled = true
+                                }
                                 btnAction.text = "Join"
                             }
                         }
