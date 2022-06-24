@@ -18,6 +18,7 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var edt_first_name: EditText
     private lateinit var edt_last_name: EditText
     private lateinit var edt_phone: EditText
+    private lateinit var edt_email: EditText
     private lateinit var rtBar: RatingBar
     private lateinit var tx_review_number: TextView
 
@@ -28,6 +29,7 @@ class ProfileActivity : AppCompatActivity() {
         edt_first_name = findViewById(R.id.edt_first_name)
         edt_last_name = findViewById(R.id.edt_last_name)
         edt_phone = findViewById(R.id.phone)
+        edt_email = findViewById(R.id.email)
         rtBar = findViewById(R.id.ratingBar)
         tx_review_number = findViewById(R.id.tx_ratings_number)
 
@@ -41,7 +43,8 @@ class ProfileActivity : AppCompatActivity() {
                     var user = snapshot.getValue(User::class.java)!!
                     edt_first_name.setText(user.name)
                     edt_last_name.setText(user.surname)
-                    edt_phone.setText(user.email)
+                    edt_phone.setText(user.telephoneNumber)
+                    edt_email.setText(user.email)
                     rtBar.rating = user.averageReview
                     tx_review_number.text = "Reviews: " + user.numerOfReviews.toString()
                 }
@@ -65,7 +68,8 @@ class ProfileActivity : AppCompatActivity() {
                         var user = snapshot.getValue(User::class.java)!!
                         user.name = edt_first_name.text.toString()
                         user.surname = edt_last_name.text.toString()
-                        user.email = edt_phone.text.toString()
+                        user.email = edt_email .text.toString()
+                        user.telephoneNumber = edt_phone.text.toString()
                         userRef.child(FirebaseAuth.getInstance().currentUser?.uid!!).setValue(user)
                     }
 

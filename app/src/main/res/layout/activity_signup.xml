@@ -1,77 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SignupActivity">
-
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="30dp"
-        android:gravity="center"
-        android:text="Please enter your data \n and upload a picture of yourself :)"
-        android:textColor="@color/black"
-        android:textSize="20sp" />
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:gravity="center"
+            android:text="Please enter your data \n and upload a picture of yourself :)"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
 
 
-    <ImageView
-        android:id="@+id/ivProfilePicture"
-        android:layout_width="400px"
-        android:layout_height="400px"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        android:src="@drawable/avatar" />
+        <ImageView
+            android:id="@+id/ivProfilePicture"
+            android:layout_width="400px"
+            android:layout_height="400px"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+            android:src="@drawable/avatar" />
 
-    <EditText
-        android:id="@+id/edt_name"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@id/ivProfilePicture"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="20dp"
-        android:hint="Name" />
+        <EditText
+            android:id="@+id/edt_name"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/ivProfilePicture"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="20dp"
+            android:hint="Name" />
 
-    <EditText
-        android:id="@+id/edt_surname"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@id/edt_name"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
-        android:hint="Surname" />
-
-    <EditText
-        android:id="@+id/edt_email"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@id/edt_surname"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
-        android:hint="Email" />
+        <EditText
+            android:id="@+id/edt_surname"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/edt_name"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:hint="Surname" />
 
 
-    <EditText
-        android:id="@+id/edt_password"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@id/edt_email"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
-        android:hint="Password" />
+        <EditText
+            android:id="@+id/edt_telephone"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/edt_surname"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:hint="Telephone" />
 
-    <Button
-        android:id="@+id/btnSignUp"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/edt_password"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:text="Sign up" />
+        <EditText
+            android:id="@+id/edt_email"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/edt_telephone"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:hint="Email" />
 
-</RelativeLayout>
+        <EditText
+            android:id="@+id/edt_password"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/edt_email"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:hint="Password" />
+
+        <Button
+            android:id="@+id/btnSignUp"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edt_password"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:text="Sign up" />
+
+    </RelativeLayout>
+</ScrollView>

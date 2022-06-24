@@ -5,6 +5,7 @@ class User {
     var name: String? = null
     var surname: String? = null
     var email: String? = null
+    var telephoneNumber: String? = null
 //    var pictureUrl: String? = null
     var averageReview: Float = 0F
     var numerOfReviews: Int = 0
@@ -19,6 +20,7 @@ class User {
         userID: String?,
         name: String?,
         surname: String?,
+        telephone: String?,
         email: String?,
 //        pictureUrl: String?,
         averageReview: Float,
@@ -28,6 +30,7 @@ class User {
         this.name = name
         this.surname = surname
         this.email = email
+        this.telephoneNumber = telephone
 //        this.pictureUrl = pictureUrl
         this.averageReview = averageReview
         this.numerOfReviews = numerOfReviews
