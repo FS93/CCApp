@@ -77,6 +77,9 @@ class SearchResultActivity : AppCompatActivity() {
                 rideList.clear()
                 for (postSnapshot in snapshot.children){
                     var ride = postSnapshot.getValue(Ride::class.java)!!
+                    if (ride.passengers.size >= ride.seats){
+                        continue
+                    }
                     if (!(ride.passengers.contains(usrId)) && ride.driverId != usrId)
                         if(checkString(ride.departure, departure) && checkString(ride.destination, destination)) rideList.add(ride)
                 }
