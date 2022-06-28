@@ -68,10 +68,10 @@ class ProfileActivity : AppCompatActivity() {
                         var user = snapshot.getValue(User::class.java)!!
                         user.name = edt_first_name.text.toString()
                         user.surname = edt_last_name.text.toString()
-                        user.email = edt_email .text.toString()
                         user.telephoneNumber = edt_phone.text.toString()
                         userRef.child(FirebaseAuth.getInstance().currentUser?.uid!!).setValue(user)
                     }
+
 
                     override fun onCancelled(error: DatabaseError) {
                         TODO("Not yet implemented")

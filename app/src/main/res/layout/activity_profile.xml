@@ -129,6 +129,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
+            android:enabled="false"
             android:inputType="textEmailAddress"
             android:text="email@email.com" />
     </LinearLayout>
@@ -156,6 +157,7 @@
             android:id="@+id/ratingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:isIndicator="true"
             android:numStars="5"
             android:rating="3" />
 

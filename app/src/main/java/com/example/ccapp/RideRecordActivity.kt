@@ -103,7 +103,10 @@ class RideRecordActivity : AppCompatActivity() {
                                 errorGoHome()
                             }
                             "driver" -> {
-                                Toast.makeText(baseContext, "new activity opens", Toast.LENGTH_LONG).show()
+                                val intent = Intent(this@RideRecordActivity, PassengerManageActivity::class.java)
+                                intent.putExtra("ride_id", ride.id)
+                                finish()
+                                startActivity(intent)
                             }
                             "passenger" -> { //unjoin
                                 if(ride.passengers.contains(FirebaseAuth.getInstance().currentUser?.uid!!)){
