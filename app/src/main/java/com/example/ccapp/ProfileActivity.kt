@@ -2,7 +2,6 @@ package com.example.ccapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.example.ccapp.dbClasses.User
@@ -11,6 +10,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+
 
 class ProfileActivity : AppCompatActivity() {
 
@@ -21,6 +21,8 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var edt_email: EditText
     private lateinit var rtBar: RatingBar
     private lateinit var tx_review_number: TextView
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,11 +36,15 @@ class ProfileActivity : AppCompatActivity() {
         tx_review_number = findViewById(R.id.tx_ratings_number)
 
 
+        //Toast.makeText(this,"$userID", Toast.LENGTH_LONG).show()
+
         var userRef =
             FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
                 .getReference("user")
-        userRef.child(FirebaseAuth.getInstance().currentUser?.uid!!)
-            .addListenerForSingleValueEvent(object: ValueEventListener{
+        //userRef.child(FirebaseAuth.getInstance().currentUser?.uid!!)
+        var userID = intent.getStringExtra("userID").toString()
+        userRef.child(userID)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     var user = snapshot.getValue(User::class.java)!!
                     edt_first_name.setText(user.name)
@@ -54,40 +60,45 @@ class ProfileActivity : AppCompatActivity() {
                 }
             })
 
-        layout = findViewById(R.id.button_layout)
-        val editButton = Button(this)
-        editButton.text = "Save"
-        layout.addView(editButton)
 
-        editButton.setOnClickListener {
-            // make content editable
-            //TODO("make content of text views editable")
-            userRef.child(FirebaseAuth.getInstance().currentUser?.uid!!)
-                .addListenerForSingleValueEvent(object: ValueEventListener{
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        var user = snapshot.getValue(User::class.java)!!
-                        user.name = edt_first_name.text.toString()
-                        user.surname = edt_last_name.text.toString()
-                        user.email = edt_email .text.toString()
-                        user.telephoneNumber = edt_phone.text.toString()
-                        userRef.child(FirebaseAuth.getInstance().currentUser?.uid!!).setValue(user)
-                    }
+        if (userID == FirebaseAuth.getInstance().currentUser?.uid!!.toString()) {
 
-                    override fun onCancelled(error: DatabaseError) {
-                        TODO("Not yet implemented")
-                    }
-                })
+            layout = findViewById(R.id.btnProfileSave)
+            val editButton = Button(this)
+            editButton.text = "Save"
+            layout.addView(editButton)
+
+            editButton.setOnClickListener {
+                // make content editable
+                //TODO("make content of text views editable")
+                userRef.child(FirebaseAuth.getInstance().currentUser?.uid!!)
+                    .addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            var user = snapshot.getValue(User::class.java)!!
+                            user.name = edt_first_name.text.toString()
+                            user.surname = edt_last_name.text.toString()
+                            user.email = edt_email.text.toString()
+                            user.telephoneNumber = edt_phone.text.toString()
+                            userRef.child(FirebaseAuth.getInstance().currentUser?.uid!!)
+                                .setValue(user)
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            TODO("Not yet implemented")
+                        }
+                    })
 
 
-            val text = "Profile updated!"
-            val duration = Toast.LENGTH_SHORT
+                val text = "Profile updated!"
+                val duration = Toast.LENGTH_SHORT
 
-            val toast = Toast.makeText(applicationContext, text, duration)
-            toast.show()
+                val toast = Toast.makeText(applicationContext, text, duration)
+                toast.show()
 
-            finish()
+                finish()
 
 //            layout.removeView(editButton)
+            }
         }
     }
 }

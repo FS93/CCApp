@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ccapp.dbClasses.Ride
 import com.google.firebase.auth.FirebaseAuth
@@ -26,6 +27,9 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var btnReview: ImageButton
 
     private lateinit var mDbRef: DatabaseReference
+
+    var userID = FirebaseAuth.getInstance().currentUser?.uid!!.toString()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,8 +60,8 @@ class HomeActivity : AppCompatActivity() {
                     if (System.currentTimeMillis() < formattedDate.time + 86400000){
                         dateOk = true
                     }
-                    var userId = FirebaseAuth.getInstance().currentUser?.uid!!
-                    if ((ride.passengers.contains(userId) || ride.driverId == userId ) && dateOk) {
+
+                    if ((ride.passengers.contains(userID) || ride.driverId == userID ) && dateOk) {
                         upcomingRideList.add(postSnapshot.getValue(Ride::class.java)!!)
                     }
                 }
@@ -92,7 +96,8 @@ class HomeActivity : AppCompatActivity() {
         adapter.onItemClick = { ride ->
             val intent = Intent(this@HomeActivity, RideRecordActivity::class.java)
             intent.putExtra("ride_id", ride.id)
-            if (ride.driverId == FirebaseAuth.getInstance().currentUser?.uid!!) {
+            intent.putExtra("userID", userID)
+            if (ride.driverId == userID) {
                 intent.putExtra("user_type", "driver")
             } else {
                 intent.putExtra("user_type", "passenger")
@@ -111,6 +116,7 @@ class HomeActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.profile -> {
                 val intent = Intent(this@HomeActivity, ProfileActivity::class.java)
+                intent.putExtra("userID", userID)
                 //finish()
                 startActivity(intent)
             }

@@ -1,9 +1,6 @@
 package com.example.ccapp
 
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.ColorFilter
-import android.graphics.PorterDuff
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
@@ -15,6 +12,8 @@ import com.example.ccapp.dbClasses.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_ride_record.*
+import java.util.Locale
+import java.util.Currency
 
 
 class RideRecordActivity : AppCompatActivity() {
@@ -31,9 +30,12 @@ class RideRecordActivity : AppCompatActivity() {
 
     private lateinit var departure: TextView
     private lateinit var destination: TextView
-    private lateinit var driver: TextView
+    private lateinit var drivername: TextView
     private lateinit var dateTime: TextView
     private lateinit var price: TextView
+
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,9 +48,15 @@ class RideRecordActivity : AppCompatActivity() {
 
         departure = findViewById<TextView>(R.id.txtRideRecordDeparture)
         destination = findViewById<TextView>(R.id.txtRideRecordDestination)
-        driver = findViewById<TextView>(R.id.txtRideRecordDriverName)
+        drivername = findViewById<TextView>(R.id.txtRideRecordDriverName)
         dateTime = findViewById<TextView>(R.id.txtRideRecordDateTime)
         price = findViewById<TextView>(R.id.txtRideRecordPrice)
+
+
+        // Formatting for currency string
+        val currency = Currency.getInstance("EUR")
+        val currencyFormat = java.text.NumberFormat.getCurrencyInstance(Locale.ITALY)
+        currencyFormat.currency = currency
 
         btnAction = findViewById(R.id.btn_action)
 
@@ -79,9 +87,9 @@ class RideRecordActivity : AppCompatActivity() {
                 ride = snapshot.getValue(Ride::class.java)!!
                 departure.text = ride.departure
                 destination.text = ride.destination
-                driver.text = ride.driverName + " " + ride.driverSurname
+                drivername.text = ride.driverName + " " + ride.driverSurname
                 dateTime.text = ride.date + " " + ride.time
-                price.text = ride.price.toString() + " €"
+                price.text = currencyFormat.format(ride.price)
 
                 btnAction.setOnClickListener {
                     var userRef = FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
@@ -143,6 +151,16 @@ class RideRecordActivity : AppCompatActivity() {
                         }
                     }
 
+                }
+
+
+                // Link to the Driver Profile
+                llRideRecordDriverName.setOnClickListener() {
+                    //Toast.makeText(baseContext,"Driver clicked!", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this@RideRecordActivity, ProfileActivity::class.java)
+                    intent.putExtra("userID", ride.driverId )
+                    //finish()
+                    startActivity(intent)
                 }
 
                 if (intent.getBooleanExtra("review", false)){
