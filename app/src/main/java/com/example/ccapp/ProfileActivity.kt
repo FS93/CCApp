@@ -2,6 +2,7 @@ package com.example.ccapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.InputType
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
@@ -11,6 +12,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import kotlinx.android.synthetic.main.fragment_ride_dialog1.view.*
 
 class ProfileActivity : AppCompatActivity() {
 
@@ -59,14 +61,23 @@ class ProfileActivity : AppCompatActivity() {
 
         if (userID == FirebaseAuth.getInstance().currentUser?.uid!!.toString()) {
 
+            // Make fields editable
+            for (field in arrayListOf<EditText>(edt_first_name, edt_last_name, edt_phone)) {
+                field.isEnabled = true
+            }
+            edt_first_name.inputType = InputType.TYPE_CLASS_TEXT
+            edt_last_name.inputType = InputType.TYPE_CLASS_TEXT
+            edt_phone.inputType = InputType.TYPE_CLASS_PHONE
+
+
+            // Display "Save" Button
             layout = findViewById(R.id.btnProfileSave)
             val editButton = Button(this)
             editButton.text = "Save"
             layout.addView(editButton)
 
+            // Save changes to the database
             editButton.setOnClickListener {
-                // make content editable
-                //TODO("make content of text views editable")
                 userRef.child(FirebaseAuth.getInstance().currentUser?.uid!!)
                     .addListenerForSingleValueEvent(object : ValueEventListener {
                         override fun onDataChange(snapshot: DataSnapshot) {

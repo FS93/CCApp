@@ -45,7 +45,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:inputType="none"
+            android:inputType="text"
+            android:enabled="false"
+            android:textColor="@android:color/black"
             android:text="Paolo" />
     </LinearLayout>
 
@@ -64,7 +66,6 @@
             android:layout_width="24dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:editable="false"
             android:text="Last Name" />
 
         <EditText
@@ -72,8 +73,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:inputType="text"
             android:ems="10"
-            android:inputType="none"
+            android:enabled="false"
+            android:textColor="@android:color/black"
             android:text="Rossi" />
     </LinearLayout>
 
@@ -102,6 +105,8 @@
             android:layout_weight="1"
             android:ems="10"
             android:inputType="phone"
+            android:enabled="false"
+            android:textColor="@android:color/black"
             android:text="1234567890" />
     </LinearLayout>
 
@@ -130,8 +135,9 @@
             android:layout_weight="1"
             android:ems="10"
             android:enabled="false"
-            android:inputType="textEmailAddress"
-            android:text="email@email.com" />
+            android:textColor="@android:color/black"
+            android:text="email@email.com"
+             />
     </LinearLayout>
 
     <LinearLayout
