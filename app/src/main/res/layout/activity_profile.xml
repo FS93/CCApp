@@ -8,18 +8,32 @@
     android:orientation="vertical"
     tools:context=".ProfileActivity">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewWrapper"
+        android:layout_width="160dp"
         android:layout_height="160dp"
-        android:layout_margin="5dp"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/avatar"
+        android:elevation="0dp"
+        app:cardElevation="0dp"
+        app:cardCornerRadius="80dp"
+        android:layout_centerHorizontal="true"
+        android:innerRadius="0dp"
+        android:shape="ring"
+        android:thicknessRatio="0.0"
+        android:layout_marginTop="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/profileImage"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:src="@drawable/avatar"
+            tools:visibility="visible"
+            />
+
+    </androidx.cardview.widget.CardView>
 
     <LinearLayout
         android:id="@+id/llName"
@@ -30,7 +44,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView">
+        app:layout_constraintTop_toBottomOf="@+id/cardViewWrapper">
 
         <TextView
             android:id="@+id/tx_first_name"

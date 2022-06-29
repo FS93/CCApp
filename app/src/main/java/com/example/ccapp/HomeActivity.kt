@@ -117,13 +117,13 @@ class HomeActivity : AppCompatActivity() {
             R.id.profile -> {
                 val intent = Intent(this@HomeActivity, ProfileActivity::class.java)
                 intent.putExtra("userID", userID)
-                //finish()
+//                finish()
                 startActivity(intent)
             }
             R.id.logout -> {
                 Firebase.auth.signOut()
                 val intent = Intent(this@HomeActivity, LoginActivity::class.java)
-                //finish()
+                finish()
                 startActivity(intent)
             }
         }

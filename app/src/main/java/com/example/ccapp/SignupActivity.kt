@@ -1,7 +1,8 @@
 package com.example.ccapp
 
 import android.content.Intent
-import android.net.Uri
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -15,6 +16,12 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.UploadTask
+import com.google.firebase.storage.ktx.storage
+import kotlinx.android.synthetic.main.activity_signup.*
+import java.io.ByteArrayOutputStream
+import java.util.*
 
 
 class SignupActivity : AppCompatActivity() {
@@ -27,14 +34,18 @@ class SignupActivity : AppCompatActivity() {
     private lateinit var edt_telephone: EditText
     lateinit var btnSignup: Button
     val pickImage = 0
-    private var imageUri: Uri? = null
     private lateinit var mAuth: FirebaseAuth
-
-    private val SELECT_PICTURE = 200
+    val REQUEST_CODE = 100
+    lateinit var imagesRef: StorageReference
+    var imageUrl: String? = null
 
     private lateinit var mDbRef: DatabaseReference
 
+    private lateinit var bitmap: Bitmap
+    private lateinit var baos: ByteArrayOutputStream
+    private lateinit var uploadTask: UploadTask
 
+    private var imagePicked = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,22 +53,25 @@ class SignupActivity : AppCompatActivity() {
 
         mAuth = Firebase.auth
 
-        // Gallery Picker for profile picture
         profilePicture = findViewById(R.id.ivProfilePicture)
         profilePicture.setOnClickListener {
-//            val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
-//            startActivityForResult(gallery, pickImage)
-
-//            val i = Intent()
-//            i.type = "image/*"
-//            i.action = Intent.ACTION_GET_CONTENT
-//            startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE)
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/*"
+            startActivityForResult(intent, REQUEST_CODE)
         }
+
         edt_email = findViewById(R.id.edt_email)
         edt_password = findViewById(R.id.edt_password)
         edt_name = findViewById(R.id.edt_name)
         edt_surname = findViewById(R.id.edt_surname)
         edt_telephone = findViewById(R.id.edt_telephone)
+
+
+        val storage = Firebase.storage
+        val storageRef = storage.reference
+
+        imageUrl = "images/"+getRandomString(20)
+        imagesRef = storageRef.child(imageUrl!!)
 
         btnSignup = findViewById(R.id.btnSignUp)
         btnSignup.setOnClickListener {
@@ -69,7 +83,7 @@ class SignupActivity : AppCompatActivity() {
             var telephone = edt_telephone.text.toString()
             // validity check
             if (email != "" && password != "" && surname != "" && name != "") {
-                signup(name, surname, telephone, email, password)
+                signup(name, surname, telephone, email, password, imageUrl)
             } else {
                 Toast.makeText(this, "Please enter your credentials", Toast.LENGTH_SHORT).show()
             }
@@ -80,34 +94,40 @@ class SignupActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK && requestCode == pickImage) {
-//            imageUri = data?.data
-//            profilePicture.setImageURI(imageUri)
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+            ivProfilePicture.setImageURI(data?.data)
 
-//            Log.d("image", resultCode.toString())
-//            if (resultCode === RESULT_OK) {
-//
-//                // compare the resultCode with the
-//                // SELECT_PICTURE constant
-//                if (requestCode === SELECT_PICTURE) {
-//                    // Get the url of the image from data
-//                    val selectedImageUri: Uri? = data?.data
-//                    if (null != selectedImageUri) {
-//                        // update the preview image in the layout
-//                        profilePicture.setImageURI(selectedImageUri)
-//                    }
-//                }
-//            }
+            profilePicture.isDrawingCacheEnabled = true
+            profilePicture.buildDrawingCache()
+
+            bitmap = (profilePicture.drawable as BitmapDrawable).bitmap
+            baos = ByteArrayOutputStream()
+            imagePicked = true
         }
     }
 
-    private fun signup(name: String, surname: String, telephone: String, email: String, password: String) {
+    private fun signup(name: String, surname: String, telephone: String, email: String, password: String, imageUri: String?) {
         mAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    addUserToDatabase(name, surname, telephone, email, mAuth.currentUser?.uid!!)
-                    // Sign in success, go to HomeActivity
+                    if(imagePicked){
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+                        var data = baos.toByteArray()
+
+                        uploadTask = imagesRef.putBytes(data)
+                        uploadTask.addOnFailureListener {
+                            Toast.makeText(this, "upload failed", Toast.LENGTH_SHORT).show()
+                        }.addOnSuccessListener { taskSnapshot ->
+                            Toast.makeText(this, "upload successful", Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        imageUrl = null
+                    }
                     Log.d("SignUp", "createUserWithEmail:success")
+                    addUserToDatabase(name, surname, telephone, email, mAuth.currentUser?.uid!!, imageUrl)
+                    // Sign in success, go to HomeActivity
+
+
                     val intent = Intent(this, HomeActivity::class.java)
                     finish()
                     startActivity(intent)
@@ -120,9 +140,19 @@ class SignupActivity : AppCompatActivity() {
             }
     }
 
-    private fun addUserToDatabase(name: String, surname: String, telephone: String, email: String, uid: String) {
+    private fun addUserToDatabase(name: String, surname: String, telephone: String, email: String, uid: String, imageUri: String?) {
         mDbRef = FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/").reference
-        mDbRef.child("user").child(uid).setValue(User(uid, name, surname, telephone, email, 0F, 0))
+        mDbRef.child("user").child(uid).setValue(User(uid, name, surname, telephone, email, imageUri,0F, 0))
+    }
+
+    private fun getRandomString(sizeOfRandomString: Int): String? {
+        val random = Random()
+        val ALLOWED_CHARACTERS = "0123456789qwertyuiopasdfghjklzxcvbnm"
+        val sb = StringBuilder(sizeOfRandomString)
+        for (i in 0 until sizeOfRandomString) sb.append(
+            ALLOWED_CHARACTERS[random.nextInt(ALLOWED_CHARACTERS.length)]
+            )
+        return sb.toString()
     }
 
 }

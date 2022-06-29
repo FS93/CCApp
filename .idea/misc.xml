@@ -17,22 +17,28 @@
         <entry key="..\:/Users/Giulio/StudioProjects/CCApp/app/src/main/res/layout/fragment_ride_dialog_fragment6_passenger.xml" value="0.3572916666666667" />
         <entry key="..\:/Users/Giulio/StudioProjects/CCApp/app/src/main/res/layout/fragment_ride_dialogue1.xml" value="0.5546875" />
         <entry key="..\:/Users/Giulio/StudioProjects/CCApp/app/src/main/res/layout/ride_layout.xml" value="0.4578804347826087" />
+        <entry key="..\:/Users/giuli/StudioProjects/CCApp/app/src/main/res/drawable/circular.xml" value="0.3385" />
+        <entry key="..\:/Users/giuli/StudioProjects/CCApp/app/src/main/res/drawable/image.xml" value="0.3385" />
         <entry key="..\:/Users/giuli/StudioProjects/CCApp/app/src/main/res/layout/activity_database_test.xml" value="0.3432971014492754" />
+        <entry key="..\:/Users/giuli/StudioProjects/CCApp/app/src/main/res/layout/activity_login.xml" value="0.5505208333333333" />
         <entry key="..\:/Users/giuli/StudioProjects/CCApp/app/src/main/res/layout/activity_passenger_manage.xml" value="0.45018115942028986" />
-        <entry key="..\:/Users/giuli/StudioProjects/CCApp/app/src/main/res/layout/activity_profile.xml" value="0.22" />
+        <entry key="..\:/Users/giuli/StudioProjects/CCApp/app/src/main/res/layout/activity_profile.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/giuli/StudioProjects/CCApp/app/src/main/res/layout/activity_review.xml" value="0.452445652173913" />
         <entry key="..\:/Users/giuli/StudioProjects/CCApp/app/src/main/res/layout/activity_ride_record.xml" value="0.465625" />
         <entry key="..\:/Users/giuli/StudioProjects/CCApp/app/src/main/res/layout/activity_search_result.xml" value="0.3333333333333333" />
-        <entry key="..\:/Users/giuli/StudioProjects/CCApp/app/src/main/res/layout/activity_signup.xml" value="0.5505208333333333" />
+        <entry key="..\:/Users/giuli/StudioProjects/CCApp/app/src/main/res/layout/activity_signup.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/giuli/StudioProjects/CCApp/app/src/main/res/layout/fragment_ride_dialog1.xml" value="0.26773049645390073" />
         <entry key="..\:/Users/giuli/StudioProjects/CCApp/app/src/main/res/layout/fragment_ride_dialog2.xml" value="0.20947315096251268" />
         <entry key="..\:/Users/giuli/StudioProjects/CCApp/app/src/main/res/layout/fragment_ride_dialog3.xml" value="0.2074468085106383" />
         <entry key="..\:/Users/giuli/StudioProjects/CCApp/app/src/main/res/layout/fragment_ride_dialog4.xml" value="0.22418478260869565" />
         <entry key="..\:/Users/giuli/StudioProjects/CCApp/app/src/main/res/layout/fragment_ride_dialog_fragment6_driver.xml" value="0.22418478260869565" />
+        <entry key="..\:/Users/giuli/StudioProjects/CCApp/app/src/main/res/layout/item_passenger_checkbox.xml" value="0.5505208333333333" />
         <entry key="..\:/Users/giuli/StudioProjects/CCApp/app/src/main/res/layout/item_review.xml" value="0.26773049645390073" />
         <entry key="..\:/Users/giuli/StudioProjects/CCApp/app/src/main/res/layout/manage_user_item.xml" value="0.32155797101449274" />
+        <entry key="..\:/Users/giuli/StudioProjects/CCApp/app/src/main/res/layout/ride_layout.xml" value="0.4466666666666667" />
         <entry key="..\:/Users/giuli/StudioProjects/CCApp/app/src/main/res/menu/home_menu.xml" value="0.1" />
         <entry key="..\:/Users/giuli/StudioProjects/CCApp/app/src/main/res/menu/ride_menu.xml" value="0.1" />
+        <entry key="..\:/Users/giuli/StudioProjects/CCApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.3385" />
         <entry key="app/src/main/res/drawable-v24/ic_logo.xml" value="0.144" />
         <entry key="app/src/main/res/drawable/ic_add.xml" value="0.3745" />
         <entry key="app/src/main/res/drawable/ic_baseline_more_vert_24.xml" value="0.154" />

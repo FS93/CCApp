@@ -5,13 +5,16 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ccapp.dbClasses.Passenger
 import com.example.ccapp.dbClasses.Ride
 import com.example.ccapp.dbClasses.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_ride_record.*
+import java.io.File
 import java.util.Locale
 import java.util.Currency
 
@@ -33,6 +36,7 @@ class RideRecordActivity : AppCompatActivity() {
     private lateinit var drivername: TextView
     private lateinit var dateTime: TextView
     private lateinit var price: TextView
+    private lateinit var profileImage: ImageView
 
 
 
@@ -51,6 +55,7 @@ class RideRecordActivity : AppCompatActivity() {
         drivername = findViewById<TextView>(R.id.txtRideRecordDriverName)
         dateTime = findViewById<TextView>(R.id.txtRideRecordDateTime)
         price = findViewById<TextView>(R.id.txtRideRecordPrice)
+        profileImage = findViewById(R.id.riderecordImage)
 
 
         // Formatting for currency string
@@ -80,11 +85,37 @@ class RideRecordActivity : AppCompatActivity() {
 
         mDbRef = FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/").getReference("ride/" + id!!)
         mDbRef.addValueEventListener(object: ValueEventListener {
+
             override fun onDataChange(snapshot: DataSnapshot) {
+                ride = snapshot.getValue(Ride::class.java)!!
+
+                var userRefImage =
+                    FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
+                        .getReference("user")
+                userRefImage.child(ride.driverId!!)
+                    .addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            var user = snapshot.getValue(User::class.java)!!
+                            if (!user.pictureUrl.isNullOrBlank()){
+                                var ref = FirebaseStorage.getInstance().reference.child(user.pictureUrl!!)
+                                var localImage = File.createTempFile("profile", "jpg")
+                                ref.getFile(localImage).addOnSuccessListener {
+                                    profileImage.setImageURI(localImage.toUri())
+                                }
+                            }
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            TODO("Not yet implemented")
+                        }
+                    })
+
+
+
                 passengerList.clear()
                 adapter.notifyDataSetChanged()
 
-                ride = snapshot.getValue(Ride::class.java)!!
+
                 departure.text = ride.departure
                 destination.text = ride.destination
                 drivername.text = ride.driverName + " " + ride.driverSurname

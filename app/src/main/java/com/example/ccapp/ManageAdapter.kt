@@ -4,12 +4,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ccapp.dbClasses.Review
 import com.example.ccapp.dbClasses.Ride
 import com.example.ccapp.dbClasses.User
 import com.google.firebase.database.*
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.item_review.view.*
+import java.io.File
 
 class ManageAdapter (var userList: List<User>, var rideId: String) : RecyclerView.Adapter<ManageAdapter.ManageViewHolder>(){
 
@@ -26,6 +30,23 @@ class ManageAdapter (var userList: List<User>, var rideId: String) : RecyclerVie
         holder.itemView.apply {
             txPersonName.text = userList[position].name + " " + userList[position].surname
 //            ivAvatar.setImageResource(reviews[position].avatar)
+            var imageRef = FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
+                .getReference("user/"+userList[position].userID)
+            imageRef.addValueEventListener(object: ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    var user = snapshot.getValue(User::class.java)!!
+                    if (!user.pictureUrl.isNullOrBlank()){
+                        var ref = FirebaseStorage.getInstance().reference.child(user.pictureUrl!!)
+                        var localImage = File.createTempFile("profile", "jpg")
+                        ref.getFile(localImage).addOnSuccessListener {
+                            holder.itemView.findViewById<ImageView>(R.id.ivAvatarManage).setImageURI(localImage.toUri())
+                        }
+                    }
+
+                }
+                override fun onCancelled(error: DatabaseError) {
+                }
+            })
         }
         holder.itemView.findViewById<Button>(R.id.btnDelete).setOnClickListener {
             var index = holder.position
@@ -56,6 +77,11 @@ class ManageAdapter (var userList: List<User>, var rideId: String) : RecyclerVie
                 override fun onCancelled(error: DatabaseError) {
                 }
             })
+
+
+
+
+
         }
 
     }

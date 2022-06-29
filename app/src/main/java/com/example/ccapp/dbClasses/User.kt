@@ -6,7 +6,7 @@ class User {
     var surname: String? = null
     var email: String? = null
     var telephoneNumber: String? = null
-//    var pictureUrl: String? = null
+    var pictureUrl: String? = null
     var averageReview: Float = 0F
     var numerOfReviews: Int = 0
     var ridesAsDriver: ArrayList<String> = ArrayList()
@@ -22,7 +22,7 @@ class User {
         surname: String?,
         telephone: String?,
         email: String?,
-//        pictureUrl: String?,
+        pictureUrl: String?,
         averageReview: Float,
         numerOfReviews: Int
     ) {
@@ -31,7 +31,7 @@ class User {
         this.surname = surname
         this.email = email
         this.telephoneNumber = telephone
-//        this.pictureUrl = pictureUrl
+        this.pictureUrl = pictureUrl
         this.averageReview = averageReview
         this.numerOfReviews = numerOfReviews
     }
