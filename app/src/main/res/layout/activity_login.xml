@@ -12,7 +12,7 @@
         android:layout_height="400px"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
-        android:src="@drawable/ic_car" />
+        android:src="@drawable/ic_car_blue" />
 
     <EditText
         android:id="@+id/edt_email"
