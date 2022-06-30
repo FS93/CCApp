@@ -102,6 +102,7 @@ class RideRecordActivity : AppCompatActivity() {
                 var userRefImage =
                     FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
                         .getReference("user")
+
                 userRefImage.child(ride.driverId!!)
                     .addListenerForSingleValueEvent(object : ValueEventListener {
                         override fun onDataChange(snapshot: DataSnapshot) {
@@ -124,6 +125,7 @@ class RideRecordActivity : AppCompatActivity() {
 
                 passengerList.clear()
                 adapter.notifyDataSetChanged()
+
 
 
                 departure.text = ride.departure
@@ -224,8 +226,6 @@ class RideRecordActivity : AppCompatActivity() {
                         }
                     }
                 }
-
-
 
 
                 if (ride.seats < ride.passengers.size) {

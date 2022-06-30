@@ -17,6 +17,8 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import java.io.File
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class RideAdapter constructor(val context: Context, val rideList: ArrayList<Ride>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -65,7 +67,7 @@ class RideAdapter constructor(val context: Context, val rideList: ArrayList<Ride
                         var user = snapshot.getValue(User::class.java)!!
                         if (!user.pictureUrl.isNullOrBlank()){
                             var ref = FirebaseStorage.getInstance().reference.child(user.pictureUrl!!)
-                            var localImage = File.createTempFile("profile", "jpg")
+                            var localImage = File.createTempFile("profile"+getRandomString(4), "jpg")
                             ref.getFile(localImage).addOnSuccessListener {
                                 ivAvatar.setImageURI(localImage.toUri())
                             }
@@ -81,5 +83,15 @@ class RideAdapter constructor(val context: Context, val rideList: ArrayList<Ride
 
     override fun getItemCount(): Int {
         return rideList.size
+    }
+
+    private fun getRandomString(sizeOfRandomString: Int): String? {
+        val random = Random()
+        val ALLOWED_CHARACTERS = "0123456789qwertyuiopasdfghjklzxcvbnm"
+        val sb = StringBuilder(sizeOfRandomString)
+        for (i in 0 until sizeOfRandomString) sb.append(
+            ALLOWED_CHARACTERS[random.nextInt(ALLOWED_CHARACTERS.length)]
+        )
+        return sb.toString()
     }
 }
