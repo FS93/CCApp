@@ -123,8 +123,7 @@ class RideRecordActivity : AppCompatActivity() {
 
 
 
-                passengerList.clear()
-                adapter.notifyDataSetChanged()
+
 
 
 
@@ -231,6 +230,9 @@ class RideRecordActivity : AppCompatActivity() {
                 if (ride.seats < ride.passengers.size) {
                     errorGoHome()
                 }
+
+                passengerList.clear()
+                adapter.notifyDataSetChanged()
 
                 // Upadate the RecyclerView in the UI
                 var userRef = FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/").getReference("user")

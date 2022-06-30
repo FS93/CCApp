@@ -42,6 +42,7 @@ class PassengerAdapter(var passengers: List<Passenger>) :
         if (passengers[position].seatTaken) {
 
             // -------- REPLACE WITH USER'S PROFILE PICTURE ------------
+            holder.itemView.ivPassenger.setImageDrawable(null)
 
             var userRefImage =
                 FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
@@ -50,13 +51,15 @@ class PassengerAdapter(var passengers: List<Passenger>) :
                 .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         var user = snapshot.getValue(User::class.java)!!
-                        if (!user.pictureUrl.isNullOrBlank()) {
+                        if (!user.pictureUrl.isNullOrEmpty()) {
                             var ref =
                                 FirebaseStorage.getInstance().reference.child(user.pictureUrl!!)
                             var localImage = File.createTempFile("profile"+getRandomString(5), "jpg")
                             ref.getFile(localImage).addOnSuccessListener {
                                 holder.itemView.ivPassenger.setImageURI(localImage.toUri())
                             }
+                        } else {
+                            holder.itemView.ivPassenger.setImageResource(R.drawable.ic_car_gray)
                         }
                     }
 
