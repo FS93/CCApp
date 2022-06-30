@@ -89,6 +89,16 @@ class RideRecordActivity : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 ride = snapshot.getValue(Ride::class.java)!!
 
+                // Link to the Driver Profile
+                llRideRecordDriverName.setOnClickListener() {
+                    //Toast.makeText(baseContext,"Driver clicked!", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this@RideRecordActivity, ProfileActivity::class.java)
+                    intent.putExtra("userID", ride.driverId )
+                    //finish()
+                    startActivity(intent)
+                }
+
+
                 var userRefImage =
                     FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
                         .getReference("user")
@@ -188,14 +198,6 @@ class RideRecordActivity : AppCompatActivity() {
                 }
 
 
-                // Link to the Driver Profile
-                llRideRecordDriverName.setOnClickListener() {
-                    //Toast.makeText(baseContext,"Driver clicked!", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this@RideRecordActivity, ProfileActivity::class.java)
-                    intent.putExtra("userID", ride.driverId )
-                    //finish()
-                    startActivity(intent)
-                }
 
                 if (intent.getBooleanExtra("review", false)){
                     btnAction.text = "Review"
@@ -230,6 +232,7 @@ class RideRecordActivity : AppCompatActivity() {
                     errorGoHome()
                 }
 
+                // Upadate the RecyclerView in the UI
                 var userRef = FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/").getReference("user")
                 for (i in 1 .. (ride.seats - ride.passengers.size)) passengerList.add(Passenger(false))
                 for (pas in ride.passengers) {
@@ -237,7 +240,7 @@ class RideRecordActivity : AppCompatActivity() {
                         override fun onDataChange(dataSnapshot: DataSnapshot) {
                             Log.d("FIREBASE1", dataSnapshot.toString())
                             var passenger = dataSnapshot.getValue(User::class.java)!!
-                            passengerList.add(0, Passenger(passenger.name + " " + passenger.surname))
+                            passengerList.add(0, Passenger(passenger.name + " " + passenger.surname, passenger.userID))
                             adapter.notifyDataSetChanged()
                         }
 
