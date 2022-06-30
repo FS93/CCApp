@@ -4,22 +4,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CompoundButton
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_passenger_checkbox.view.*
 import com.example.ccapp.dbClasses.Passenger
 
 class PassengerAdapter(var passengers: List<Passenger>) :
     RecyclerView.Adapter<PassengerAdapter.PassengerViewHolder>() {
-
-    // DEBUGGING: Mock-up switch for the type of user to open the activity
-    enum class userType {
-        DRIVER, PASSENGER
-    }
-
-    var toggleSeatChoosen: Boolean = false
-
-    val type: userType = userType.PASSENGER
 
     inner class PassengerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
@@ -36,42 +26,18 @@ class PassengerAdapter(var passengers: List<Passenger>) :
 
         holder.itemView.apply {
             passengerName.text = passengers[position].name
-            passengerCheckbox.isChecked = passengers[position].seatTaken
         }
-
-
-        // driver can only delete passengers, passenger can only click on available seats
-        // TODO: passengers shall only be able to choose ONE seat, work with toggleSeatChoosen
-        when (type) {
-            userType.DRIVER -> {
-                holder.itemView.passengerCheckbox.isClickable = passengers[position].seatTaken
+        if (passengers[position].seatTaken) {
+            holder.itemView.ivPassenger.apply {
+                // -------- REPLACE WITH USER'S PROFILE PICTURE ------------
+                setBackgroundResource(R.drawable.avatar)
+                }
+        } else {
+            holder.itemView.ivPassenger.apply {
+                setBackgroundResource(R.drawable.ic_car_gray)
             }
-            userType.PASSENGER -> {
-                holder.itemView.passengerCheckbox.isClickable = passengers[position].seatTaken.not()
-            }
+
         }
-
-        val cb = holder.itemView.passengerCheckbox
-
-//        cb.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
-//            run {
-//                // TODO: passengers shall only be able to choose ONE seat, work with toggleSeatChoosen
-//                if (cb.isChecked) {
-//                    if (type == userType.PASSENGER && !toggleSeatChoosen) {
-//                        cb.text = "Take Seat"
-//                    } else {
-//                        cb.text = "Undo removal"
-//                    }
-//                } else {
-//                    if (type == userType.DRIVER) {
-//                        cb.text = "Remove Passenger"
-//                    } else {
-//                        cb.text = "Undo choice"
-//                    }
-//                }
-//            }
-//        })
-
     }
 
     override fun getItemCount(): Int {
