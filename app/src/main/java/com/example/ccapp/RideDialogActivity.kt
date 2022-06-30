@@ -159,7 +159,9 @@ class RideDialogActivity : AppIntro2() {
 
     fun setDateTime(date: String, time: String){
         ride.date = date
+        Log.d("datetime", date)
         ride.time = time
+        Log.d("datetime", time)
     }
 
     fun setSeats(seats: Int){
