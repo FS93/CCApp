@@ -1,4 +1,4 @@
-package com.example.ccapp.fragments
+package com.example.ccapp.fragments_ride
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

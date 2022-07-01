@@ -59,7 +59,7 @@ class LoginActivity : AppCompatActivity() {
         // Check if user is signed in (non-null) - if so, got to HomeActivity.
         val currentUser = mAuth.currentUser
         if(currentUser != null){
-            val intent = Intent(this, HomeActivity::class.java)
+            val intent = Intent(this, HomeActivityFragments::class.java)
             finish()
             startActivity(intent)
         }

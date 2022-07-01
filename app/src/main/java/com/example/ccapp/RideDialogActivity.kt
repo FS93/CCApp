@@ -7,11 +7,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.ccapp.dbClasses.Ride
 import com.example.ccapp.dbClasses.User
-import com.example.ccapp.fragments.*
+import com.example.ccapp.fragments_ride.*
 import com.github.appintro.AppIntro2
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import java.util.*
 
 class RideDialogActivity : AppIntro2() {
 

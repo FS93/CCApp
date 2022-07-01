@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.RideDialogFragment2">
+    tools:context=".fragments_ride.RideDialogFragment2">
 
     <LinearLayout
         android:layout_width="0dp"

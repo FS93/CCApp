@@ -1,4 +1,4 @@
-package com.example.ccapp.fragments
+package com.example.ccapp.fragments_ride
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,25 +11,25 @@ import com.example.ccapp.R
 import com.example.ccapp.RideDialogActivity
 import com.github.appintro.SlidePolicy
 
-class RideDialogFragment1() : Fragment(), SlidePolicy {
+class RideDialogFragment4 : Fragment(), SlidePolicy {
 
-    private lateinit var edtLocation: EditText
+    private lateinit var edtSeats: EditText
 
     override val isPolicyRespected: Boolean
         get() = check()
 
     private fun check(): Boolean{
-        if (edtLocation.text.toString() == ""){
+        if (edtSeats.text.toString() == ""){
             return false
         }
         var rda: RideDialogActivity = activity as RideDialogActivity
-        rda.setDeparture(edtLocation.text.toString())
+        rda.setSeats(edtSeats.text.toString().toInt())
         return true
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?){
         super.onViewCreated(view, savedInstanceState)
-        edtLocation = view.findViewById(R.id.edt_location)
+        edtSeats = view.findViewById(R.id.edt_seats)
     }
 
     override fun onCreateView(
@@ -37,7 +37,7 @@ class RideDialogFragment1() : Fragment(), SlidePolicy {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_ride_dialog1, container, false)
+        return inflater.inflate(R.layout.fragment_ride_dialog4, container, false)
     }
 
     override fun onUserIllegallyRequestedNextPage() {

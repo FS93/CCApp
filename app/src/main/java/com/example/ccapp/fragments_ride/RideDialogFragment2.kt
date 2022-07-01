@@ -1,4 +1,4 @@
-package com.example.ccapp.fragments
+package com.example.ccapp.fragments_ride
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,7 +13,6 @@ import com.example.ccapp.R
 import com.example.ccapp.RideDialogActivity
 import com.github.appintro.SlidePolicy
 import java.text.SimpleDateFormat
-import java.util.*
 
 
 class RideDialogFragment2 : Fragment(), SlidePolicy {

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments_home.RideSearchFragment"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/edt_departure_search_frag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textAutoComplete"
+        android:minHeight="48dp"
+        android:hint="Departure..." />
+
+    <EditText
+        android:id="@+id/edt_destination_search_frag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textAutoComplete"
+        android:minHeight="48dp"
+        android:hint="Destination..." />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/result_list_frag"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

@@ -1,4 +1,4 @@
-package com.example.ccapp.fragments
+package com.example.ccapp.fragments_ride
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,26 +11,25 @@ import com.example.ccapp.R
 import com.example.ccapp.RideDialogActivity
 import com.github.appintro.SlidePolicy
 
+class RideDialogFragment1() : Fragment(), SlidePolicy {
 
-class RideDialogFragment6Driver : Fragment(), SlidePolicy {
+    private lateinit var edtLocation: EditText
 
-    private lateinit var edtPrice: EditText
+    override val isPolicyRespected: Boolean
+        get() = check()
 
-    override val isPolicyRespected: Boolean get() = check()
-
-    private fun check(): Boolean {
-        if(edtPrice.text.toString() == ""){
+    private fun check(): Boolean{
+        if (edtLocation.text.toString() == ""){
             return false
         }
         var rda: RideDialogActivity = activity as RideDialogActivity
-        rda.setPrice(edtPrice.text.toString().toFloat())
-        rda.saveRideToDatabase()
+        rda.setDeparture(edtLocation.text.toString())
         return true
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        edtPrice = view.findViewById(R.id.edt_price)
+        edtLocation = view.findViewById(R.id.edt_location)
     }
 
     override fun onCreateView(
@@ -38,12 +37,11 @@ class RideDialogFragment6Driver : Fragment(), SlidePolicy {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_ride_dialog_fragment6_driver, container, false)
+        return inflater.inflate(R.layout.fragment_ride_dialog1, container, false)
     }
 
     override fun onUserIllegallyRequestedNextPage() {
         Toast.makeText(activity,"You need to fill in the information needed to go forward!",
             Toast.LENGTH_LONG).show()
     }
-
 }
