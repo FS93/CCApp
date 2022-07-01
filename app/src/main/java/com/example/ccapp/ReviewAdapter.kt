@@ -14,10 +14,12 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.android.synthetic.main.item_passenger_checkbox.view.*
 import kotlinx.android.synthetic.main.item_review.view.*
 import kotlinx.android.synthetic.main.item_review.view.txPersonName
 import kotlinx.android.synthetic.main.manage_user_item.view.*
 import java.io.File
+import java.util.*
 
 class ReviewAdapter(var reviews: List<Review>) : RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder>(){
 
@@ -32,29 +34,39 @@ class ReviewAdapter(var reviews: List<Review>) : RecyclerView.Adapter<ReviewAdap
         holder.itemView.apply {
             txPersonName.text = reviews[position].personName
             ivAvatarReview.setImageResource(reviews[position].avatar)
-
-            var imageRef = FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
-                .getReference("user/"+reviews[position].userId)
-            imageRef.addValueEventListener(object: ValueEventListener{
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    var user = snapshot.getValue(User::class.java)!!
-                    if (!user.pictureUrl.isNullOrBlank()){
-                        var ref = FirebaseStorage.getInstance().reference.child(user.pictureUrl!!)
-                        var localImage = File.createTempFile("profile", "jpg")
-                        ref.getFile(localImage).addOnSuccessListener {
-                            ivAvatarManage.setImageURI(localImage.toUri())
-                        }
-                    }
-
-                }
-                override fun onCancelled(error: DatabaseError) {
-                }
-            })
         }
+        var imageRef = FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
+            .getReference("user").child(reviews[position].userId!!)
+        imageRef.addListenerForSingleValueEvent(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var user = snapshot.getValue(User::class.java)!!
+                if (!user.pictureUrl.isNullOrBlank()){
+                    var ref = FirebaseStorage.getInstance().reference.child(user.pictureUrl!!)
+                    var localImage = File.createTempFile("profile"+getRandomString(5), "jpg")
+                    ref.getFile(localImage).addOnSuccessListener {
+                        holder.itemView.ivAvatarReview.setImageURI(localImage.toUri())
+                    }
+                }
+
+            }
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+
     }
 
     override fun getItemCount(): Int {
         return reviews.size
+    }
+
+    private fun getRandomString(sizeOfRandomString: Int): String? {
+        val random = Random()
+        val ALLOWED_CHARACTERS = "0123456789qwertyuiopasdfghjklzxcvbnm"
+        val sb = StringBuilder(sizeOfRandomString)
+        for (i in 0 until sizeOfRandomString) sb.append(
+            ALLOWED_CHARACTERS[random.nextInt(ALLOWED_CHARACTERS.length)]
+        )
+        return sb.toString()
     }
 
 }
