@@ -13,38 +13,13 @@
                 android:title="Profile"
                 app:showAsAction="never" />
             <item
+                android:id="@+id/chronology"
+                android:title="Chronology"
+                app:showAsAction="never" />
+            <item
                 android:id="@+id/logout"
                 android:title="Logout"
                 app:showAsAction="never" />
         </menu>
     </item>
 </menu>
-
-    <!--<?xml version="1.0" encoding="utf-8"?>-->
-    <!--<menu xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--    xmlns:app="http://schemas.android.com/apk/res-auto">-->
-
-    <!--    <item-->
-    <!--        android:id="@+id/overflowMenu"-->
-    <!--        android:icon="@drawable/ic_3_dots"-->
-    <!--        android:title=""-->
-    <!--        app:showAsAction="always">-->
-    <!--        <menu>-->
-    <!--            <item-->
-    <!--                android:id="@+id/search"-->
-    <!--                android:icon="@drawable/ic_settings"-->
-    <!--                android:title="Search"-->
-    <!--                app:showAsAction="never" />-->
-    <!--            <item-->
-    <!--                android:id="@+id/offer"-->
-    <!--                android:icon="@drawable/ic_about"-->
-    <!--                android:title="Offer"-->
-    <!--                app:showAsAction="never" />-->
-    <!--            <item-->
-    <!--                android:id="@+id/logout"-->
-    <!--                android:icon="@drawable/ic_exit"-->
-    <!--                android:title="Logout"-->
-    <!--                app:showAsAction="never" />-->
-    <!--        </menu>-->
-    <!--    </item>-->
-    <!--</menu>-->

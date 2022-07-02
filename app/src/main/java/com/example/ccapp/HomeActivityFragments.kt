@@ -125,6 +125,7 @@ class HomeActivityFragments : AppCompatActivity() {
         } else {
             badge.number = count
             badge.isVisible = true
+
         }
 
     }
@@ -146,6 +147,12 @@ class HomeActivityFragments : AppCompatActivity() {
                 Firebase.auth.signOut()
                 val intent = Intent(this@HomeActivityFragments, LoginActivity::class.java)
                 finish()
+                startActivity(intent)
+            }
+            R.id.chronology -> {
+                val intent = Intent(this@HomeActivityFragments, ChronologyActivity::class.java)
+                intent.putExtra("userID", userID)
+//                finish()
                 startActivity(intent)
             }
         }
