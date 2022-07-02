@@ -186,6 +186,7 @@ class RideRecordActivity : AppCompatActivity() {
                                                 override fun onCancelled(error: DatabaseError){}
                                             })
                                             dialog.dismiss()
+                                            onBackPressed()
                                         })
 
                                     builder.setNegativeButton(
@@ -227,6 +228,7 @@ class RideRecordActivity : AppCompatActivity() {
                                                     override fun onCancelled(error: DatabaseError){}
                                                 })
                                                 dialog.dismiss()
+                                                onBackPressed()
                                             })
 
                                         builder.setNegativeButton(
