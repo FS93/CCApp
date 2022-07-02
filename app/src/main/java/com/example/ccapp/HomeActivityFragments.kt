@@ -3,19 +3,28 @@ package com.example.ccapp
 import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.example.ccapp.dbClasses.Ride
+import com.example.ccapp.dbClasses.User
 import com.example.ccapp.fragments_home.CreateFragment
 import com.example.ccapp.fragments_home.OpenReviewFragment
 import com.example.ccapp.fragments_home.RideSearchFragment
 import com.example.ccapp.fragments_home.UpcomingRidesFragment
+import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
 
 
@@ -74,6 +83,50 @@ class HomeActivityFragments : AppCompatActivity() {
             }
             true
         }
+
+
+        var mDbRef =
+            FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
+                .getReference("ride")
+        var userRef =
+            FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
+                .getReference("user").child(FirebaseAuth.getInstance().currentUser?.uid!!)
+
+        userRef.addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var userReviewedRides = snapshot.getValue(User::class.java)!!.reviewedRides
+                Log.d("reviews", userReviewedRides.toString())
+
+                mDbRef.addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        addBadge(snapshot.childrenCount.toInt())
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                    }
+                })
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+
+    }
+
+    fun addBadge(count: Int){
+        val badge: BadgeDrawable = bnBottomNav.getOrCreateBadge(
+            R.id.review_frag
+        )
+        badge.backgroundColor = Color.YELLOW
+        if(count == 0){
+            badge.isVisible = false
+        } else {
+            badge.number = count
+            badge.isVisible = true
+        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

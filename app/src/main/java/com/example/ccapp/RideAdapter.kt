@@ -1,16 +1,19 @@
 package com.example.ccapp
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ccapp.dbClasses.Ride
 import com.example.ccapp.dbClasses.User
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -40,6 +43,7 @@ class RideAdapter constructor(val context: Context, val rideList: ArrayList<Ride
         val rbDriverRating = itemView.findViewById<RatingBar>(R.id.rbDriverRating)
         val txtPrice = itemView.findViewById<TextView>(R.id.txtPrice)
         val txtRideDateTextView = itemView.findViewById<TextView>(R.id.txtRideDateTime)
+        val rideLayout = itemView.findViewById<ConstraintLayout>(R.id.layout_ride)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -56,6 +60,11 @@ class RideAdapter constructor(val context: Context, val rideList: ArrayList<Ride
             txtDestination.text = singleRide.destination
             txtPrice.text = singleRide.price.toString() + " €"
             txtRideDateTextView.text = singleRide.date + " " + singleRide.time
+            rbDriverRating.rating = singleRide.driverReview!!
+
+            if (singleRide.driverId!! == FirebaseAuth.getInstance().currentUser?.uid!!.toString()){
+                rideLayout.setBackgroundResource(R.drawable.background_driver)
+            }
 
             var userRef =
                 FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")

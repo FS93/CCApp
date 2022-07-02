@@ -27,7 +27,6 @@ class NotificationService : Service() {
     }
 
     override fun onCreate() {
-        Toast.makeText(this, "Invoke background service onCreate method.", Toast.LENGTH_LONG).show()
         super.onCreate()
 
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

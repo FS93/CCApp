@@ -67,7 +67,7 @@ class RideDialogActivity : AppIntro2() {
                 addSlide(RideDialogFragment1())
                 addSlide(RideDialogFragment2())
                 addSlide(RideDialogFragment3())
-                addSlide(RideDialogFragment5())
+//                addSlide(RideDialogFragment5())
                 addSlide(RideDialogFragment6Passenger())
             }
             "offer" -> {
@@ -75,7 +75,7 @@ class RideDialogActivity : AppIntro2() {
                 addSlide(RideDialogFragment2())
                 addSlide(RideDialogFragment3())
                 addSlide(RideDialogFragment4())
-                addSlide(RideDialogFragment5())
+//                addSlide(RideDialogFragment5())
                 addSlide(RideDialogFragment6Driver())
             }
         }
