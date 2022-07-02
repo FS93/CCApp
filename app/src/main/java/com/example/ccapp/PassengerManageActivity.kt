@@ -9,6 +9,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.ccapp.dbClasses.Notification
 import com.example.ccapp.dbClasses.Ride
 import com.example.ccapp.dbClasses.User
 import com.google.firebase.auth.FirebaseAuth
@@ -30,7 +31,7 @@ class PassengerManageActivity : AppCompatActivity() {
         rideId = intent.getStringExtra("ride_id").toString()
 
         var userList = mutableListOf<User>()
-        val adapter = ManageAdapter(userList, rideId)
+        val adapter = ManageAdapter(userList, rideId, this)
         rvManage = findViewById(R.id.rvManage)
         rvManage.layoutManager = LinearLayoutManager(this)
         rvManage.adapter = adapter
@@ -104,6 +105,9 @@ class PassengerManageActivity : AppCompatActivity() {
                                             override fun onCancelled(databaseError: DatabaseError) {
                                             }
                                         })
+                                    val notRef = FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
+                                        .getReference("notification").push()
+                                    notRef.setValue(Notification(pas, "The ride from ${ride.departure} to ${ride.destination} has been deleted by the driver!"))
                                 }
                                 //remove link from driver
                                 userRef.child(FirebaseAuth.getInstance().currentUser?.uid!!).addListenerForSingleValueEvent(
@@ -126,6 +130,7 @@ class PassengerManageActivity : AppCompatActivity() {
                             }
 
                         })
+
                         dialog.dismiss()
                         val intent = Intent(this@PassengerManageActivity, HomeActivity::class.java)
                         startActivity(intent)

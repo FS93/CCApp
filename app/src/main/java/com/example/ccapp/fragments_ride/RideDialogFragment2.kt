@@ -1,6 +1,7 @@
 package com.example.ccapp.fragments_ride
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,8 @@ import androidx.fragment.app.Fragment
 import com.example.ccapp.R
 import com.example.ccapp.RideDialogActivity
 import com.github.appintro.SlidePolicy
+import java.text.DecimalFormat
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 
 
@@ -32,7 +35,7 @@ class RideDialogFragment2 : Fragment(), SlidePolicy {
             return false
         }
         var rda: RideDialogActivity = activity as RideDialogActivity
-        rda.setDateTime(selectedDate!!, edtTime.text.toString())
+        rda.setDateTime(curDate!!, edtTime.text.toString())
         return true
     }
 
@@ -42,7 +45,9 @@ class RideDialogFragment2 : Fragment(), SlidePolicy {
         datePicker = view.findViewById(R.id.calendarView)
 
         datePicker.setOnDateChangeListener(OnDateChangeListener { view, year, month, dayOfMonth ->
-            curDate = dayOfMonth.toString()+"/"+month+"/"+year
+            val f: NumberFormat = DecimalFormat("00")
+            curDate = dayOfMonth.toString()+"/"+f.format(month)+"/"+year
+            Log.d("date", curDate!!)
         })
     }
 

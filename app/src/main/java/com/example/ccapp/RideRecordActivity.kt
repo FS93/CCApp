@@ -1,12 +1,15 @@
 package com.example.ccapp
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.ccapp.dbClasses.Notification
 import com.example.ccapp.dbClasses.Passenger
 import com.example.ccapp.dbClasses.Ride
 import com.example.ccapp.dbClasses.User
@@ -160,36 +163,81 @@ class RideRecordActivity : AppCompatActivity() {
                             }
                             "passenger" -> { //unjoin
                                 if(ride.passengers.contains(FirebaseAuth.getInstance().currentUser?.uid!!)){
-                                    userRef.addListenerForSingleValueEvent(object: ValueEventListener{
-                                        override fun onDataChange(snapshot: DataSnapshot){
-                                            user = snapshot.getValue(User::class.java)!!
-                                            user.ridesAsPassenger.remove(id)
-                                            userRef.setValue(user)
-                                            ride.passengers.remove(FirebaseAuth.getInstance().currentUser?.uid!!)
-                                            mDbRef.setValue(ride)
-                                        }
+                                    val builder: AlertDialog.Builder = AlertDialog.Builder(this@RideRecordActivity)
+                                    builder.setTitle("Confirm")
+                                    builder.setMessage("Are you sure you want to join this ride?")
 
-                                        override fun onCancelled(error: DatabaseError){}
-                                    })
+                                    builder.setPositiveButton(
+                                        "YES",
+                                        DialogInterface.OnClickListener { dialog, which -> // Do nothing but close the dialog
+                                            userRef.addListenerForSingleValueEvent(object: ValueEventListener{
+                                                override fun onDataChange(snapshot: DataSnapshot){
+                                                    user = snapshot.getValue(User::class.java)!!
+                                                    user.ridesAsPassenger.remove(id)
+                                                    userRef.setValue(user)
+                                                    ride.passengers.remove(FirebaseAuth.getInstance().currentUser?.uid!!)
+                                                    mDbRef.setValue(ride)
+
+                                                    val notRef = FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
+                                                        .getReference("notification").push()
+                                                    notRef.setValue(Notification(ride.driverId!!, "A new passenger joined the ride from ${ride.departure} to ${ride.destination}!"))
+                                                }
+
+                                                override fun onCancelled(error: DatabaseError){}
+                                            })
+                                            dialog.dismiss()
+                                        })
+
+                                    builder.setNegativeButton(
+                                        "NO",
+                                        DialogInterface.OnClickListener { dialog, which -> // Do nothing
+                                            dialog.dismiss()
+                                        })
+
+                                    val alert: AlertDialog = builder.create()
+                                    alert.show()
                                 } else { //join
                                     if (ride.passengers.size >= ride.seats){
                                         Toast.makeText(baseContext, "No seats available!", Toast.LENGTH_LONG).show()
                                     } else {
-                                        userRef.addListenerForSingleValueEvent(object: ValueEventListener{
-                                            override fun onDataChange(snapshot: DataSnapshot){
-                                                user = snapshot.getValue(User::class.java)!!
-                                                if (!user.ridesAsPassenger.contains(id)){
-                                                    user.ridesAsPassenger.add(id)
-                                                    userRef.setValue(user)
-                                                }
-                                                if(!ride.passengers.contains((FirebaseAuth.getInstance().currentUser?.uid!!))){
-                                                    ride.passengers.add(FirebaseAuth.getInstance().currentUser?.uid!!)
-                                                    mDbRef.setValue(ride)
-                                                }
-                                            }
 
-                                            override fun onCancelled(error: DatabaseError){}
-                                        })
+                                        val builder: AlertDialog.Builder = AlertDialog.Builder(this@RideRecordActivity)
+                                        builder.setTitle("Confirm")
+                                        builder.setMessage("Are you sure you want to unjoin this ride?")
+
+                                        builder.setPositiveButton(
+                                            "YES",
+                                            DialogInterface.OnClickListener { dialog, which -> // Do nothing but close the dialog
+                                                userRef.addListenerForSingleValueEvent(object: ValueEventListener{
+                                                    override fun onDataChange(snapshot: DataSnapshot){
+                                                        user = snapshot.getValue(User::class.java)!!
+                                                        if (!user.ridesAsPassenger.contains(id)){
+                                                            user.ridesAsPassenger.add(id)
+                                                            userRef.setValue(user)
+                                                        }
+                                                        if(!ride.passengers.contains((FirebaseAuth.getInstance().currentUser?.uid!!))){
+                                                            ride.passengers.add(FirebaseAuth.getInstance().currentUser?.uid!!)
+                                                            mDbRef.setValue(ride)
+                                                            val notRef = FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
+                                                                .getReference("notification").push()
+                                                            notRef.setValue(Notification(ride.driverId!!, "A new passenger joined the ride from ${ride.departure} to ${ride.destination}!"))
+                                                        }
+                                                    }
+
+                                                    override fun onCancelled(error: DatabaseError){}
+                                                })
+                                                dialog.dismiss()
+                                            })
+
+                                        builder.setNegativeButton(
+                                            "NO",
+                                            DialogInterface.OnClickListener { dialog, which -> // Do nothing
+                                                dialog.dismiss()
+                                            })
+
+                                        val alert: AlertDialog = builder.create()
+                                        alert.show()
+
                                     }
                                 }
                             }

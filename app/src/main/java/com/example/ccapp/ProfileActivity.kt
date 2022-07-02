@@ -63,12 +63,6 @@ class ProfileActivity : AppCompatActivity() {
         imgView = findViewById(R.id.profileImage)
 
 
-        imgView.setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK)
-            intent.type = "image/*"
-            startActivityForResult(intent, REQUEST_CODE)
-        }
-
 
         var userRef =
             FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
@@ -108,7 +102,13 @@ class ProfileActivity : AppCompatActivity() {
             })
 
 
+
         if (userID == FirebaseAuth.getInstance().currentUser?.uid!!.toString()) {
+            imgView.setOnClickListener {
+                val intent = Intent(Intent.ACTION_PICK)
+                intent.type = "image/*"
+                startActivityForResult(intent, REQUEST_CODE)
+            }
 
             // Make fields editable
             for (field in arrayListOf<EditText>(edt_first_name, edt_last_name, edt_phone)) {
