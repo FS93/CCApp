@@ -99,7 +99,14 @@ class HomeActivityFragments : AppCompatActivity() {
 
                 mDbRef.addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        addBadge(snapshot.childrenCount.toInt())
+                        var counter = 0
+                        for(rid in snapshot.children){
+                            if (rid.getValue(Ride::class.java)!!.passengers.contains(userID)
+                                || rid.getValue(Ride::class.java)!!.driverId == userID){
+                                counter++
+                            }
+                        }
+                        addBadge(counter)
                     }
 
                     override fun onCancelled(error: DatabaseError) {
