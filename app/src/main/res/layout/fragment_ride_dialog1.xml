@@ -31,14 +31,6 @@
             android:inputType="textPersonName"
             android:minHeight="48dp" />
 
-        <SeekBar
-            android:id="@+id/seekBar"
-            style="@style/Widget.AppCompat.SeekBar.Discrete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:max="10"
-            android:progress="3" />
-
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
