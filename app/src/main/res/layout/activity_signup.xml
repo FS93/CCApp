@@ -104,6 +104,7 @@
             android:layout_below="@id/edt_password"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
+            android:layout_marginBottom="32dp"
             android:text="Sign up" />
 
     </RelativeLayout>
