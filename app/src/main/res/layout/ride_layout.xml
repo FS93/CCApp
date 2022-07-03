@@ -6,6 +6,7 @@
     android:layout_height="120dp"
     android:layout_margin="10dp"
     android:padding="5dp"
+    android:paddingTop="10dp"
     android:background="@drawable/background_passenger"
     android:id="@+id/layout_ride">
 
@@ -69,16 +70,16 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginStart="5dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="0dp"
         android:src="@drawable/ic_departure"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/txtDeparture"
-        app:layout_constraintTop_toTopOf="@+id/cardViewWrapperList"
+        app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/white" />
 
     <TextView
         android:id="@+id/txtDeparture"
-        android:layout_width="250dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
@@ -96,7 +97,7 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginStart="5dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="0dp"
         android:src="@drawable/ic_destination"
         app:layout_constraintBottom_toBottomOf="@+id/cardViewWrapperList"
         app:layout_constraintEnd_toEndOf="parent"
@@ -105,7 +106,7 @@
 
     <TextView
         android:id="@+id/txtDestination"
-        android:layout_width="250dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="5dp"
         android:layout_marginStart="5dp"

@@ -6,6 +6,7 @@ import android.graphics.drawable.BitmapDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.InputType
+import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.net.toUri
@@ -31,8 +32,10 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var edt_phone: EditText
     private lateinit var edt_email: EditText
     private lateinit var rtBar: RatingBar
+    private lateinit var rtBarDriver: RatingBar
     private lateinit var imgView: ImageView
     private lateinit var tx_review_number: TextView
+    private lateinit var tx_review_number_driver: TextView
     val REQUEST_CODE = 100
     private lateinit var bitmap: Bitmap
     private lateinit var baos: ByteArrayOutputStream
@@ -53,7 +56,9 @@ class ProfileActivity : AppCompatActivity() {
         edt_phone = findViewById(R.id.phone)
         edt_email = findViewById(R.id.email)
         rtBar = findViewById(R.id.ratingBar)
+        rtBarDriver = findViewById(R.id.ratingBar_driver)
         tx_review_number = findViewById(R.id.tx_ratings_number)
+        tx_review_number_driver = findViewById(R.id.tx_ratings_number_driver)
         imgView = findViewById(R.id.profileImage)
 
 
@@ -73,6 +78,7 @@ class ProfileActivity : AppCompatActivity() {
                     edt_phone.setText(user.telephoneNumber)
                     edt_email.setText(user.email)
                     rtBar.rating = user.averageReview
+                    rtBarDriver.rating = user.averageReviewDriver
 
 
                     if (!user.pictureUrl.isNullOrBlank()){
@@ -88,6 +94,7 @@ class ProfileActivity : AppCompatActivity() {
                         }
                     }
                     tx_review_number.text = "Reviews: " + user.numberOfReviews.toString()
+                    tx_review_number_driver.text = "Reviews: " + user.numberOfReviewsDriver.toString()
                 }
 
                 override fun onCancelled(error: DatabaseError) {
