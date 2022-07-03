@@ -16,13 +16,12 @@ class Ride {
 
     var driverName: String? = null
     var driverSurname: String? = null
-    var driverReview: Float? = null
 
     constructor() {
     }
 
     override fun toString(): String {
-        return "Ride(driverId=$driverId, departure=$departure, destination=$destination, price=$price, date=$date, time=$time, seats=$seats, driverName=$driverName, driverSurname=$driverSurname, driverReview=$driverReview)"
+        return "Ride(driverId=$driverId, departure=$departure, destination=$destination, price=$price, date=$date, time=$time, seats=$seats, driverName=$driverName, driverSurname=$driverSurname)"
     }
 
 

@@ -6,14 +6,10 @@ import android.graphics.drawable.BitmapDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.InputType
-import android.util.Log
-import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.net.toUri
 import com.example.ccapp.dbClasses.User
-import com.google.android.material.imageview.ShapeableImageView
-import com.google.android.material.shape.CornerFamily
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -24,8 +20,6 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import com.google.firebase.storage.ktx.storage
-import kotlinx.android.synthetic.main.activity_signup.*
-import kotlinx.android.synthetic.main.fragment_ride_dialog1.view.*
 import java.io.ByteArrayOutputStream
 import java.io.File
 
@@ -93,7 +87,7 @@ class ProfileActivity : AppCompatActivity() {
                             imgView.setImageURI(localImage.toUri())
                         }
                     }
-                    tx_review_number.text = "Reviews: " + user.numerOfReviews.toString()
+                    tx_review_number.text = "Reviews: " + user.numberOfReviews.toString()
                 }
 
                 override fun onCancelled(error: DatabaseError) {

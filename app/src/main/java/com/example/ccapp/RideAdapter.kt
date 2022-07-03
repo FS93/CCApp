@@ -60,10 +60,11 @@ class RideAdapter constructor(val context: Context, val rideList: ArrayList<Ride
             txtDestination.text = singleRide.destination
             txtPrice.text = singleRide.price.toString() + " €"
             txtRideDateTextView.text = singleRide.date + " " + singleRide.time
-            rbDriverRating.rating = singleRide.driverReview!!
 
             if (singleRide.driverId!! == FirebaseAuth.getInstance().currentUser?.uid!!.toString()){
                 rideLayout.setBackgroundResource(R.drawable.background_driver)
+            } else {
+                rideLayout.setBackgroundResource(R.drawable.background_passenger)
             }
 
             var userRef =
@@ -74,6 +75,7 @@ class RideAdapter constructor(val context: Context, val rideList: ArrayList<Ride
                 .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         var user = snapshot.getValue(User::class.java)!!
+                        rbDriverRating.rating = user.averageReviewDriver
                         if (!user.pictureUrl.isNullOrBlank()){
                             var ref = FirebaseStorage.getInstance().reference.child(user.pictureUrl!!)
                             var localImage = File.createTempFile("profile"+getRandomString(4), "jpg")

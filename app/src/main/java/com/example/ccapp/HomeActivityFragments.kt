@@ -134,6 +134,7 @@ class HomeActivityFragments : AppCompatActivity() {
             badge.isVisible = true
 
         }
+        badge.badgeTextColor = Color.GRAY
 
     }
 

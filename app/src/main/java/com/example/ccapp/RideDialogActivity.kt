@@ -53,7 +53,6 @@ class RideDialogActivity : AppIntro2() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 ride.driverName = snapshot.getValue(User::class.java)!!.name.toString()
                 ride.driverSurname = snapshot.getValue(User::class.java)!!.surname.toString()
-                ride.driverReview = snapshot.getValue(User::class.java)!!.averageReview
                 submittable = true
                 Log.d("firebase", snapshot.getValue(User::class.java)!!.toString())
             }

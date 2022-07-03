@@ -10,13 +10,11 @@ import android.widget.Toast
 import androidx.core.view.isInvisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.ccapp.dbClasses.Passenger
 import com.example.ccapp.dbClasses.Review
 import com.example.ccapp.dbClasses.Ride
 import com.example.ccapp.dbClasses.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.activity_review.*
 
 class ReviewActivity : AppCompatActivity() {
 
@@ -139,10 +137,24 @@ class ReviewActivity : AppCompatActivity() {
                             var i = userList.indexOf(user)
                             var view = rvReviews.layoutManager!!.findViewByPosition(i)
                             var stars = view!!.findViewById<RatingBar>(R.id.rbReview).rating
-
                             var u = snapshot.getValue(User::class.java)!!
-                            u.averageReview = (u.averageReview * u.numerOfReviews + stars) /( u.numerOfReviews -1)
-                            u.numerOfReviews += 1
+
+                            if(ride.driverId == u.userID){
+                                u.numberOfReviewsDriver += 1
+                                if(u.numberOfReviewsDriver == 1){
+                                    u.averageReviewDriver = stars
+                                } else {
+                                    u.averageReviewDriver = (u.averageReviewDriver * (u.numberOfReviewsDriver-1) + stars) /( u.numberOfReviewsDriver)
+                                }
+
+                            } else {
+                                u.numberOfReviews += 1
+                                if(u.numberOfReviews == 1){
+                                    u.averageReview = stars
+                                } else {
+                                    u.averageReview = (u.averageReview * (u.numberOfReviews-1) + stars) /( u.numberOfReviews)
+                                }
+                            }
                             userRef.child(user.userId).setValue(u)
                         }
 
@@ -166,9 +178,7 @@ class ReviewActivity : AppCompatActivity() {
 
             Toast.makeText(this, "Thank you for your reviews :)", Toast.LENGTH_LONG).show()
             Thread.sleep(1000)
-            val intent = Intent(this@ReviewActivity, OpenReviewsActivity::class.java)
-            finish()
-            startActivity(intent)
+            onBackPressed()
         }
 
     }

@@ -142,7 +142,7 @@ class SignupActivity : AppCompatActivity() {
 
     private fun addUserToDatabase(name: String, surname: String, telephone: String, email: String, uid: String, imageUri: String?) {
         mDbRef = FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/").reference
-        mDbRef.child("user").child(uid).setValue(User(uid, name, surname, telephone, email, imageUri,0F, 0))
+        mDbRef.child("user").child(uid).setValue(User(uid, name, surname, telephone, email, imageUri,0F, 0, 0F, 0))
     }
 
     private fun getRandomString(sizeOfRandomString: Int): String? {
