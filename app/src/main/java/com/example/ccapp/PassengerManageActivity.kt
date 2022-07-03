@@ -132,7 +132,7 @@ class PassengerManageActivity : AppCompatActivity() {
                         })
 
                         dialog.dismiss()
-                        val intent = Intent(this@PassengerManageActivity, HomeActivity::class.java)
+                        val intent = Intent(this@PassengerManageActivity, HomeActivityFragments::class.java)
                         startActivity(intent)
                         finish()
                     })

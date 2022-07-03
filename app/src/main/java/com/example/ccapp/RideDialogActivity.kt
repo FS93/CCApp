@@ -84,11 +84,6 @@ class RideDialogActivity : AppIntro2() {
     override fun onDonePressed(currentFragment: Fragment?) {
         super.onDonePressed(currentFragment)
         when(intent.extras?.getString("dialog_type")) {
-            "search" -> {
-                val intent = Intent(this@RideDialogActivity, SearchResultActivity::class.java)
-                finish()
-                startActivity(intent)
-            }
             "offer" -> {
                 val intent = Intent(this@RideDialogActivity, ConfirmationActivity::class.java)
                 finish()
@@ -136,7 +131,7 @@ class RideDialogActivity : AppIntro2() {
                 baseContext, "An error has occured",
                 Toast.LENGTH_LONG
             ).show()
-            val intent = Intent(this@RideDialogActivity, HomeActivity::class.java)
+            val intent = Intent(this@RideDialogActivity, HomeActivityFragments::class.java)
             finish()
             startActivity(intent)
         }

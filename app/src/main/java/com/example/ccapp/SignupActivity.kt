@@ -128,7 +128,7 @@ class SignupActivity : AppCompatActivity() {
                     // Sign in success, go to HomeActivity
 
 
-                    val intent = Intent(this, HomeActivity::class.java)
+                    val intent = Intent(this, HomeActivityFragments::class.java)
                     finish()
                     startActivity(intent)
                 } else {

@@ -62,7 +62,7 @@ class ReviewActivity : AppCompatActivity() {
                             baseContext, "An error has occurred",
                             Toast.LENGTH_LONG
                         ).show()
-                        val intent = Intent(this@ReviewActivity, HomeActivity::class.java)
+                        val intent = Intent(this@ReviewActivity, HomeActivityFragments::class.java)
                         finish()
                         startActivity(intent)
                     }
@@ -72,7 +72,7 @@ class ReviewActivity : AppCompatActivity() {
                                 baseContext, "Impossible to leave a review with no passengers",
                                 Toast.LENGTH_LONG
                             ).show()
-                            val intent = Intent(this@ReviewActivity, HomeActivity::class.java)
+                            val intent = Intent(this@ReviewActivity, HomeActivityFragments::class.java)
                             finish()
                             startActivity(intent)
                         }

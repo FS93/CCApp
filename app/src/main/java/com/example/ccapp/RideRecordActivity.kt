@@ -319,7 +319,7 @@ class RideRecordActivity : AppCompatActivity() {
             baseContext, "An error has occurred",
             Toast.LENGTH_LONG
         ).show()
-        val intent = Intent(this@RideRecordActivity, HomeActivity::class.java)
+        val intent = Intent(this@RideRecordActivity, HomeActivityFragments::class.java)
         finish()
         startActivity(intent)
     }

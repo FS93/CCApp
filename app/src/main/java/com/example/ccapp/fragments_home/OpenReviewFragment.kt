@@ -18,7 +18,6 @@ import com.example.ccapp.dbClasses.Ride
 import com.example.ccapp.dbClasses.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.activity_open_reviews.*
 
 class OpenReviewFragment : Fragment() {
 

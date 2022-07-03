@@ -16,7 +16,6 @@ import com.example.ccapp.RideRecordActivity
 import com.example.ccapp.dbClasses.Ride
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragment_upcoming_rides.*
 
 
