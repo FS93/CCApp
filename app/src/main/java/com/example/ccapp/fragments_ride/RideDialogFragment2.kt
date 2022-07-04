@@ -16,6 +16,7 @@ import com.github.appintro.SlidePolicy
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
+import java.util.*
 
 
 class RideDialogFragment2 : Fragment(), SlidePolicy {
@@ -34,8 +35,7 @@ class RideDialogFragment2 : Fragment(), SlidePolicy {
         if (selectedDate.isNullOrEmpty() || edtTime.text.toString().isNullOrEmpty()){
             return false
         }
-        var rda: RideDialogActivity = activity as RideDialogActivity
-        rda.setDateTime(curDate!!, edtTime.text.toString())
+
         return true
     }
 
@@ -43,11 +43,12 @@ class RideDialogFragment2 : Fragment(), SlidePolicy {
         super.onViewCreated(view, savedInstanceState)
         edtTime = view.findViewById(R.id.editTextTime)
         datePicker = view.findViewById(R.id.calendarView)
-
         datePicker.setOnDateChangeListener(OnDateChangeListener { view, year, month, dayOfMonth ->
-            val f: NumberFormat = DecimalFormat("00")
-            curDate = dayOfMonth.toString()+"/"+f.format(month)+"/"+year
-            Log.d("date", curDate!!)
+            val f=  SimpleDateFormat("dd/MM/yyyy")
+            Log.d("year", f.format(Date(year-1900, month, dayOfMonth)))
+            curDate = f.format(Date(year-1900, month, dayOfMonth))
+            var rda: RideDialogActivity = activity as RideDialogActivity
+            rda.setDateTime(curDate!!, edtTime.text.toString())
         })
     }
 
@@ -60,8 +61,8 @@ class RideDialogFragment2 : Fragment(), SlidePolicy {
     }
 
     override fun onUserIllegallyRequestedNextPage() {
-        Toast.makeText(activity,"You need to fill in the information needed to go forward!",
-            Toast.LENGTH_LONG).show()
+//        Toast.makeText(activity,"You need to fill in the information needed to go forward!",
+//            Toast.LENGTH_LONG).show()
     }
 
 }

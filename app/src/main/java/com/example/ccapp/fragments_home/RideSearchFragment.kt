@@ -87,8 +87,7 @@ class RideSearchFragment : Fragment() {
         }
         for (s in destination) Log.d("search", "Destination: " + s)
 
-
-        mDbRef.addListenerForSingleValueEvent(object: ValueEventListener {
+        mDbRef.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 rideList.clear()
                 var dFormat = SimpleDateFormat("dd/MM/yyyy")

@@ -24,9 +24,11 @@ class RideDialogFragment6Driver : Fragment(), SlidePolicy {
         }
         var rda: RideDialogActivity = activity as RideDialogActivity
         rda.setPrice(edtPrice.text.toString().toFloat())
-        rda.saveRideToDatabase()
+//        rda.saveRideToDatabase()
         return true
     }
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -4,6 +4,7 @@ import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.icu.text.DateFormat
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import android.util.Log
@@ -26,6 +27,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
+import java.util.*
 
 
 class HomeActivityFragments : AppCompatActivity() {
@@ -100,10 +102,16 @@ class HomeActivityFragments : AppCompatActivity() {
                 mDbRef.addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         var counter = 0
+                        var dFormat = SimpleDateFormat("dd/MM/yyyy")
                         for(rid in snapshot.children){
-                            if (rid.getValue(Ride::class.java)!!.passengers.contains(userID)
-                                || rid.getValue(Ride::class.java)!!.driverId == userID){
-                                counter++
+                            var tmpRide = rid.getValue(Ride::class.java)!!
+                            if (tmpRide.passengers.contains(userID)
+                                || tmpRide.driverId == userID){
+
+                                var formattedDate = dFormat.parse(tmpRide.date)
+                                if (System.currentTimeMillis() > formattedDate.time + 86400000 && !userReviewedRides.contains(tmpRide.id)){
+                                    counter++
+                                }
                             }
                         }
                         addBadge(counter)
@@ -152,10 +160,17 @@ class HomeActivityFragments : AppCompatActivity() {
                 startActivity(intent)
             }
             R.id.logout -> {
+                        val stopServiceIntent = Intent(
+            this@HomeActivityFragments,
+            NotificationService::class.java
+        )
+        stopService(stopServiceIntent)
+        Log.d("service", "stopped running")
                 Firebase.auth.signOut()
                 val intent = Intent(this@HomeActivityFragments, LoginActivity::class.java)
                 finish()
                 startActivity(intent)
+
             }
             R.id.chronology -> {
                 val intent = Intent(this@HomeActivityFragments, ChronologyActivity::class.java)
@@ -176,11 +191,5 @@ class HomeActivityFragments : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-//        val stopServiceIntent = Intent(
-//            this@HomeActivityFragments,
-//            NotificationService::class.java
-//        )
-//        stopService(stopServiceIntent)
-//        Log.d("service", "stopped running")
     }
 }

@@ -20,6 +20,7 @@ class RideDialogActivity : AppIntro2() {
     private lateinit var userRefDatabase : DatabaseReference
     private lateinit var mDbRef: DatabaseReference
     private lateinit var user : User
+    var done = false
 
     private var submittable = false
 
@@ -63,11 +64,6 @@ class RideDialogActivity : AppIntro2() {
 
         when(intent.extras?.getString("dialog_type")) {
             "search" -> {
-                addSlide(RideDialogFragment1())
-                addSlide(RideDialogFragment2())
-                addSlide(RideDialogFragment3())
-//                addSlide(RideDialogFragment5())
-                addSlide(RideDialogFragment6Passenger())
             }
             "offer" -> {
                 addSlide(RideDialogFragment1())
@@ -85,6 +81,7 @@ class RideDialogActivity : AppIntro2() {
         super.onDonePressed(currentFragment)
         when(intent.extras?.getString("dialog_type")) {
             "offer" -> {
+                saveRideToDatabase()
                 val intent = Intent(this@RideDialogActivity, ConfirmationActivity::class.java)
                 finish()
                 startActivity(intent)
@@ -93,24 +90,9 @@ class RideDialogActivity : AppIntro2() {
     }
 
     fun saveRideToDatabase(){
-//        if (submittable){
-//            ridesRefDatabase.setValue(ride).addOnSuccessListener{
-//                Toast.makeText(
-//                    baseContext, "SAVED TO DB",
-//                    Toast.LENGTH_LONG
-//                ).show()
-//            }
-//        } else {
-//            Toast.makeText(
-//                baseContext, "An error has occured",
-//                Toast.LENGTH_LONG
-//            ).show()
-//            val intent = Intent(this@RideDialogActivity, HomeActivity::class.java)
-//            finish()
-//            startActivity(intent)
-//        }
-
-        if (submittable) {
+        if (submittable && !done) {
+            done = true
+            submittable = false
             var rideRef = ridesRefDatabase.push()
             var rideKey = rideRef.key
             ride.id = rideKey
@@ -126,14 +108,6 @@ class RideDialogActivity : AppIntro2() {
                 user.ridesAsDriver.add(rideKey!!)
                 userRefDatabase.setValue(user)
             }
-        } else {
-            Toast.makeText(
-                baseContext, "An error has occured",
-                Toast.LENGTH_LONG
-            ).show()
-            val intent = Intent(this@RideDialogActivity, HomeActivityFragments::class.java)
-            finish()
-            startActivity(intent)
         }
 
     }
@@ -155,6 +129,7 @@ class RideDialogActivity : AppIntro2() {
         Log.d("datetime", date)
         ride.time = time
         Log.d("datetime", time)
+        Toast.makeText(this, ride.date + " " + ride.time, Toast.LENGTH_LONG).show()
     }
 
     fun setSeats(seats: Int){

@@ -40,6 +40,7 @@ class NotificationService : Service() {
         var userID = FirebaseAuth.getInstance().currentUser?.uid!!.toString()
         mDbRef.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                userID = FirebaseAuth.getInstance().currentUser?.uid!!.toString()
                 for (notification in snapshot.children){
                     var not = notification.getValue(com.example.ccapp.dbClasses.Notification::class.java)
                     if(not != null){
