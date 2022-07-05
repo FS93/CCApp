@@ -9,6 +9,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.ccapp.Adapters.ManageAdapter
 import com.example.ccapp.dbClasses.Notification
 import com.example.ccapp.dbClasses.Ride
 import com.example.ccapp.dbClasses.User

@@ -1,12 +1,11 @@
-package com.example.ccapp
+package com.example.ccapp.Adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.RatingBar
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
+import com.example.ccapp.R
 import com.example.ccapp.dbClasses.Review
 import com.example.ccapp.dbClasses.User
 import com.google.firebase.database.DataSnapshot
@@ -14,10 +13,8 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
-import kotlinx.android.synthetic.main.item_passenger_checkbox.view.*
 import kotlinx.android.synthetic.main.item_review.view.*
 import kotlinx.android.synthetic.main.item_review.view.txPersonName
-import kotlinx.android.synthetic.main.manage_user_item.view.*
 import java.io.File
 import java.util.*
 

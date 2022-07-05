@@ -1,10 +1,8 @@
-package com.example.ccapp
+package com.example.ccapp.Adapters
 
 import android.app.AlertDialog
-import android.app.PendingIntent.getActivity
 import android.content.Context
 import android.content.DialogInterface
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,11 +10,10 @@ import android.widget.Button
 import android.widget.ImageView
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
+import com.example.ccapp.R
 import com.example.ccapp.dbClasses.Notification
-import com.example.ccapp.dbClasses.Review
 import com.example.ccapp.dbClasses.Ride
 import com.example.ccapp.dbClasses.User
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.item_review.view.*

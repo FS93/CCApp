@@ -8,6 +8,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.ccapp.Adapters.PassengerAdapter
 import com.example.ccapp.dbClasses.Notification
 import com.example.ccapp.dbClasses.Passenger
 import com.example.ccapp.dbClasses.Ride

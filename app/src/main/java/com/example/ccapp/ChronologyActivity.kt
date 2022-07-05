@@ -1,11 +1,10 @@
 package com.example.ccapp
 
-import android.content.Intent
-import android.icu.text.SimpleDateFormat
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.ccapp.Adapters.RideAdapter
 import com.example.ccapp.dbClasses.Ride
 import com.example.ccapp.dbClasses.User
 import com.google.firebase.auth.FirebaseAuth

@@ -1,16 +1,14 @@
-package com.example.ccapp
+package com.example.ccapp.Adapters
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat.startActivity
 import androidx.core.net.toUri
-import androidx.core.view.isInvisible
 import androidx.recyclerview.widget.RecyclerView
+import com.example.ccapp.ProfileActivity
+import com.example.ccapp.R
 import kotlinx.android.synthetic.main.item_passenger_checkbox.view.*
 import com.example.ccapp.dbClasses.Passenger
 import com.example.ccapp.dbClasses.User
@@ -19,7 +17,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
-import kotlinx.android.synthetic.main.activity_ride_record.*
 import java.io.File
 import java.util.*
 

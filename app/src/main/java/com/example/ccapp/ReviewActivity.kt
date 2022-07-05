@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.core.view.isInvisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.ccapp.Adapters.ReviewAdapter
 import com.example.ccapp.dbClasses.Review
 import com.example.ccapp.dbClasses.Ride
 import com.example.ccapp.dbClasses.User

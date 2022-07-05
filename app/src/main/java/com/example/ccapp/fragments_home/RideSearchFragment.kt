@@ -13,7 +13,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ccapp.R
-import com.example.ccapp.RideAdapter
+import com.example.ccapp.Adapters.RideAdapter
 import com.example.ccapp.RideRecordActivity
 import com.example.ccapp.dbClasses.Ride
 import com.google.firebase.auth.FirebaseAuth
