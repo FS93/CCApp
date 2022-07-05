@@ -8,10 +8,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -61,7 +58,7 @@ class LoginActivity : AppCompatActivity() {
         // Check if user is signed in (non-null) - if so, got to HomeActivity.
         val currentUser = mAuth.currentUser
         if(currentUser != null){
-            val intent = Intent(this, HomeActivityFragments::class.java)
+            val intent = Intent(this, HomeActivity::class.java)
             finish()
             startActivity(intent)
         }
@@ -72,7 +69,7 @@ class LoginActivity : AppCompatActivity() {
         mAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    val intent = Intent(this@LoginActivity, HomeActivityFragments::class.java)
+                    val intent = Intent(this@LoginActivity, HomeActivity::class.java)
                     finish()
                     startActivity(intent)
                 } else {

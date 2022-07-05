@@ -14,7 +14,6 @@ import com.example.ccapp.dbClasses.Ride
 import com.example.ccapp.dbClasses.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.activity_passenger_manage.*
 
 
 class PassengerManageActivity : AppCompatActivity() {
@@ -132,7 +131,7 @@ class PassengerManageActivity : AppCompatActivity() {
                         })
 
                         dialog.dismiss()
-                        val intent = Intent(this@PassengerManageActivity, HomeActivityFragments::class.java)
+                        val intent = Intent(this@PassengerManageActivity, HomeActivity::class.java)
                         startActivity(intent)
                         finish()
                     })

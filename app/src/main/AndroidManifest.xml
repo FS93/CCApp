@@ -21,7 +21,7 @@
             android:exported="true" />
 
         <activity
-            android:name=".HomeActivityFragments"
+            android:name=".HomeActivity"
             android:exported="false" />
         <activity
             android:name=".PassengerManageActivity"

@@ -224,7 +224,7 @@ class RideRecordActivity : AppCompatActivity() {
                                                     override fun onCancelled(error: DatabaseError){}
                                                 })
                                                 dialog.dismiss()
-                                                var intent = Intent(this@RideRecordActivity, HomeActivityFragments::class.java)
+                                                var intent = Intent(this@RideRecordActivity, HomeActivity::class.java)
                                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                                                 startActivity(intent)
                                             })
@@ -317,7 +317,7 @@ class RideRecordActivity : AppCompatActivity() {
             baseContext, "An error has occurred",
             Toast.LENGTH_LONG
         ).show()
-        val intent = Intent(this@RideRecordActivity, HomeActivityFragments::class.java)
+        val intent = Intent(this@RideRecordActivity, HomeActivity::class.java)
         finish()
         startActivity(intent)
     }

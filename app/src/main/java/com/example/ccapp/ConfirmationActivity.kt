@@ -16,7 +16,7 @@ class ConfirmationActivity : AppCompatActivity() {
         btnHome = findViewById(R.id.btnHome)
 
         btnHome.setOnClickListener {
-            val intent = Intent(this@ConfirmationActivity, HomeActivityFragments::class.java)
+            val intent = Intent(this@ConfirmationActivity, HomeActivity::class.java)
             finish()
             startActivity(intent)
         }
