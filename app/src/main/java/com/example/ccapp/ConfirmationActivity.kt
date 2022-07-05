@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 
+// displayed after the RideDialogueActivity, i.e. when a new ride is created by the driver
 class ConfirmationActivity : AppCompatActivity() {
 
     private lateinit var btnHome: Button

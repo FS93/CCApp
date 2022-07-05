@@ -16,6 +16,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import kotlin.random.Random
 
 
 class NotificationService : Service() {
@@ -75,8 +76,8 @@ class NotificationService : Service() {
     }
 
     fun sendNotification(text: String) {
-        val notificationID = 101
-        val channelID = "com.example.notifydemo.news"
+        val notificationID = Random.nextInt(2000)
+        val channelID = "com.ccapp.news"
         val notification = Notification.Builder(this@NotificationService, channelID)
             .setContentTitle("CCApp")
             .setContentText(text)

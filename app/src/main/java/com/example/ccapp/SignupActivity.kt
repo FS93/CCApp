@@ -33,32 +33,24 @@ class SignupActivity : AppCompatActivity() {
     private lateinit var edt_surname: EditText
     private lateinit var edt_telephone: EditText
     lateinit var btnSignup: Button
-    val pickImage = 0
-    private lateinit var mAuth: FirebaseAuth
+
     val REQUEST_CODE = 100
-    lateinit var imagesRef: StorageReference
     var imageUrl: String? = null
-
-    private lateinit var mDbRef: DatabaseReference
-
     private lateinit var bitmap: Bitmap
     private lateinit var baos: ByteArrayOutputStream
     private lateinit var uploadTask: UploadTask
-
     private var imagePicked = false
+
+    // Firebase
+    private lateinit var mDbRef: DatabaseReference
+    lateinit var imagesRef: StorageReference
+    private lateinit var mAuth: FirebaseAuth
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
-
-        mAuth = Firebase.auth
-
-        profilePicture = findViewById(R.id.ivProfilePicture)
-        profilePicture.setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK)
-            intent.type = "image/*"
-            startActivityForResult(intent, REQUEST_CODE)
-        }
 
         edt_email = findViewById(R.id.edt_email)
         edt_password = findViewById(R.id.edt_password)
@@ -66,10 +58,21 @@ class SignupActivity : AppCompatActivity() {
         edt_surname = findViewById(R.id.edt_surname)
         edt_telephone = findViewById(R.id.edt_telephone)
 
+        mAuth = Firebase.auth
+
+        profilePicture = findViewById(R.id.ivProfilePicture)
+
+        // on click on the image, open the Android Image Picker
+        profilePicture.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/*"
+            startActivityForResult(intent, REQUEST_CODE)
+        }
 
         val storage = Firebase.storage
         val storageRef = storage.reference
 
+        // generate URL for profile picture &
         imageUrl = "images/"+getRandomString(20)
         imagesRef = storageRef.child(imageUrl!!)
 
@@ -81,9 +84,9 @@ class SignupActivity : AppCompatActivity() {
             val email = edt_email.text.toString()
             val password = edt_password.text.toString()
             var telephone = edt_telephone.text.toString()
-            // validity check
+            // completeness check
             if (email != "" && password != "" && surname != "" && name != "") {
-                signup(name, surname, telephone, email, password, imageUrl)
+                signup(name, surname, telephone, email, password)
             } else {
                 Toast.makeText(this, "Please enter your credentials", Toast.LENGTH_SHORT).show()
             }
@@ -92,6 +95,7 @@ class SignupActivity : AppCompatActivity() {
 
     }
 
+    // function that is called when an image is chosen
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
@@ -100,20 +104,24 @@ class SignupActivity : AppCompatActivity() {
             profilePicture.isDrawingCacheEnabled = true
             profilePicture.buildDrawingCache()
 
+            // converting image to bitmap
             bitmap = (profilePicture.drawable as BitmapDrawable).bitmap
             baos = ByteArrayOutputStream()
             imagePicked = true
         }
     }
 
-    private fun signup(name: String, surname: String, telephone: String, email: String, password: String, imageUri: String?) {
+    private fun signup(name: String, surname: String, telephone: String, email: String, password: String) {
         mAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     if(imagePicked){
+
+                        // convert Bitmap to JPEG
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
                         var data = baos.toByteArray()
 
+                        // upload image to the Storage DB
                         uploadTask = imagesRef.putBytes(data)
                         uploadTask.addOnFailureListener {
                             Toast.makeText(this, "upload failed", Toast.LENGTH_SHORT).show()
@@ -124,10 +132,11 @@ class SignupActivity : AppCompatActivity() {
                         imageUrl = null
                     }
                     Log.d("SignUp", "createUserWithEmail:success")
+
+                    // create user in the Realtime DB & use his UID form the Authentication
                     addUserToDatabase(name, surname, telephone, email, mAuth.currentUser?.uid!!, imageUrl)
+
                     // Sign in success, go to HomeActivity
-
-
                     val intent = Intent(this, HomeActivity::class.java)
                     finish()
                     startActivity(intent)
