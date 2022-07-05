@@ -66,7 +66,6 @@ class ProfileActivity : AppCompatActivity() {
         var userRef =
             FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
                 .getReference("user")
-        //userRef.child(FirebaseAuth.getInstance().currentUser?.uid!!)
         var userID = intent.getStringExtra("userID").toString()
 
         userRef.child(userID)

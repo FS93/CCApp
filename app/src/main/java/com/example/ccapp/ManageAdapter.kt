@@ -36,7 +36,6 @@ class ManageAdapter (var userList: List<User>, var rideId: String, var context: 
     override fun onBindViewHolder(holder: ManageViewHolder, position: Int) {
         holder.itemView.apply {
             txPersonName.text = userList[position].name + " " + userList[position].surname
-//            ivAvatar.setImageResource(reviews[position].avatar)
             var imageRef = FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
                 .getReference("user/"+userList[position].userID)
             imageRef.addValueEventListener(object: ValueEventListener{

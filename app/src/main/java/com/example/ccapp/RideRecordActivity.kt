@@ -125,11 +125,6 @@ class RideRecordActivity : AppCompatActivity() {
                     })
 
 
-
-
-
-
-
                 departure.text = ride.departure
                 destination.text = ride.destination
                 drivername.text = ride.driverName + " " + ride.driverSurname

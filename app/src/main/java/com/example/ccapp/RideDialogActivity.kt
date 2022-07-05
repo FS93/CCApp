@@ -47,9 +47,6 @@ class RideDialogActivity : AppIntro2() {
             }
         })
 
-//        mDbRef = FirebaseDatabase
-//            .getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
-//            .getReference("user/" + FirebaseAuth.getInstance().currentUser?.uid!!)
         userRefDatabase.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 ride.driverName = snapshot.getValue(User::class.java)!!.name.toString()
@@ -71,7 +68,7 @@ class RideDialogActivity : AppIntro2() {
                 addSlide(RideDialogFragment3())
                 addSlide(RideDialogFragment4())
 //                addSlide(RideDialogFragment5())
-                addSlide(RideDialogFragment6Driver())
+                addSlide(RideDialogFragment5())
             }
         }
 

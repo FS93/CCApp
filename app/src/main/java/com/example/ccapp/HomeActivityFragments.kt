@@ -156,7 +156,6 @@ class HomeActivityFragments : AppCompatActivity() {
             R.id.profile -> {
                 val intent = Intent(this@HomeActivityFragments, ProfileActivity::class.java)
                 intent.putExtra("userID", userID)
-//                finish()
                 startActivity(intent)
             }
             R.id.logout -> {
@@ -175,7 +174,6 @@ class HomeActivityFragments : AppCompatActivity() {
             R.id.chronology -> {
                 val intent = Intent(this@HomeActivityFragments, ChronologyActivity::class.java)
                 intent.putExtra("userID", userID)
-//                finish()
                 startActivity(intent)
             }
         }

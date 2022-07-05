@@ -12,7 +12,7 @@ import com.example.ccapp.RideDialogActivity
 import com.github.appintro.SlidePolicy
 
 
-class RideDialogFragment6Driver : Fragment(), SlidePolicy {
+class RideDialogFragment5 : Fragment(), SlidePolicy {
 
     private lateinit var edtPrice: EditText
 

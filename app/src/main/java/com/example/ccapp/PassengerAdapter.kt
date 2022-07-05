@@ -41,7 +41,6 @@ class PassengerAdapter(var passengers: List<Passenger>) :
 
         if (passengers[position].seatTaken) {
 
-            // -------- REPLACE WITH USER'S PROFILE PICTURE ------------
             holder.itemView.ivPassenger.setImageDrawable(null)
 
             var userRefImage =
