@@ -12,16 +12,20 @@ import com.github.appintro.AppIntro2
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
+//uses third party library AppIntro2
 class RideDialogActivity : AppIntro2() {
 
+    //empty ride to be filled as the carousel proceeds
     private var ride: Ride = Ride()
     private lateinit var database: FirebaseDatabase
     private lateinit var ridesRefDatabase : DatabaseReference
     private lateinit var userRefDatabase : DatabaseReference
-    private lateinit var mDbRef: DatabaseReference
     private lateinit var user : User
     var done = false
 
+    //needed to make sure that the application has
+    //the data from the user to be able to correctly
+    //create the ride
     private var submittable = false
 
 
@@ -29,7 +33,7 @@ class RideDialogActivity : AppIntro2() {
         super.onCreate(savedInstanceState)
         showStatusBar(true)
 
-        isWizardMode = true
+        isWizardMode = true // part of the library
         ride.driverId = FirebaseAuth.getInstance().currentUser?.uid!!
 
         database =
@@ -37,18 +41,9 @@ class RideDialogActivity : AppIntro2() {
         ridesRefDatabase = database.getReference("ride")
         userRefDatabase = database.getReference("user").child(FirebaseAuth.getInstance().currentUser?.uid!!)
 
-        userRefDatabase.addValueEventListener(object: ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot){
-                user = snapshot.getValue(User::class.java)!!
-            }
-
-            override fun onCancelled(error: DatabaseError){
-
-            }
-        })
-
         userRefDatabase.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                user = snapshot.getValue(User::class.java)!!
                 ride.driverName = snapshot.getValue(User::class.java)!!.name.toString()
                 ride.driverSurname = snapshot.getValue(User::class.java)!!.surname.toString()
                 submittable = true
@@ -59,39 +54,35 @@ class RideDialogActivity : AppIntro2() {
             }
         })
 
-        when(intent.extras?.getString("dialog_type")) {
-            "search" -> {
-            }
-            "offer" -> {
-                addSlide(RideDialogFragment1())
-                addSlide(RideDialogFragment2())
-                addSlide(RideDialogFragment3())
-                addSlide(RideDialogFragment4())
-//                addSlide(RideDialogFragment5())
-                addSlide(RideDialogFragment5())
-            }
-        }
+        //adding the fragments in the order to display to the user
+        addSlide(RideDialogFragment1())
+        addSlide(RideDialogFragment2())
+        addSlide(RideDialogFragment3())
+        addSlide(RideDialogFragment4())
+        addSlide(RideDialogFragment5())
 
     }
 
+    //gets called after the last fragment is completed
     override fun onDonePressed(currentFragment: Fragment?) {
         super.onDonePressed(currentFragment)
-        when(intent.extras?.getString("dialog_type")) {
-            "offer" -> {
-                saveRideToDatabase()
-                val intent = Intent(this@RideDialogActivity, ConfirmationActivity::class.java)
-                finish()
-                startActivity(intent)
-            }
-        }
+        saveRideToDatabase()
+        val intent = Intent(this@RideDialogActivity, ConfirmationActivity::class.java)
+        finish()
+        startActivity(intent)
     }
 
-    fun saveRideToDatabase(){
+    private fun saveRideToDatabase(){
         if (submittable && !done) {
+            //done flag is needed because the onDonePressed might be called
+            //multiple times
             done = true
             submittable = false
+
+            //get the key of the ride the app we create
             var rideRef = ridesRefDatabase.push()
             var rideKey = rideRef.key
+
             ride.id = rideKey
             if (rideRef == null) {
                 Log.w("firebase", "Couldn't get push key for posts")
@@ -104,6 +95,9 @@ class RideDialogActivity : AppIntro2() {
         }
 
     }
+
+
+    //these functions fill the ride as the user proceeds
 
     fun setDeparture(departure: String){
         ride.departure = departure
@@ -122,7 +116,6 @@ class RideDialogActivity : AppIntro2() {
         Log.d("datetime", date)
         ride.time = time
         Log.d("datetime", time)
-        Toast.makeText(this, ride.date + " " + ride.time, Toast.LENGTH_LONG).show()
     }
 
     fun setSeats(seats: Int){

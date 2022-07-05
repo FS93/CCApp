@@ -36,6 +36,7 @@ class RideAdapter constructor(val context: Context, val rideList: ArrayList<Ride
             }
         }
 
+        // all of the fields to display
         val txtDriverName = itemView.findViewById<TextView>(R.id.txtDriverName)
         val txtDeparture = itemView.findViewById<TextView>(R.id.txtDeparture)
         val txtDestination = itemView.findViewById<TextView>(R.id.txtDestination)
@@ -51,16 +52,25 @@ class RideAdapter constructor(val context: Context, val rideList: ArrayList<Ride
         return RideViewHolder(view)
     }
 
+    //function that fills all of the data
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val singleRide = rideList[position]
         holder as RideViewHolder
+
+        //filling all of the fields with data the singleRide
         holder.apply {
             txtDriverName.text = singleRide.driverName + " " + singleRide.driverSurname
             txtDeparture.text = singleRide.departure
             txtDestination.text = singleRide.destination
-            txtPrice.text = singleRide.price.toString() + " €"
+
+            val currency = Currency.getInstance("EUR")
+            val currencyFormat = java.text.NumberFormat.getCurrencyInstance(Locale.ITALY)
+            currencyFormat.currency = currency
+            txtPrice.text = currencyFormat.format(singleRide.price)
+
             txtRideDateTextView.text = singleRide.date + " " + singleRide.time
 
+            //setting layout background with rounded corners
             if (singleRide.driverId!! == FirebaseAuth.getInstance().currentUser?.uid!!.toString()){
                 rideLayout.setBackgroundResource(R.drawable.background_driver)
             } else {
@@ -71,6 +81,7 @@ class RideAdapter constructor(val context: Context, val rideList: ArrayList<Ride
                 FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
                     .getReference("user")
 
+            //fetching the data from the driver to download its image
             userRef.child(singleRide.driverId!!)
                 .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
@@ -78,7 +89,7 @@ class RideAdapter constructor(val context: Context, val rideList: ArrayList<Ride
                         rbDriverRating.rating = user.averageReviewDriver
                         if (!user.pictureUrl.isNullOrBlank()){
                             var ref = FirebaseStorage.getInstance().reference.child(user.pictureUrl!!)
-                            var localImage = File.createTempFile("profile"+getRandomString(4), "jpg")
+                            var localImage = File.createTempFile("profile"+getRandomString(10), "jpg")
                             ref.getFile(localImage).addOnSuccessListener {
                                 ivAvatar.setImageURI(localImage.toUri())
                             }
@@ -92,6 +103,7 @@ class RideAdapter constructor(val context: Context, val rideList: ArrayList<Ride
         }
     }
 
+    //function necessary for the adapter
     override fun getItemCount(): Int {
         return rideList.size
     }

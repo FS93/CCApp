@@ -71,6 +71,7 @@ class ProfileActivity : AppCompatActivity() {
         userRef.child(userID)
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
+                    //fill the fields
                     var user = snapshot.getValue(User::class.java)!!
                     edt_first_name.setText(user.name)
                     edt_last_name.setText(user.surname)
@@ -78,8 +79,11 @@ class ProfileActivity : AppCompatActivity() {
                     edt_email.setText(user.email)
                     rtBar.rating = user.averageReview
                     rtBarDriver.rating = user.averageReviewDriver
+                    tx_review_number.text = "Reviews: " + user.numberOfReviews.toString()
+                    tx_review_number_driver.text = "Reviews: " + user.numberOfReviewsDriver.toString()
 
 
+                    //download the image
                     if (!user.pictureUrl.isNullOrBlank()){
                         imagesRef = storageRef.child(user.pictureUrl!!)
                     }
@@ -92,8 +96,6 @@ class ProfileActivity : AppCompatActivity() {
                             imgView.setImageURI(localImage.toUri())
                         }
                     }
-                    tx_review_number.text = "Reviews: " + user.numberOfReviews.toString()
-                    tx_review_number_driver.text = "Reviews: " + user.numberOfReviewsDriver.toString()
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -103,6 +105,7 @@ class ProfileActivity : AppCompatActivity() {
 
 
 
+        //if the profile is the one of the current user he can edit his fields
         if (userID == FirebaseAuth.getInstance().currentUser?.uid!!.toString()) {
             imgView.setOnClickListener {
                 val intent = Intent(Intent.ACTION_PICK)
@@ -135,9 +138,12 @@ class ProfileActivity : AppCompatActivity() {
                             user.surname = edt_last_name.text.toString()
                             user.email = edt_email.text.toString()
                             user.telephoneNumber = edt_phone.text.toString()
+
+                            //save the user to the db
                             userRef.child(FirebaseAuth.getInstance().currentUser?.uid!!)
                                 .setValue(user)
 
+                            //if image has changed it updates it
                             if(imagePicked){
                                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
                                 var data = baos.toByteArray()
@@ -154,7 +160,6 @@ class ProfileActivity : AppCompatActivity() {
                         }
 
                         override fun onCancelled(error: DatabaseError) {
-                            TODO("Not yet implemented")
                         }
                     })
 

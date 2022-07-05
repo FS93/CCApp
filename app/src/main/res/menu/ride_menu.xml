@@ -10,7 +10,7 @@
         <menu>
             <item
                 android:id="@+id/remove"
-                android:title="Remove"
+                android:title="Delete ride"
                 app:showAsAction="never" />
         </menu>
     </item>

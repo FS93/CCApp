@@ -18,6 +18,8 @@ class RideDialogFragment1() : Fragment(), SlidePolicy {
     override val isPolicyRespected: Boolean
         get() = check()
 
+
+    //called when users go to the next page
     private fun check(): Boolean{
         if (edtLocation.text.toString() == ""){
             return false

@@ -35,13 +35,10 @@ class ChronologyActivity : AppCompatActivity() {
             FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
                 .getReference("user").child(FirebaseAuth.getInstance().currentUser?.uid!!)
 
+        //fetching user from database
         userRef.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                var rides = snapshot.getValue(User::class.java)!!.ridesAsDriver
-                rides += snapshot.getValue(User::class.java)!!.ridesAsPassenger
-
-                Log.d("reviews", rides.toString())
-
+                //fetching all of the rides
                 mDbRef.addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         ridesList.clear()
@@ -68,16 +65,5 @@ class ChronologyActivity : AppCompatActivity() {
             }
         })
 
-//        rideAdapter.onItemClick = { ride ->
-//            val intent = Intent(this@ChronologyActivity, RideRecordActivity::class.java)
-//            intent.putExtra("ride_id", ride.id)
-//            intent.putExtra("review", true)
-//            if (ride.driverId == FirebaseAuth.getInstance().currentUser?.uid!!) {
-//                intent.putExtra("user_type", "driver")
-//            } else {
-//                intent.putExtra("user_type", "passenger")
-//            }
-//            startActivity(intent)
-//        }
     }
 }

@@ -30,8 +30,11 @@ class ReviewAdapter(var reviews: List<Review>) : RecyclerView.Adapter<ReviewAdap
     override fun onBindViewHolder(holder: ReviewViewHolder, position: Int) {
         holder.itemView.apply {
             txPersonName.text = reviews[position].personName
+            //set default image
             ivAvatarReview.setImageResource(reviews[position].avatar)
         }
+
+        //download the profile picture of the user
         var imageRef = FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
             .getReference("user").child(reviews[position].userId!!)
         imageRef.addListenerForSingleValueEvent(object: ValueEventListener{

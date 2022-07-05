@@ -28,37 +28,47 @@ class ReviewActivity : AppCompatActivity() {
     private lateinit var dbRef: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d("Review", "Activity Start")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_review)
+
+        //App needs to know if user is driver or passenger
+        //To give the list of passengers or the driver
         userType = intent.getStringExtra("user_type").toString()
-        Log.d("Review", userType)
         rideId = intent.getStringExtra("ride_id").toString()
-        Log.d("Review", rideId)
 
         btnSaveReviews = findViewById(R.id.btnSaveReviews)
 
-        var userList = mutableListOf<Review>()
 
+        //linking the recycler view with the adapter
+        var userList = mutableListOf<Review>()
         val adapter = ReviewAdapter(userList)
         rvReviews = findViewById(R.id.rvReviews)
         rvReviews.layoutManager = LinearLayoutManager(this)
         rvReviews.adapter = adapter
 
+
+        //database reference to the selected ride
         dbRef =
             FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
                 .getReference("ride/" + rideId!!)
+
+        //database reference to the user list
         var userRef =
             FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
                 .getReference("user")
 
+
+        //fetching the ride to fetch either the driver or the passengers
         dbRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 userList.clear()
                 adapter.notifyDataSetChanged()
                 ride = snapshot.getValue(Ride::class.java)!!
+
                 when (userType) {
                     null -> {
+                        //if no userType defined go home
+                        //just in case
                         Toast.makeText(
                             baseContext, "An error has occurred",
                             Toast.LENGTH_LONG
@@ -68,6 +78,8 @@ class ReviewActivity : AppCompatActivity() {
                         startActivity(intent)
                     }
                     "driver" -> {
+                        //download all the passengers
+                        //give the list to the adapter
                         if (ride.passengers.isEmpty()){
                             Toast.makeText(
                                 baseContext, "Impossible to leave a review with no passengers",
@@ -99,6 +111,8 @@ class ReviewActivity : AppCompatActivity() {
                         }
                     }
                     "passenger" -> {
+                        //fetch the driver
+                        //give the driver to the recyclerView
                         userRef.child(ride.driverId!!)
                             .addListenerForSingleValueEvent(object : ValueEventListener {
                                 override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -127,6 +141,9 @@ class ReviewActivity : AppCompatActivity() {
         })
 
 
+        //need to differentiate two cases
+        //if the user reviews the driver it will update his driverReview counter
+        //if the user reviews the passengers it will update their passengerReview counter
         btnSaveReviews.setOnClickListener {
             rvReviews.isInvisible = true
             btnSaveReviews.isInvisible = true
@@ -140,6 +157,8 @@ class ReviewActivity : AppCompatActivity() {
                             var stars = view!!.findViewById<RatingBar>(R.id.rbReview).rating
                             var u = snapshot.getValue(User::class.java)!!
 
+                            //if you are the driver
+                            //review the passengers
                             if(ride.driverId == u.userID){
                                 u.numberOfReviewsDriver += 1
                                 if(u.numberOfReviewsDriver == 1){
@@ -148,7 +167,7 @@ class ReviewActivity : AppCompatActivity() {
                                     u.averageReviewDriver = (u.averageReviewDriver * (u.numberOfReviewsDriver-1) + stars) /( u.numberOfReviewsDriver)
                                 }
 
-                            } else {
+                            } else { //else review the driver
                                 u.numberOfReviews += 1
                                 if(u.numberOfReviews == 1){
                                     u.averageReview = stars
@@ -164,6 +183,9 @@ class ReviewActivity : AppCompatActivity() {
                     })
             }
 
+            //add the current ride to the reviewedRide list inside a profile
+            //so that the ride will not be displayed anymore in the rides to review
+            //fetch the user and edit its reviewedRide array
             userRef.child(FirebaseAuth.getInstance().currentUser?.uid!!).addListenerForSingleValueEvent(object: ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
                     var currentUser = snapshot.getValue(User::class.java)!!
@@ -179,7 +201,9 @@ class ReviewActivity : AppCompatActivity() {
 
             Toast.makeText(this, "Thank you for your reviews :)", Toast.LENGTH_LONG).show()
             Thread.sleep(1000)
-            onBackPressed()
+            var intent = Intent(this@ReviewActivity, HomeActivity::class.java)
+            finish()
+            startActivity(intent)
         }
 
     }

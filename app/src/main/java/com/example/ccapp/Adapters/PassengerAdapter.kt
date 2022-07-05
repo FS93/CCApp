@@ -40,23 +40,27 @@ class PassengerAdapter(var passengers: List<Passenger>, var context: Context) :
 
         if (passengers[position].seatTaken) {
 
-            // Link to the Driver Profile
+            // Link to the passenger Profile
             holder.itemView.setOnClickListener() {
                 val intent = Intent(context, ProfileActivity::class.java)
                 intent.putExtra("userID", passengers[position].userID )
-                //finish()
                 context.startActivity(intent)
             }
 
-            holder.itemView.ivPassenger.setImageDrawable(null)
 
             var userRefImage =
                 FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
                     .getReference("user")
+
+            //fetching the image of the user from the database
             userRefImage.child(passengers[position].userID!!)
                 .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         var user = snapshot.getValue(User::class.java)!!
+                        //check if pictureUrl is not empty
+                        //then I download the image
+                        //save it into a temporary file
+                        //set the url of the temporary file as the url of the image view
                         if (!user.pictureUrl.isNullOrEmpty()) {
                             var ref =
                                 FirebaseStorage.getInstance().reference.child(user.pictureUrl!!)
@@ -86,6 +90,7 @@ class PassengerAdapter(var passengers: List<Passenger>, var context: Context) :
         return passengers.size
     }
 
+    //necessary to avoid having "/" character in the name of the temp file
     private fun getRandomString(sizeOfRandomString: Int): String? {
         val random = Random()
         val ALLOWED_CHARACTERS = "0123456789qwertyuiopasdfghjklzxcvbnm"

@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,7 +24,7 @@ class PassengerManageActivity : AppCompatActivity() {
     private lateinit var rvManage: RecyclerView
     private lateinit var ride: Ride
 
-    private lateinit var dbRef: DatabaseReference
+    private lateinit var rideReference: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,17 +37,25 @@ class PassengerManageActivity : AppCompatActivity() {
         rvManage.layoutManager = LinearLayoutManager(this)
         rvManage.adapter = adapter
 
-        dbRef =
+        rideReference =
             FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
                 .getReference("ride/" + rideId!!)
-        var userRef =
+        val userRef =
             FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
                 .getReference("user")
-        dbRef.addValueEventListener(object : ValueEventListener {
+
+        //populate the list of passenger
+        //get the ride reference
+        //clean the adapter
+        //fill it again with the passengers
+        rideReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 userList.clear()
                 adapter.notifyDataSetChanged()
+                //get ride from database
                 ride = snapshot.getValue(Ride::class.java)!!
+
+                //get passengers and add the to the userList
                 for (pas in ride.passengers) {
                     userRef.child(pas)
                         .addListenerForSingleValueEvent(object : ValueEventListener {
@@ -74,6 +83,8 @@ class PassengerManageActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
+
+    //menu to delete the ride
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.remove -> {
@@ -85,13 +96,12 @@ class PassengerManageActivity : AppCompatActivity() {
                 builder.setPositiveButton(
                     "YES",
                     DialogInterface.OnClickListener { dialog, which -> // Do nothing but close the dialog
-                        dbRef =
-                            FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
-                                .getReference("ride/" + rideId!!)
                         var userRef =
                             FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
                                 .getReference("user")
-                        dbRef.addListenerForSingleValueEvent(object : ValueEventListener {
+
+                        // get all of the passenger
+                        rideReference.addListenerForSingleValueEvent(object : ValueEventListener {
                             override fun onDataChange(snapshot: DataSnapshot) {
                                 ride = snapshot.getValue(Ride::class.java)!!
                                 for (pas in ride.passengers) { //remove link from passenger
@@ -105,6 +115,7 @@ class PassengerManageActivity : AppCompatActivity() {
                                             override fun onCancelled(databaseError: DatabaseError) {
                                             }
                                         })
+                                    //notification for each deleted passenger
                                     val notRef = FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
                                         .getReference("notification").push()
                                     notRef.setValue(Notification(pas, "The ride from ${ride.departure} to ${ride.destination} has been deleted by the driver!"))
@@ -122,8 +133,9 @@ class PassengerManageActivity : AppCompatActivity() {
                                             TODO("Not yet implemented")
                                         }
                                     })
+
                                 //delete the whole ride
-                                dbRef.removeValue()
+                                rideReference.removeValue()
                             }
 
                             override fun onCancelled(error: DatabaseError) {
@@ -141,8 +153,10 @@ class PassengerManageActivity : AppCompatActivity() {
                     "NO",
                     DialogInterface.OnClickListener { dialog, which -> // Do nothing
                         dialog.dismiss()
+
                     })
 
+                //show the dialog
                 val alert: AlertDialog = builder.create()
                 alert.show()
             }

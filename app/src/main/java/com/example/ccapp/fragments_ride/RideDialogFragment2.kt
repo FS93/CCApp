@@ -61,8 +61,8 @@ class RideDialogFragment2 : Fragment(), SlidePolicy {
     }
 
     override fun onUserIllegallyRequestedNextPage() {
-//        Toast.makeText(activity,"You need to fill in the information needed to go forward!",
-//            Toast.LENGTH_LONG).show()
+        Toast.makeText(activity,"You need to fill in the information needed to go forward!",
+            Toast.LENGTH_LONG).show()
     }
 
 }

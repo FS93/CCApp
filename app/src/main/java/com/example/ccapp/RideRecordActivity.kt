@@ -45,15 +45,33 @@ class RideRecordActivity : AppCompatActivity() {
 
 
 
+    //Activity is used for in the following cases:
+    // if passenger:
+    //  -join
+    //  -unjoin
+    // if driver:
+    //  -can open the manageActivity
+    // if the ride has expired
+    //  - everyone can open the review activity
+    //
+    // so we need to change the clickListener of the btnAction
+    // and its text
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ride_record)
 
         id = intent.getStringExtra("ride_id").toString()
+        //need to distinguish if:
+        // - user not joined
+        // - user is passenger
+        // - user is driver
+        // - the drive has expired and the user needs to review
         userType = intent.getStringExtra("user_type").toString()
         var user: User
 
+
+        //referencing the data
         departure = findViewById<TextView>(R.id.txtRideRecordDeparture)
         destination = findViewById<TextView>(R.id.txtRideRecordDestination)
         drivername = findViewById<TextView>(R.id.txtRideRecordDriverName)
@@ -132,6 +150,8 @@ class RideRecordActivity : AppCompatActivity() {
                 dateTime.text = ride.date + " " + ride.time
                 price.text = currencyFormat.format(ride.price)
 
+
+
                 btnAction.setOnClickListener {
                     var userRef = FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
                         .getReference("user").child(FirebaseAuth.getInstance().currentUser?.uid!!)
@@ -158,7 +178,8 @@ class RideRecordActivity : AppCompatActivity() {
                                 finish()
                                 startActivity(intent)
                             }
-                            "passenger" -> { //unjoin
+                            "passenger" -> {
+                                //unjoin
                                 if(ride.passengers.contains(FirebaseAuth.getInstance().currentUser?.uid!!)){
                                     val builder: AlertDialog.Builder = AlertDialog.Builder(this@RideRecordActivity)
                                     builder.setTitle("Confirm")
@@ -183,6 +204,7 @@ class RideRecordActivity : AppCompatActivity() {
                                                 override fun onCancelled(error: DatabaseError){}
                                             })
                                             dialog.dismiss()
+                                            Toast.makeText(this@RideRecordActivity, "You successfully unjoined the ride :(", Toast.LENGTH_LONG).show()
                                             onBackPressed()
                                         })
 
@@ -198,11 +220,9 @@ class RideRecordActivity : AppCompatActivity() {
                                     if (ride.passengers.size >= ride.seats){
                                         Toast.makeText(baseContext, "No seats available!", Toast.LENGTH_LONG).show()
                                     } else {
-
                                         val builder: AlertDialog.Builder = AlertDialog.Builder(this@RideRecordActivity)
                                         builder.setTitle("Confirm")
                                         builder.setMessage("Are you sure you want to unjoin this ride?")
-
                                         builder.setPositiveButton(
                                             "YES",
                                             DialogInterface.OnClickListener { dialog, which -> // Do nothing but close the dialog
@@ -225,6 +245,7 @@ class RideRecordActivity : AppCompatActivity() {
                                                     override fun onCancelled(error: DatabaseError){}
                                                 })
                                                 dialog.dismiss()
+                                                Toast.makeText(this@RideRecordActivity, "Thank you for joining the ride :)", Toast.LENGTH_LONG).show()
                                                 var intent = Intent(this@RideRecordActivity, HomeActivity::class.java)
                                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                                                 startActivity(intent)
@@ -248,7 +269,7 @@ class RideRecordActivity : AppCompatActivity() {
                 }
 
 
-
+                //changes the text of the button
                 if (intent.getBooleanExtra("review", false)){
                     btnAction.text = "Review"
                 } else {
@@ -283,7 +304,8 @@ class RideRecordActivity : AppCompatActivity() {
                 passengerList.clear()
                 adapter.notifyDataSetChanged()
 
-                // Upadate the RecyclerView in the UI
+                // Update the RecyclerView in the UI
+                // Adds the cirlces of the users at the bottom the view
                 var userRef = FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/").getReference("user")
                 for (i in 1 .. (ride.seats - ride.passengers.size)) passengerList.add(Passenger(false))
                 for (pas in ride.passengers) {

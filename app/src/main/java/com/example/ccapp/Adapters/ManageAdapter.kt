@@ -23,7 +23,7 @@ class ManageAdapter (var userList: List<User>, var rideId: String, var context: 
 
     inner class ManageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
-    private lateinit var dbRef: DatabaseReference
+    private lateinit var rideRef: DatabaseReference
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ManageViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.manage_user_item,parent,false)
@@ -55,21 +55,28 @@ class ManageAdapter (var userList: List<User>, var rideId: String, var context: 
             var index = holder.position
             var userId = userList[index].userID
 
+            //instanciate AlertDialogBuilder
             val builder: AlertDialog.Builder = AlertDialog.Builder(context)
             builder.setTitle("Confirm")
             builder.setMessage("Are you sure you want to remove this passenger?")
 
+            //set positive and negative
             builder.setPositiveButton(
                 "YES",
                 DialogInterface.OnClickListener { dialog, which -> // Do nothing but close the dialog
-                    dbRef =
+                    rideRef =
                         FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
                             .getReference("ride/" + rideId!!)
-                    dbRef.addListenerForSingleValueEvent(object : ValueEventListener {
+
+                    //opening the ride to remove the user from the passengerList
+                    rideRef.addListenerForSingleValueEvent(object : ValueEventListener {
                         override fun onDataChange(snapshot: DataSnapshot) {
                             var ride = snapshot.getValue(Ride::class.java)!!
                             ride.passengers.remove(userId)
-                            dbRef.setValue(ride)
+                            //save the modified ride to the database
+                            rideRef.setValue(ride)
+
+                            //finding the user to delete from its rides the current ride
                             var userRef =
                                 FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
                                     .getReference("user").child(userId!!)
@@ -84,6 +91,7 @@ class ManageAdapter (var userList: List<User>, var rideId: String, var context: 
                                 }
                             })
 
+                            //create a notification on the database
                             val notRef = FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
                                 .getReference("notification").push()
                             notRef.setValue(Notification(userId, "You have been deleted by the driver from the ride from ${ride.departure} to ${ride.destination}!"))
