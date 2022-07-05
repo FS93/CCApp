@@ -189,11 +189,6 @@ class HomeActivity : AppCompatActivity() {
                 startActivity(intent)
 
             }
-            R.id.chronology -> {
-                val intent = Intent(this@HomeActivity, ChronologyActivity::class.java)
-                intent.putExtra("userID", userID)
-                startActivity(intent)
-            }
         }
         return super.onOptionsItemSelected(item)
     }

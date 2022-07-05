@@ -13,10 +13,6 @@
                 android:title="Profile"
                 app:showAsAction="never" />
             <item
-                android:id="@+id/chronology"
-                android:title="Chronology"
-                app:showAsAction="never" />
-            <item
                 android:id="@+id/logout"
                 android:title="Logout"
                 app:showAsAction="never" />

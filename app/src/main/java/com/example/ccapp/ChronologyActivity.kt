@@ -15,6 +15,7 @@ class ChronologyActivity : AppCompatActivity() {
     private lateinit var rideAdapter: RideAdapter
     private lateinit var ridesList: ArrayList<Ride>
     private lateinit var mDbRef: DatabaseReference
+    private lateinit var userID: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,38 +31,22 @@ class ChronologyActivity : AppCompatActivity() {
             FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
                 .getReference("ride")
 
+        var userID = intent.getStringExtra("userID")!!
 
-        var userRef =
-            FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
-                .getReference("user").child(FirebaseAuth.getInstance().currentUser?.uid!!)
-
-        //fetching user from database
-        userRef.addValueEventListener(object: ValueEventListener {
+        //fetches all of the rides from the db and check if userID has been part of
+        mDbRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                //fetching all of the rides
-                mDbRef.addValueEventListener(object : ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        ridesList.clear()
-                        for (postSnapshot in snapshot.children) {
-                            var ride = postSnapshot.getValue(Ride::class.java)!!
-                            var userId = FirebaseAuth.getInstance().currentUser?.uid!!
-                            if ( ride.passengers.contains(userId) || ride.driverId == userId ) {
-                                ridesList.add(postSnapshot.getValue(Ride::class.java)!!)
-                            }
-                        }
-                        rideAdapter.notifyDataSetChanged()
+                ridesList.clear()
+                for (postSnapshot in snapshot.children) {
+                    var ride = postSnapshot.getValue(Ride::class.java)!!
+                    if ( ride.passengers.contains(userID) || ride.driverId == userID ) {
+                        ridesList.add(postSnapshot.getValue(Ride::class.java)!!)
                     }
-
-                    override fun onCancelled(error: DatabaseError) {
-                    }
-                })
-
-
-
+                }
+                rideAdapter.notifyDataSetChanged()
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
             }
         })
 

@@ -105,6 +105,18 @@ class ProfileActivity : AppCompatActivity() {
 
 
 
+        //display history button
+        layout = findViewById(R.id.btnProfileSave)
+        val chronologyButton = Button(this)
+        chronologyButton.text = "History"
+        layout.addView(chronologyButton)
+        chronologyButton.setOnClickListener{
+            val intent = Intent(this@ProfileActivity, ChronologyActivity::class.java)
+            intent.putExtra("userID", userID)
+            startActivity(intent)
+        }
+
+
         //if the profile is the one of the current user he can edit his fields
         if (userID == FirebaseAuth.getInstance().currentUser?.uid!!.toString()) {
             imgView.setOnClickListener {
@@ -123,7 +135,6 @@ class ProfileActivity : AppCompatActivity() {
 
 
             // Display "Save" Button
-            layout = findViewById(R.id.btnProfileSave)
             val editButton = Button(this)
             editButton.text = "Save"
             layout.addView(editButton)
