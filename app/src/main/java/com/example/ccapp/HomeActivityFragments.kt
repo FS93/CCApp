@@ -31,8 +31,6 @@ import java.util.*
 
 
 class HomeActivityFragments : AppCompatActivity() {
-
-
     private lateinit var bnBottomNav: BottomNavigationView
     var userID = FirebaseAuth.getInstance().currentUser?.uid!!.toString()
 
@@ -61,11 +59,12 @@ class HomeActivityFragments : AppCompatActivity() {
             startService(startServiceIntent)
         }
 
-        bnBottomNav = findViewById(R.id.bnBottomNav)
         val searchFragment = RideSearchFragment()
         val createFragment = CreateFragment()
         val homeFragment = UpcomingRidesFragment()
         val openReviewFragment = OpenReviewFragment()
+
+        bnBottomNav = findViewById(R.id.bnBottomNav)
         makeCurrentFragment(homeFragment)
 
         bnBottomNav.setOnItemSelectedListener {

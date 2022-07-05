@@ -1,7 +1,6 @@
 package com.example.ccapp
 
 import android.content.DialogInterface
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
@@ -20,6 +19,7 @@ import kotlinx.android.synthetic.main.activity_ride_record.*
 import java.io.File
 import java.util.Locale
 import java.util.Currency
+import android.content.Intent as Intent
 
 
 class RideRecordActivity : AppCompatActivity() {
@@ -69,7 +69,7 @@ class RideRecordActivity : AppCompatActivity() {
         btnAction = findViewById(R.id.btn_action)
 
         passengerList = mutableListOf<Passenger>()
-        adapter = PassengerAdapter(passengerList)
+        adapter = PassengerAdapter(passengerList, this)
         rvPassengers.adapter = adapter
 
         // Insert line breaks for long texts
@@ -151,7 +151,8 @@ class RideRecordActivity : AppCompatActivity() {
                                 errorGoHome()
                             }
                             "driver" -> {
-                                val intent = Intent(this@RideRecordActivity, PassengerManageActivity::class.java)
+                                val intent =
+                                    Intent(this@RideRecordActivity, PassengerManageActivity::class.java)
                                 intent.putExtra("ride_id", ride.id)
                                 finish()
                                 startActivity(intent)
@@ -223,7 +224,9 @@ class RideRecordActivity : AppCompatActivity() {
                                                     override fun onCancelled(error: DatabaseError){}
                                                 })
                                                 dialog.dismiss()
-                                                onBackPressed()
+                                                var intent = Intent(this@RideRecordActivity, HomeActivityFragments::class.java)
+                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                                                startActivity(intent)
                                             })
 
                                         builder.setNegativeButton(

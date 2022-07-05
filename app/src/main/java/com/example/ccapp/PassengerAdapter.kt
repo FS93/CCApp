@@ -1,10 +1,13 @@
 package com.example.ccapp
 
+import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.net.toUri
 import androidx.core.view.isInvisible
 import androidx.recyclerview.widget.RecyclerView
@@ -16,10 +19,11 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.android.synthetic.main.activity_ride_record.*
 import java.io.File
 import java.util.*
 
-class PassengerAdapter(var passengers: List<Passenger>) :
+class PassengerAdapter(var passengers: List<Passenger>, var context: Context) :
     RecyclerView.Adapter<PassengerAdapter.PassengerViewHolder>() {
 
     inner class PassengerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -33,13 +37,19 @@ class PassengerAdapter(var passengers: List<Passenger>) :
     }
 
     override fun onBindViewHolder(holder: PassengerViewHolder, position: Int) {
-
-
         holder.itemView.apply {
             passengerName.text = passengers[position].name
         }
 
         if (passengers[position].seatTaken) {
+
+            // Link to the Driver Profile
+            holder.itemView.setOnClickListener() {
+                val intent = Intent(context, ProfileActivity::class.java)
+                intent.putExtra("userID", passengers[position].userID )
+                //finish()
+                context.startActivity(intent)
+            }
 
             holder.itemView.ivPassenger.setImageDrawable(null)
 

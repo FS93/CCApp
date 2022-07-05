@@ -98,10 +98,6 @@ class RideDialogActivity : AppIntro2() {
                 return
             }
             rideRef.setValue(ride).addOnSuccessListener {
-                Toast.makeText(
-                    baseContext, "SAVED TO DB",
-                    Toast.LENGTH_LONG
-                ).show()
                 user.ridesAsDriver.add(rideKey!!)
                 userRefDatabase.setValue(user)
             }
