@@ -9,8 +9,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.IBinder
 import android.util.Log
-import android.view.View
-import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -22,6 +20,7 @@ import kotlin.random.Random
 class NotificationService : Service() {
 
     private var notificationManager: NotificationManager? = null
+    private lateinit var userID : String
 
     override fun onBind(intent: Intent): IBinder {
         TODO("Return the communication channel to the service.")
@@ -32,22 +31,26 @@ class NotificationService : Service() {
 
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         createNotificationChannel(
-            "com.example.notifydemo.news",
-            "NotifyDemo News",
-            "Example News Channel"
+            "com.ccapp.news",
+            "CCApp News",
+            "CCApp Changes"
         )
 
-        var mDbRef = FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/").getReference("notification")
-        var userID = FirebaseAuth.getInstance().currentUser?.uid!!.toString()
-        mDbRef.addValueEventListener(object: ValueEventListener {
+        // get Firebase reference
+        var notificationRef = FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/").getReference("notification")
+
+
+        notificationRef.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 userID = FirebaseAuth.getInstance().currentUser?.uid!!.toString()
                 for (notification in snapshot.children){
                     var not = notification.getValue(com.example.ccapp.dbClasses.Notification::class.java)
                     if(not != null){
                         if (not.userId == userID) {
+                            // send notifications relevant for the current user
                             sendNotification(not.message)
-                            mDbRef.child(notification.key!!).removeValue()
+                            // delete notification in the database
+                            notificationRef.child(notification.key!!).removeValue()
                         }
                     }
                 }
@@ -66,6 +69,7 @@ class NotificationService : Service() {
         Log.d("notification", "onDestroy")
     }
 
+    // setup of notification channel
     private fun createNotificationChannel(id: String, name: String, description: String) {
         val importance = NotificationManager.IMPORTANCE_LOW
         var channel = NotificationChannel(id, name, importance)
