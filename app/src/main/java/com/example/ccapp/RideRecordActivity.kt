@@ -221,7 +221,7 @@ class RideRecordActivity : AppCompatActivity() {
                                                             mDbRef.setValue(ride)
                                                             val notRef = FirebaseDatabase.getInstance("https://ccapp-22f27-default-rtdb.europe-west1.firebasedatabase.app/")
                                                                 .getReference("notification").push()
-                                                            notRef.setValue(Notification(ride.driverId!!, "A new passenger joined the ride from ${ride.departure} to ${ride.destination}!"))
+                                                            notRef.setValue(Notification(ride.driverId!!, "A new passenger unjoined the ride from ${ride.departure} to ${ride.destination}!"))
                                                         }
                                                     }
 

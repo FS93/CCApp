@@ -78,7 +78,8 @@ class OpenReviewFragment : Fragment() {
                                 dateOk = true
                             }
                             if (( ride.passengers.contains(userId) || ride.driverId == userId ) && dateOk) {
-                                if (!userReviewedRides.contains(ride.id)) pastRidesList.add(postSnapshot.getValue(Ride::class.java)!!)
+                                if (!userReviewedRides.contains(ride.id))
+                                    pastRidesList.add(postSnapshot.getValue(Ride::class.java)!!)
                             }
                         }
                         rideAdapter.notifyDataSetChanged()
